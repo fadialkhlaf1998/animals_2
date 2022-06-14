@@ -338,12 +338,12 @@ class App {
                       ],
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width*0.6,
+                      width: MediaQuery.of(context).size.width*0.5,
                       height: MediaQuery.of(context).size.height*0.05,
                       child: Row(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width*0.6,
+                            width: MediaQuery.of(context).size.width*0.5,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -623,20 +623,20 @@ class App {
                       ],
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width*0.55,
+                      width: MediaQuery.of(context).size.width*0.45,
                       height: MediaQuery.of(context).size.height*0.05,
                       child: Row(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width*0.55,
+                            width: MediaQuery.of(context).size.width*0.45,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                titleHeader(context,0,"home",homeController,13),
-                                titleHeader(context,1,"about",homeController,13),
-                                titleHeader(context,2,"services",homeController,13),
-                                titleHeader(context,3,"rates",homeController,13),
-                                titleHeader(context,4,"gallery",homeController,13),
+                                titleHeader(context,0,"home",homeController,11),
+                                titleHeader(context,1,"about",homeController,11),
+                                titleHeader(context,2,"services",homeController,11),
+                                titleHeader(context,3,"rates",homeController,11),
+                                titleHeader(context,4,"gallery",homeController,11),
                                 OnHover(builder: (isHovered){
                                   return GestureDetector(
                                     onTap: () {
@@ -648,7 +648,7 @@ class App {
                                     },
                                     child: Row(
                                       children: [
-                                        titleHeader(context,5,"news",homeController,13),
+                                        titleHeader(context,5,"news",homeController,11),
                                         Icon(homeController.btmNavBarIndex.value != 5 ?
                                         Icons.arrow_drop_down : Icons.arrow_drop_up,
                                           color: homeController.btmNavBarIndex.value == 5 || isHovered
@@ -659,7 +659,7 @@ class App {
                                     ),
                                   );
                                 }),
-                                titleHeader(context,6,"contact_us",homeController,13),
+                                titleHeader(context,6,"contact_us",homeController,11),
                               ],
                             ),
                           )
@@ -911,20 +911,20 @@ class App {
                       ],
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width*0.55,
+                      width: MediaQuery.of(context).size.width*0.45,
                       height: MediaQuery.of(context).size.height*0.05,
                       child: Row(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width*0.55,
+                            width: MediaQuery.of(context).size.width*0.45,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                titleHeader(context,0,"home",homeController,10),
-                                titleHeader(context,1,"about",homeController,10),
-                                titleHeader(context,2,"services",homeController,10),
-                                titleHeader(context,3,"rates",homeController,10),
-                                titleHeader(context,4,"gallery",homeController,10),
+                                titleHeader(context,0,"home",homeController,9),
+                                titleHeader(context,1,"about",homeController,9),
+                                titleHeader(context,2,"services",homeController,9),
+                                titleHeader(context,3,"rates",homeController,9),
+                                titleHeader(context,4,"gallery",homeController,9),
                                 OnHover(builder: (isHovered){
                                   return GestureDetector(
                                     onTap: () {
@@ -936,7 +936,7 @@ class App {
                                     },
                                     child: Row(
                                       children: [
-                                        titleHeader(context,5,"news",homeController,10),
+                                        titleHeader(context,5,"news",homeController,9),
                                         Icon(homeController.btmNavBarIndex.value != 5 ?
                                         Icons.arrow_drop_down : Icons.arrow_drop_up,
                                           color: homeController.btmNavBarIndex.value == 5 || isHovered
@@ -947,7 +947,7 @@ class App {
                                     ),
                                   );
                                 }),
-                                titleHeader(context,6,"contact_us",homeController,10),
+                                titleHeader(context,6,"contact_us",homeController,9),
                               ],
                             ),
                           )

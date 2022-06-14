@@ -335,13 +335,17 @@ class Home extends StatelessWidget {
                                 fit: BoxFit.cover)),
                         child: Align(
                           alignment: AlignmentDirectional.bottomStart,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              posts[index].title!,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,fontSize: 20),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width*0.25,
+                            color: Colors.grey.withOpacity(0.2),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Text(
+                                posts[index].title!,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,fontSize: 20),
+                              ),
                             ),
                           ),
                         ),
@@ -1012,13 +1016,17 @@ class Home extends StatelessWidget {
                                         fit: BoxFit.cover)),
                                 child: Align(
                                   alignment: AlignmentDirectional.bottomStart,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: Text(
-                                      posts[index].title!,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,fontSize: 15),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width*0.25,
+                                    color:  Colors.grey.withOpacity(0.2),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20),
+                                      child: Text(
+                                        posts[index].title!,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,fontSize: 15),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -1685,13 +1693,17 @@ class Home extends StatelessWidget {
                                     fit: BoxFit.cover)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
-                              child: Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Text(
-                                  posts[index].title!,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,fontSize: 13),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width*0.25,
+                                color:  Colors.grey.withOpacity(0.2),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Text(
+                                    posts[index].title!,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
                                 ),
                               ),
                             ),
@@ -3258,7 +3270,7 @@ class Home extends StatelessWidget {
                                       style: TextStyle(
                                           color: Colors.white ,
                                           fontSize: MediaQuery.of(context).size.width>App.larg ? 30 :
-                                          MediaQuery.of(context).size.width>App.big? 16 : 14,
+                                          MediaQuery.of(context).size.width>App.big? 20 : 16,
                                           fontWeight: FontWeight.bold),),
                                   ),
                                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),

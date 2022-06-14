@@ -1,5 +1,6 @@
 import 'package:animals/helper/app.dart';
 import 'package:animals/model/post.dart';
+import 'package:animals/view/book_assessment.dart';
 import 'package:animals/view/onHoverTransform.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -158,15 +159,19 @@ class Services extends StatelessWidget {
                                     fit: BoxFit.cover)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Text(
-                                  posts[index].title!,
-                                  style: TextStyle(
-                                      color:
-                                      homeController.selectedServices.value == index ? App.primery :
-                                      inHovered ? App.primery : Colors.white,
-                                      fontWeight: FontWeight.bold,fontSize: 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width*0.25,
+                                color:  Colors.grey.withOpacity(0.2),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Text(
+                                    posts[index].title!,
+                                    style: TextStyle(
+                                        color:
+                                        homeController.selectedServices.value == index ? App.primery :
+                                        inHovered ? App.primery : Colors.white,
+                                        fontWeight: FontWeight.bold,fontSize: 20),
+                                  ),
                                 ),
                               ),
                             ),
@@ -225,6 +230,32 @@ class Services extends StatelessWidget {
                         textAlign: TextAlign.justify,
                       ),
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(() => BookAssessment());
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width>App.larg ?
+                        MediaQuery.of(context).size.width * 0.15 : MediaQuery.of(context).size.width>App.big?
+                        MediaQuery.of(context).size.width * 0.2 : MediaQuery.of(context).size.width * 0.23,
+                        height: MediaQuery.of(context).size.width>App.larg ?
+                        40 : MediaQuery.of(context).size.width>App.big?
+                        35 : 30,
+                        decoration: BoxDecoration(
+                            color: App.primery,
+                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
+                              color: Colors.white ,
+                              fontSize: MediaQuery.of(context).size.width>App.larg ?
+                              15 : MediaQuery.of(context).size.width>App.big?
+                              12 : 10,
+                              fontWeight: FontWeight.bold),),
+                        ) ,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -339,14 +370,18 @@ class Services extends StatelessWidget {
                                     fit: BoxFit.fill)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Text(
-                                  posts[index].title!,
-                                  style: TextStyle(
-                                      color: homeController.selectedServices.value == index ? App.primery :
-                                      inHovered ? App.primery : Colors.white,
-                                      fontWeight: FontWeight.bold,fontSize: 15),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width*0.25,
+                                color:  Colors.grey.withOpacity(0.2),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Text(
+                                    posts[index].title!,
+                                    style: TextStyle(
+                                        color: homeController.selectedServices.value == index ? App.primery :
+                                        inHovered ? App.primery : Colors.white,
+                                        fontWeight: FontWeight.bold,fontSize: 15),
+                                  ),
                                 ),
                               ),
                             ),
@@ -389,7 +424,7 @@ class Services extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Align(
-                          alignment: Alignment.center,
+                          alignment: Alignment.centerLeft,
                           child: Text(homeController.service[index].title.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -402,10 +437,36 @@ class Services extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.8)),
+                        style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(() => BookAssessment());
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width>App.larg ?
+                        MediaQuery.of(context).size.width * 0.15 : MediaQuery.of(context).size.width>App.big?
+                        MediaQuery.of(context).size.width * 0.2 : MediaQuery.of(context).size.width * 0.23,
+                        height: MediaQuery.of(context).size.width>App.larg ?
+                        40 : MediaQuery.of(context).size.width>App.big?
+                        35 : 30,
+                        decoration: BoxDecoration(
+                            color: App.primery,
+                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
+                              color: Colors.white ,
+                              fontSize: MediaQuery.of(context).size.width>App.larg ?
+                              15 : MediaQuery.of(context).size.width>App.big?
+                              12 : 10,
+                              fontWeight: FontWeight.bold),),
+                        ) ,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -519,14 +580,18 @@ class Services extends StatelessWidget {
                                     fit: BoxFit.fill)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
-                              child: Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Text(
-                                  posts[index].title!,
-                                  style: TextStyle(
-                                      color: homeController.selectedServices.value == index ? App.primery :
-                                      inHovered ? App.primery : Colors.white,
-                                      fontWeight: FontWeight.bold,fontSize: 12),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width*0.25,
+                                color:  Colors.grey.withOpacity(0.2),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Text(
+                                    posts[index].title!,
+                                    style: TextStyle(
+                                        color: homeController.selectedServices.value == index ? App.primery :
+                                        inHovered ? App.primery : Colors.white,
+                                        fontWeight: FontWeight.bold,fontSize: 12),
+                                  ),
                                 ),
                               ),
                             ),
@@ -569,7 +634,7 @@ class Services extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Align(
-                          alignment: Alignment.center,
+                          alignment: Alignment.centerLeft,
                           child: Text(homeController.service[index].title.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -582,10 +647,36 @@ class Services extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.8)),
+                        style: TextStyle(fontSize: 11,color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(() => BookAssessment());
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width>App.larg ?
+                        MediaQuery.of(context).size.width * 0.15 : MediaQuery.of(context).size.width>App.big?
+                        MediaQuery.of(context).size.width * 0.2 : MediaQuery.of(context).size.width * 0.23,
+                        height: MediaQuery.of(context).size.width>App.larg ?
+                        40 : MediaQuery.of(context).size.width>App.big?
+                        35 : 30,
+                        decoration: BoxDecoration(
+                            color: App.primery,
+                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
+                              color: Colors.white ,
+                              fontSize: MediaQuery.of(context).size.width>App.larg ?
+                              15 : MediaQuery.of(context).size.width>App.big?
+                              12 : 10,
+                              fontWeight: FontWeight.bold),),
+                        ) ,
+                      ),
+                    )
                   ],
                 ),
               ),
