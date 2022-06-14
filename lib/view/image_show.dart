@@ -5,15 +5,16 @@ import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:animals/helper/app.dart';
 
-// ignore: must_be_immutable
 class ImageShow extends StatelessWidget {
   Rx<int> index;
   HomeController homeController = Get.put(HomeController());
   ImageShow(this.index, {Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> myKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: myKey,
       appBar: AppBar(
         title: const Text(""),
         centerTitle: true,
@@ -42,7 +43,6 @@ class ImageShow extends StatelessWidget {
                           }
                         }
                       }
-
                   },
                     focusNode: FocusNode(),
                     child: Container(
@@ -50,7 +50,6 @@ class ImageShow extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          // _header(context),
                           Container(
                             color: Colors.white,
                             width: MediaQuery.of(context).size.width,
@@ -68,15 +67,18 @@ class ImageShow extends StatelessWidget {
                   ),
                   // Positioned(child: IconButton(icon: Icon(Icons.arrow_back_ios,color: App.primery,),onPressed: (){index.value++;}),),
                   Positioned(
-                      left: 10,
+                      left: 20,
                       top: MediaQuery.of(context).size.height*0.5,
                       child: index.value==0?const Center():CircleAvatar(
                         backgroundColor: App.grey,
-                        child: IconButton(icon: const Icon(Icons.arrow_back_ios,color: App.primery,),onPressed: (){index.value--;}),
+                        child: IconButton(icon: Padding(
+                          padding: const EdgeInsets.only(left: 3),
+                          child: const Icon(Icons.arrow_back_ios,color: App.primery,),
+                        ),onPressed: (){index.value--;}),
                       ),
                   ),
                   Positioned(
-                    right: 10,
+                    right: 20,
                     top: MediaQuery.of(context).size.height*0.5,
                     child: index.value==homeController.gallary.length-1?const Center():CircleAvatar(
                       backgroundColor: App.grey,

@@ -32,6 +32,30 @@ class API {
   static Address? address;
   static String public_key = "6Md5Hi31ooTfpzJOUP76fVTM8DPsD5Zcq6v9TFsIxrlCnvf7sG";
 
+  static Future<bool> subscribe(String email,String firstName, String lastName) async{
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://phpstack-548447-2508399.cloudwaysapps.com/api/inquery'));
+    request.body = json.encode({
+      "email": email,
+      "first_name": firstName,
+      "last_name": lastName
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
   static Future<int> getCompanyId() async {
 
     var headers = {'Content-Type': 'application/json'};

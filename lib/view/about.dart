@@ -42,6 +42,10 @@ class About extends StatelessWidget {
                   :MediaQuery.of(context).size.width>App.small?smWidget(context):xsmWidget(context),
                 ),
                 Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(
+                    right: 0,
+                    child: App.languageBarHome(context, homeController)
+                ),
               ],
             ),
           ),
@@ -57,81 +61,78 @@ class About extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
           Container(
             width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width*0.4,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(homeController.aboutPage!.image!),
+                          fit: BoxFit.fill
+                      )
+                  ),
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
                         height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("our_story"),style: const TextStyle(color: App.green,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
+                        child: Center(
+                            child: Text(App_Localization.of(context).translate("about_us").toUpperCase(),
+                                style: const TextStyle(
+                                    color: App.primery,fontSize:40,
+                                    fontWeight: FontWeight.bold),maxLines: 1)
+                        ),
                       ),
-
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.25,
-                          height: MediaQuery.of(context).size.height*0.05,
-                          child: Text(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 25,fontWeight: FontWeight.bold),maxLines: 1),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  child: Text(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify),
-                                ),
-                                SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  child: Text(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify),
-                                )
-                              ],
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![0].data,
+                            style: TextStyle(color: App.auto,
+                              height: 1.5,
+                              fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.25,
-                              child: Text(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify),
-                            )
-                          ],
+                            textAlign: TextAlign.justify,
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    height: MediaQuery.of(context).size.width*0.6/2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(homeController.aboutPage!.image!),
-                            fit: BoxFit.fill
-                        )
-                    ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width*0.01,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![1].data,
+                            style: TextStyle(color: App.auto,
+                                fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                height: 1.5
+                            ),textAlign: TextAlign.justify),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width*0.01,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![2].data,
+                            style: TextStyle(color: App.auto,
+                                fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                height: 1.5
+                            ),textAlign: TextAlign.justify),
+                      ),
+                    ],
                   ),
                 )
               ],
             ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.03,),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -155,81 +156,75 @@ class About extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
           Container(
             width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width*0.4,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(homeController.aboutPage!.image!),
+                          fit: BoxFit.fill
+                      )
+                  ),
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
                         height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("our_story"),style: const TextStyle(color: App.green,fontSize:30,fontWeight: FontWeight.bold),maxLines: 1)),
+                        child: Center(
+                            child: Text(App_Localization.of(context).translate("about_us").toUpperCase(),
+                                style: const TextStyle(
+                                    color: App.primery,fontSize:30,
+                                    fontWeight: FontWeight.bold),maxLines: 1)
+                        ),
                       ),
-
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.25,
-                          height: MediaQuery.of(context).size.height*0.05,
-                          child: Text(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 18,fontWeight: FontWeight.bold),),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![0].data,
+                          style: TextStyle(color: App.auto,fontSize: 14,
+                              height: 1.5
+                          ),
+                          textAlign: TextAlign.justify,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  child: Text(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 12),textAlign: TextAlign.justify),
-                                ),
-                                SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  child: Text(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 12),textAlign: TextAlign.justify),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.25,
-                              child: Text(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 12),textAlign: TextAlign.justify),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    height: MediaQuery.of(context).size.width*0.6/2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(homeController.aboutPage!.image!),
-                            fit: BoxFit.fill
-                        )
-                    ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width*0.01,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![1].data,
+                            style: TextStyle(color: App.auto,fontSize: 14,
+                                height: 1.5
+                            ),textAlign: TextAlign.justify),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width*0.01,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![2].data,
+                            style: TextStyle(color: App.auto,fontSize: 14,
+                                height: 1.5
+                            ),textAlign: TextAlign.justify),
+                      ),
+                    ],
                   ),
                 )
               ],
             ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.03,),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -250,85 +245,78 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.height*0.2),
           Container(
             width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width*0.45,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(homeController.aboutPage!.image!),
+                          fit: BoxFit.fill
+                      )
+                  ),
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
                         height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("our_story"),style: const TextStyle(color: App.green,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
+                        child: Center(
+                            child: Text(App_Localization.of(context).translate("about_us").toUpperCase(),
+                                style: const TextStyle(
+                                    color: App.primery,fontSize:25,
+                                    fontWeight: FontWeight.bold),maxLines: 1)
+                        ),
                       ),
-
                     ],
                   ),
                 ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.25,
-                          height: MediaQuery.of(context).size.height*0.05,
-                          child: Text(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 14,fontWeight: FontWeight.bold),),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![0].data,
+                          style: TextStyle(color: App.auto,fontSize: 12,
+                              height: 1.5
+                          ),
+                          textAlign: TextAlign.justify,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  child: Text(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                                ),
-                                SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  child: Text(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.25,
-                              child: Text(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    height: MediaQuery.of(context).size.width*0.6/2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(homeController.aboutPage!.image!),
-                            fit: BoxFit.fill
-                        )
-                    ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width*0.01,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![1].data,
+                            style: TextStyle(color: App.auto,fontSize: 12,
+                                height: 1.5
+                            ),textAlign: TextAlign.justify),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width*0.01,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(homeController.aboutPage!.jsonData![2].data,
+                            style: TextStyle(color: App.auto,fontSize: 12,
+                                height: 1.5
+                            ),textAlign: TextAlign.justify),
+                      ),
+                    ],
                   ),
                 )
               ],
             ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.03,),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,

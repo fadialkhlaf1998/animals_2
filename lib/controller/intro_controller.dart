@@ -21,6 +21,9 @@ class IntroController extends GetxController {
   List<Post> service = <Post>[];
   List<Post> product = <Post>[];
   List<Post> gallary = <Post>[];
+  List<Post> reviews = <Post>[];
+  List<Post> events = <Post>[];
+  List<Post> blogs = <Post>[];
   Post? aboutHomePage;
   Post? aboutPage;
   HomeController homeController = Get.put(HomeController());
@@ -90,6 +93,9 @@ class IntroController extends GetxController {
     homeController.aboutHomePage = aboutHomePage;
     homeController.aboutPage = aboutPage;
     homeController.gallary = gallary;
+    homeController.reviews = reviews;
+    homeController.events = events;
+    homeController.blogs = blogs;
     // Get.to(() => Home());
     ready.value=true;
     print('ready');

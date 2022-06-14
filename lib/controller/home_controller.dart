@@ -22,6 +22,9 @@ class HomeController extends GetxController {
   List<Post> category = <Post>[];
   List<Post> product = <Post>[];
   List<Post> gallary = <Post>[];
+  List<Post> reviews = <Post>[];
+  List<Post> events = <Post>[];
+  List<Post> blogs = <Post>[];
 
   CartController cartController = Get.put(CartController());
   ShopController shopController = Get.put(ShopController());
@@ -35,6 +38,14 @@ class HomeController extends GetxController {
   RxList<Post> products = <Post>[].obs;
   TextEditingController searchController = TextEditingController();
   var ready = false.obs;
+  var openCountry = false.obs;
+  var openNews = (-1).obs;
+
+  //review slider
+  var activeIndex = 0.obs;
+  set_index(int selected){
+    activeIndex.value=selected;
+  }
 
   ///search Page
   var selectedPostFilter = 0.obs;
@@ -64,6 +75,7 @@ class HomeController extends GetxController {
     if(id == -1){
       shopController.posts = product;
       shopController.postsView.value = product;
+
       shopController.selectedCategory.value = id;
       Get.to(()=>Shop());
       loading.value=false;
@@ -99,13 +111,22 @@ class HomeController extends GetxController {
           await login();
           StartUp? startUp = await API.startUp();
           if(startUp != null){
-
             banner = startUp.banners.posts;
-            category = startUp.categories.posts;
+            category = startUp.super_category.posts;
+            // print('super category');
+            // print(category.length);
+            // print('category');
+            // print(category.first.posts!.length);
+            // print('sub category');
+            // print(category.first.posts!.first.posts!.length);
+            // print('Product');
+            // print(category.first.posts!.first.posts!.first.posts!.length);
             service = startUp.services.posts;
-            product = startUp.products.posts;
             brand = startUp.brand.posts;
             gallary = startUp.gallary.posts;
+            reviews = startUp.reviews.posts;
+            events = startUp.events.posts;
+            blogs = startUp.blogs.posts;
             aboutHomePage = startUp.aboutHomePage.posts.first;
             aboutPage = startUp.aboutPage.posts.first;
             API.address = await Store.loadAddress();
@@ -134,6 +155,9 @@ class HomeController extends GetxController {
     aboutHomePage = aboutHomePage;
     aboutPage = aboutPage;
     gallary = gallary;
+    reviews = reviews;
+    events = events;
+    blogs = blogs;
     ready.value=true;
     if (API.email.isNotEmpty && API.is_active == true) {
       // Get.offAll(() => Home());

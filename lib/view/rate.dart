@@ -42,6 +42,10 @@ class Rate extends StatelessWidget {
                       : medWidget(context)
                 ),
                 Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(
+                    right: 0,
+                    child: App.languageBarHome(context, homeController)
+                ),
               ],
             ),
           ),
@@ -58,20 +62,19 @@ class Rate extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
           Container(
             width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height*0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("rates"),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
+                        height: MediaQuery.of(context).size.height*0.2,
+                        child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -162,20 +165,19 @@ class Rate extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
           Container(
             width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height*0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("rates"),style: const TextStyle(color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
+                        height: MediaQuery.of(context).size.height*0.2,
+                        child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -265,26 +267,25 @@ class Rate extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height*0.2),
           Container(
             width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height*0.15,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("rates"),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
+                        height: MediaQuery.of(context).size.height*0.15,
+                        child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
                 ),
                 medRates(count:1,posts:homeController.service,background: const Color(0xffffffff)),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.25),
               ],
             ),
           ),

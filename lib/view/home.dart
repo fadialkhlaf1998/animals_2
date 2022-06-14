@@ -1,5 +1,7 @@
 import 'package:animals/view/about.dart';
+import 'package:animals/view/book_assessment.dart';
 import 'package:animals/view/contact.dart';
+import 'package:animals/view/events.dart';
 import 'package:animals/view/gallery.dart';
 import 'package:animals/view/on_hover.dart';
 import 'package:animals/view/rate.dart';
@@ -7,13 +9,11 @@ import 'package:animals/view/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:animals/app_localization.dart';
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
 import 'package:animals/model/post.dart';
-import 'package:animals/view/cart.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 import 'package:lottie/lottie.dart';
 
@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
 
   HomeController homeController = Get.put(HomeController());
   final GlobalKey<ScaffoldState> myKey = GlobalKey();
-
+  CarouselController carouselController = CarouselController();
   Home({Key? key}) : super(key: key);
 
   @override
@@ -30,12 +30,11 @@ class Home extends StatelessWidget {
       return
         !homeController.ready.value?loading(context): homeController.btmNavBarIndex.value == 0 ?
         home(context) : homeController.btmNavBarIndex.value == 1 ? About()
-            : homeController.btmNavBarIndex.value == 2 ? Gallery()
-            : homeController.btmNavBarIndex.value == 3?Contact():
-              homeController.btmNavBarIndex.value == 4 ? Services() :
-              homeController.btmNavBarIndex.value == 5 ? Rate() :
-              homeController.btmNavBarIndex.value == 6 ? Container() :
-              Container();
+            : homeController.btmNavBarIndex.value == 2 ? Services()
+            : homeController.btmNavBarIndex.value == 3? Rate() :
+              homeController.btmNavBarIndex.value == 4 ? Gallery() :
+              homeController.btmNavBarIndex.value == 5 ? Events() :
+              Contact() ;
     });
   }
 
@@ -61,26 +60,34 @@ class Home extends StatelessWidget {
         onRefresh: ()async{
           Get.offAllNamed("/");
         },
-        child: Zoom(
-          maxZoomWidth: MediaQuery.of(context).size.width,
-          maxZoomHeight: MediaQuery.of(context).size.height,
-          child: SafeArea(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/image/Background.png")
-                )
+        child: Stack(
+          children: [
+            Zoom(
+              maxZoomWidth: MediaQuery.of(context).size.width,
+              maxZoomHeight: MediaQuery.of(context).size.height,
+              child: SafeArea(
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/image/Background.png")
+                        )
+                    ),
+                    child: MediaQuery.of(context).size.width>App.larg?largHome(context)
+                        :MediaQuery.of(context).size.width>App.big?bgHome(context)
+                        :MediaQuery.of(context).size.width>App.mid?mdHome(context)
+                        :MediaQuery.of(context).size.width>App.small?smHome(context):xsmHome(context)
+                ),
               ),
-              child: MediaQuery.of(context).size.width>App.larg?largHome(context)
-              :MediaQuery.of(context).size.width>App.big?bgHome(context)
-              :MediaQuery.of(context).size.width>App.mid?mdHome(context)
-              :MediaQuery.of(context).size.width>App.small?smHome(context):xsmHome(context)
             ),
-          ),
-        ),
+            Positioned(
+                right: 0,
+                child: App.languageBarHome(context, homeController)
+            ),
+          ],
+        )
       ),
     );
   }
@@ -221,7 +228,7 @@ class Home extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: (){
-                            App.bookNow();
+                            Get.to(() => BookAssessment());
                           },
                           child: Container(
                               width: MediaQuery.of(context).size.width / 6,
@@ -249,6 +256,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 largReview(context),
+                SizedBox(height: MediaQuery.of(context).size.width*0.03),
                 App.footer(context,homeController),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -324,7 +332,7 @@ class Home extends StatelessWidget {
                                     .image!
                                     .replaceAll(
                                     "localhost", "10.0.2.2")),
-                                fit: BoxFit.fill)),
+                                fit: BoxFit.cover)),
                         child: Align(
                           alignment: AlignmentDirectional.bottomStart,
                           child: Padding(
@@ -332,7 +340,7 @@ class Home extends StatelessWidget {
                             child: Text(
                               posts[index].title!,
                               style: const TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,fontSize: 20),
                             ),
                           ),
@@ -360,13 +368,21 @@ class Home extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width*0.4,
-                    child: Align(alignment: Alignment.centerLeft,child: Text(homeController.aboutHomePage!.subTitle!,style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 40,), textAlign: TextAlign.left,maxLines: 2,)),
+                    child: Align(alignment: Alignment.centerLeft,
+                        child: Text(homeController.aboutHomePage!.subTitle!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 40,
+                          ), textAlign: TextAlign.left,maxLines: 2,)),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.width*0.03,),
                   SizedBox(
                     width: MediaQuery.of(context).size.width*0.4,
                     child: Text(homeController.aboutHomePage!.stringDescription!,
-                      style: TextStyle(fontSize: 17,color: Colors.white.withOpacity(0.8)),
+                      style: TextStyle(
+                          fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                          color: Colors.white.withOpacity(0.8)),
                       textAlign: TextAlign.justify,
                     ),
                   ),
@@ -390,70 +406,124 @@ class Home extends StatelessWidget {
     );
   }
   largReview(BuildContext context){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width*0.25,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                height: MediaQuery.of(context).size.width*0.3,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.network("https://media.istockphoto.com/vectors/quote-sign-icon-quotation-mark-symbol-vector-id964122728?b=1&k=20&m=964122728&s=170667a&w=0&h=vYBeqOfsHEmERoAejTo18QdJDPA9ogrCgsaTnqaA2Hw=",
-                              width: 150,height: 150,),
-                          SizedBox(height: 50),
-                        ],
-                      )
-                    ),
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: Align(alignment: Alignment.centerLeft,child: Text("Ralph (Turbo’s dad)",style: const TextStyle(fontWeight: FontWeight.bold,color: App.primery,fontSize: 18), textAlign: TextAlign.left,maxLines: 2,)),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: Text("Another thing we particularly like are the community events like thefrenchies days or other dog days were they can actually come on theweekend and join other dogs to play around and have a bit of fun in the aircondition which is quite nice in the summer.",
-                              style: TextStyle(fontSize: 18,color: Colors.black),
-                              textAlign: TextAlign.justify,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                )
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: MediaQuery.of(context).size.width*0.2,
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.aboutHomePage!.image!),
-                        fit: BoxFit.fill
-                    )
-                ),
-              ),
-            ),
-          ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            carouselController.previousPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 100,
+            width: 100,
+            child: Icon(Icons.arrow_back_ios_outlined,size: 70,color: App.primery,),
+          ),
         ),
-      ),
+        Container(
+          width: MediaQuery.of(context).size.width - 200,
+          height: MediaQuery.of(context).size.width * 0.2,
+          child: CarouselSlider.builder(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width * 0.15,
+                autoPlay: false,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                enlargeStrategy:
+                CenterPageEnlargeStrategy.height,
+                autoPlayInterval: Duration(seconds: 2),
+                onPageChanged: (index, reason) {
+                  homeController.set_index(index);
+                }),
+            itemCount: homeController.reviews.length  ,
+            itemBuilder: (BuildContext context, int index, int realIndex) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    child: Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.1,
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset("assets/image/quote.png",
+                                      width: 60,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 20),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child: Align(alignment: Alignment.centerLeft,child: Text(homeController.reviews[index].title!,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,color: App.primery,
+                                            fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                        ), textAlign: TextAlign.left,maxLines: 1),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(width: 80),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  child: Text(homeController.reviews[index].stringDescription!,
+                                    maxLines: 6,
+                                    style: TextStyle(
+                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                        color: Colors.black,
+                                        overflow: TextOverflow.ellipsis
+                                    ),
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width*0.2,
+                    decoration:BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(homeController.reviews[index].image!),
+                            fit: BoxFit.fill
+                        )
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            carouselController.nextPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 100,
+            width: 100,
+            child: Icon(Icons.arrow_forward_ios_outlined,size: 70,color: App.primery,),
+          ),
+        )
+      ],
     );
   }
   largProduct({required int count, required double ratio, required List<Post> posts, required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
@@ -830,7 +900,7 @@ class Home extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          App.bookNow();
+                          Get.to(() => BookAssessment());
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width / 5,
@@ -858,6 +928,7 @@ class Home extends StatelessWidget {
                 ),
               ),
               BigReview(context),
+              SizedBox(height: MediaQuery.of(context).size.width*0.03),
               App.footer(context,homeController),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -938,7 +1009,7 @@ class Home extends StatelessWidget {
                                             .image!
                                             .replaceAll(
                                             "localhost", "10.0.2.2")),
-                                        fit: BoxFit.fill)),
+                                        fit: BoxFit.cover)),
                                 child: Align(
                                   alignment: AlignmentDirectional.bottomStart,
                                   child: Padding(
@@ -946,7 +1017,7 @@ class Home extends StatelessWidget {
                                     child: Text(
                                       posts[index].title!,
                                       style: const TextStyle(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold,fontSize: 15),
                                     ),
                                   ),
@@ -1007,70 +1078,125 @@ class Home extends StatelessWidget {
     );
   }
   BigReview(BuildContext context){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width*0.23,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                  height: MediaQuery.of(context).size.width * 0.3,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network("https://media.istockphoto.com/vectors/quote-sign-icon-quotation-mark-symbol-vector-id964122728?b=1&k=20&m=964122728&s=170667a&w=0&h=vYBeqOfsHEmERoAejTo18QdJDPA9ogrCgsaTnqaA2Hw=",
-                                width: 100,height: 150),
-                              SizedBox(height: 60),
-                            ],
-                          )
-                      ),
-                      Container(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            carouselController.previousPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 90,
+            width: 90,
+            child: Icon(Icons.arrow_back_ios_outlined,size: 50,color: App.primery,),
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 180,
+          height: MediaQuery.of(context).size.width * 0.3,
+          child: CarouselSlider.builder(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width * 0.2,
+                autoPlay: false,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                enlargeStrategy:
+                CenterPageEnlargeStrategy.height,
+                autoPlayInterval: Duration(seconds: 2),
+                onPageChanged: (index, reason) {
+                  homeController.set_index(index);
+                }),
+            itemCount: homeController.reviews.length,
+            itemBuilder: (BuildContext context, int index, int realIndex) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.15,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Align(alignment: Alignment.centerLeft,child: Text("Ralph (Turbo’s dad)",style: const TextStyle(fontWeight: FontWeight.bold,color: App.primery,fontSize: 15), textAlign: TextAlign.left,maxLines: 2,)),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset("assets/image/quote.png",
+                                      width: 50,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 20),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.35,
+                                      child: Align(alignment: Alignment.centerLeft,child: Text(homeController.reviews[index].title!,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,color: App.primery,
+                                            fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                          ), textAlign: TextAlign.left,maxLines: 1),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Text("Another thing we particularly like are the community events like thefrenchies days or other dog days were they can actually come on theweekend and join other dogs to play around and have a bit of fun in the aircondition which is quite nice in the summer.",
-                                style: TextStyle(fontSize: 15,color: Colors.black),
-                                textAlign: TextAlign.justify,
-                              ),
-                            ),
+                            Row(
+                              children: [
+                                SizedBox(width: 80),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.35,
+                                  child: Text(homeController.reviews[index].stringDescription!,
+                                    maxLines: 7,
+                                    style: TextStyle(
+                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                        color: Colors.black,
+                                        overflow: TextOverflow.ellipsis
+                                    ),
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  )
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: MediaQuery.of(context).size.width*0.2,
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.aboutHomePage!.image!),
-                        fit: BoxFit.fill
-                    )
-                ),
-              ),
-            ),
-          ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width*0.2,
+                    decoration:BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(homeController.reviews[index].image!),
+                            fit: BoxFit.fill
+                        )
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
-      ),
+        GestureDetector(
+          onTap: () {
+            carouselController.nextPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 90,
+            width: 90,
+            child: Icon(Icons.arrow_forward_ios_outlined,size: 50,color: App.primery,),
+          ),
+        )
+
+      ],
     );
   }
   bgProduct({required int count, required double ratio, required List<Post> posts, required double height, required double? img_radius, required double? radius, required bool circle,required Color background, required bool shadow, required int op}) {
@@ -1447,7 +1573,7 @@ class Home extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          App.bookNow();
+                          Get.to(() => BookAssessment());
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width / 3,
@@ -1476,6 +1602,7 @@ class Home extends StatelessWidget {
                 ),
               ),
               mdReview(context),
+              SizedBox(height: MediaQuery.of(context).size.height*0.03),
               App.footer(context,homeController),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -1555,7 +1682,7 @@ class Home extends StatelessWidget {
                                         .image!
                                         .replaceAll(
                                         "localhost", "10.0.2.2")),
-                                    fit: BoxFit.fill)),
+                                    fit: BoxFit.cover)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
                               child: Padding(
@@ -1563,7 +1690,7 @@ class Home extends StatelessWidget {
                                 child: Text(
                                   posts[index].title!,
                                   style: const TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                               ),
@@ -1622,69 +1749,124 @@ class Home extends StatelessWidget {
     );
   }
   mdReview(BuildContext context){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width*0.23,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network("https://media.istockphoto.com/vectors/quote-sign-icon-quotation-mark-symbol-vector-id964122728?b=1&k=20&m=964122728&s=170667a&w=0&h=vYBeqOfsHEmERoAejTo18QdJDPA9ogrCgsaTnqaA2Hw=",
-                                  width: 100,height: 100),
-                              SizedBox(height: 75),
-                            ],
-                          )
-                      ),
-                      Container(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            carouselController.previousPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 70,
+            width: 70,
+            child: Icon(Icons.arrow_back_ios_outlined,size: 40,color: App.primery,),
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 140,
+          height: MediaQuery.of(context).size.width * 0.25,
+          child: CarouselSlider.builder(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width * 0.2,
+                autoPlay: false,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                enlargeStrategy:
+                CenterPageEnlargeStrategy.height,
+                autoPlayInterval: Duration(seconds: 2),
+                onPageChanged: (index, reason) {
+                  homeController.set_index(index);
+                }),
+            itemCount: homeController.reviews.length,
+            itemBuilder: (BuildContext context, int index, int realIndex) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.15,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              child: Align(alignment: Alignment.centerLeft,child: Text("Ralph (Turbo’s dad)",style: const TextStyle(fontWeight: FontWeight.bold,color: App.primery,fontSize: 12), textAlign: TextAlign.left,maxLines: 2,)),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset("assets/image/quote.png",
+                                      width: 30,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 15),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child: Align(alignment: Alignment.centerLeft,child: Text(homeController.reviews[index].title!,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,color: App.primery,
+                                            fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                          ), textAlign: TextAlign.left,maxLines: 1),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              child: Text("Another thing we particularly like are the community events like thefrenchies days or other dog days were they can actually come on theweekend and join other dogs to play around and have a bit of fun in the aircondition which is quite nice in the summer.",
-                                style: TextStyle(fontSize: 12,color: Colors.black),
-                                textAlign: TextAlign.justify,
-                              ),
-                            ),
+                            Row(
+                              children: [
+                                SizedBox(width: 50),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  child: Text(homeController.reviews[index].stringDescription!,
+                                    maxLines: 6,
+                                    style: TextStyle(
+                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                        color: Colors.black,
+                                        overflow: TextOverflow.ellipsis
+                                    ),
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  )
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: MediaQuery.of(context).size.width*0.2,
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.aboutHomePage!.image!),
-                        fit: BoxFit.fill
-                    )
-                ),
-              ),
-            ),
-          ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width*0.2,
+                    decoration:BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(homeController.reviews[index].image!),
+                            fit: BoxFit.fill
+                        )
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
-      ),
+        GestureDetector(
+          onTap: () {
+            carouselController.nextPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 70,
+            width: 70,
+            child: Icon(Icons.arrow_forward_ios_outlined,size: 40,color: App.primery,),
+          ),
+        )
+
+      ],
     );
   }
   mdProduct({required int count, required double ratio, required List<Post> posts, required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
@@ -3049,12 +3231,8 @@ class Home extends StatelessWidget {
                   child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.width * 0.5,
-                      decoration: const BoxDecoration(
-                        // image: DecorationImage(
-                        //     image: CachedNetworkImageProvider(e.image),
-                        //     fit: BoxFit.cover)
-                      ),
-                      child: CachedNetworkImage(
+                      child:
+                      CachedNetworkImage(
                         // placeholder: (context, url) => const CircularProgressIndicator(),
                         imageUrl: e.image!,
                         imageBuilder: (context, imageProvider) => Container(
@@ -3086,7 +3264,7 @@ class Home extends StatelessWidget {
                                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                   GestureDetector(
                                     onTap: (){
-                                      App.bookNow();
+                                      Get.to(() => BookAssessment());
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width>App.larg ?
@@ -3130,37 +3308,32 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        )
         /**3 point*/
-        Positioned(
-          bottom: 10,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:homeController.banner.map((e) {
-                return  Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: homeController.selder_selected.value == homeController.banner.indexOf(e)
-                          ? App.primery
-                          : Colors.grey,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
         // Positioned(
-        //     top: MediaQuery.of(context).size.width*0.2,
-        //     left: Global.language=="en"?10:null ,
-        //     right: Global.language=="ar"?10:null ,
-        //     child: )
+        //   bottom: 10,
+        //   child: SizedBox(
+        //     width: MediaQuery.of(context).size.width,
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children:homeController.banner.map((e) {
+        //         return  Padding(
+        //           padding: const EdgeInsets.all(4.0),
+        //           child: Container(
+        //             width: 8,
+        //             height: 8,
+        //             decoration: BoxDecoration(
+        //               color: homeController.selder_selected.value == homeController.banner.indexOf(e)
+        //                   ? App.primery
+        //                   : Colors.grey,
+        //               shape: BoxShape.circle,
+        //             ),
+        //           ),
+        //         );
+        //       }).toList(),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

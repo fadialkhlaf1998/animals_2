@@ -15,10 +15,11 @@ import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 class App {
 
-  static const Color primery = Color(0xfffc7012);
+  static const Color primery = Color(0xffff6200);
+  static const Color orange = Color(0xffff9628);
   static const Color secondry = Color(0xffffffff);
   static const Color grey = Color(0xfff5f5f5);
-  static const Color green = Color(0xffa0c769);
+  static const Color green = Color(0xff00a550);
   static const Color lightOrang =  Color(0xffFFB380);
   static Color auto = Colors.black.withOpacity(0.75);
   static Color purple = Color(0xff662482);
@@ -30,6 +31,23 @@ class App {
   static const double small = 600;
 
   static ScrollController scrollController = ScrollController();
+
+
+  ////////////////// FontSize //////////////////
+  static largeFontSize(double width){
+    if(width > 2500){
+      return 25;
+    }
+    if(width > 2000){
+      return 20;
+    }
+    if(width > 1500) {
+      return 16;
+    }
+    else{
+      return 13;
+    }
+  }
 
   static bookNow(){
     urlLauncher.launch("tel://+971547035736");
@@ -97,6 +115,60 @@ class App {
   ////////////////////////////////// Home //////////////////////////////////////
 
   ////////////////// Header //////////////////
+
+  //todo clear code
+  static largeNews(BuildContext context) {
+    return Column(
+      children: [
+        // SizedBox(height: MediaQuery.of(context).size.height*0.25),
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeIn,
+          child: Container(
+              child: Container(
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        color: App.blue,
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(App_Localization.of(context).translate("events"),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          //todo go to blogs page
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          color: App.primery,
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(App_Localization.of(context).translate("blogs"),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+              )
+          ),
+        )
+      ],
+    );
+  }
+
   static header(BuildContext context,HomeController homeController,GlobalKey<ScaffoldState> globalKey) {
     return MediaQuery.of(context).size.width>App.larg?largeHeader(context,homeController)
         :MediaQuery.of(context).size.width>App.big?bigHeader(context,homeController)
@@ -113,13 +185,37 @@ class App {
             width: MediaQuery.of(context).size.width,
             height: 35,
             color: Colors.grey[900],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(),
-                Text(App_Localization.of(context).translate("free_pet_pick_up"),
-                    style: TextStyle(color: secondry,fontSize: 12)),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Text(App_Localization.of(context).translate("free_pet_pick_up"),
+                      style: TextStyle(color: secondry,fontSize: 12)),
+                  GestureDetector(
+                    onTap: () {
+                      if(homeController.openCountry.value == false) {
+                        homeController.openCountry.value = true;
+                      } else {
+                        homeController.openCountry.value = false;
+                      }
+                    },
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                            width: 30, height: 30,),
+                          homeController.openCountry.value == false ?
+                          Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,) :
+                          Icon(Icons.keyboard_arrow_up_outlined,color: Colors.white,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Row(
@@ -253,12 +349,37 @@ class App {
                               children: [
                                 titleHeader(context,0,"home",homeController,15),
                                 titleHeader(context,1,"about",homeController,15),
-                                titleHeader(context,2,"gallery",homeController,15),
-                                titleHeader(context,3,"contact",homeController,15),
-                                titleHeader(context,4,"services",homeController,15),
-                                titleHeader(context,5,"rates",homeController,15),
-                                titleHeader(context,6,"news",homeController,15),
-                                titleHeader(context,7,"reviews",homeController,15),
+                                titleHeader(context,2,"services",homeController,15),
+                                titleHeader(context,3,"rates",homeController,15),
+                                titleHeader(context,4,"gallery",homeController,15),
+                                OnHover(builder: (isHovered){
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if(homeController.btmNavBarIndex.value == 5){
+                                        homeController.openNews.value = -1;
+                                      }else{
+                                        homeController.openNews.value = 5;
+                                      }
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            titleHeader(context,5,"news",homeController,15),
+                                            Icon(homeController.btmNavBarIndex.value != 5 ?
+                                            Icons.arrow_drop_down : Icons.arrow_drop_up,
+                                              color: homeController.btmNavBarIndex.value == 5 || isHovered
+                                                  ? primery : Colors.black,
+                                              size: 25,
+                                            )
+                                          ],
+                                        ),
+                                        //largeNews(context)
+                                      ],
+                                    ),
+                                  );
+                                }),
+                                titleHeader(context,6,"contact_us",homeController,15),
                               ],
                             ),
                           )
@@ -278,14 +399,6 @@ class App {
                     GestureDetector(
                       onTap: (){
                         Get.to(() => Shop());
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // homeController.btmNavBarIndex.value = 8;
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.1,
@@ -358,13 +471,37 @@ class App {
             width: MediaQuery.of(context).size.width,
             height: 30,
             color: Colors.grey[900],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(),
-                Text(App_Localization.of(context).translate("free_pet_pick_up"),
-                    style: TextStyle(color: secondry,fontSize: 10)),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Text(App_Localization.of(context).translate("free_pet_pick_up"),
+                      style: TextStyle(color: secondry,fontSize: 10)),
+                  GestureDetector(
+                    onTap: () {
+                      if(homeController.openCountry.value == false) {
+                        homeController.openCountry.value = true;
+                      } else {
+                        homeController.openCountry.value = false;
+                      }
+                    },
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                            width: 25, height: 25,),
+                          homeController.openCountry.value == false ?
+                          Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,) :
+                          Icon(Icons.keyboard_arrow_up_outlined,color: Colors.white,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Row(
@@ -497,12 +634,32 @@ class App {
                               children: [
                                 titleHeader(context,0,"home",homeController,13),
                                 titleHeader(context,1,"about",homeController,13),
-                                titleHeader(context,2,"gallery",homeController,13),
-                                titleHeader(context,3,"contact",homeController,13),
-                                titleHeader(context,4,"services",homeController,13),
-                                titleHeader(context,5,"rates",homeController,13),
-                                titleHeader(context,6,"news",homeController,13),
-                                titleHeader(context,7,"reviews",homeController,13),
+                                titleHeader(context,2,"services",homeController,13),
+                                titleHeader(context,3,"rates",homeController,13),
+                                titleHeader(context,4,"gallery",homeController,13),
+                                OnHover(builder: (isHovered){
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if(homeController.btmNavBarIndex.value == 5){
+                                        homeController.openNews.value = -1;
+                                      }else{
+                                        homeController.openNews.value = 5;
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        titleHeader(context,5,"news",homeController,13),
+                                        Icon(homeController.btmNavBarIndex.value != 5 ?
+                                        Icons.arrow_drop_down : Icons.arrow_drop_up,
+                                          color: homeController.btmNavBarIndex.value == 5 || isHovered
+                                              ? primery : Colors.black,
+                                          size: 20,
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }),
+                                titleHeader(context,6,"contact_us",homeController,13),
                               ],
                             ),
                           )
@@ -602,13 +759,37 @@ class App {
             width: MediaQuery.of(context).size.width,
             height: 30,
             color: Colors.grey[900],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(),
-                Text(App_Localization.of(context).translate("free_pet_pick_up"),
-                    style: TextStyle(color: secondry,fontSize: 10)),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Text(App_Localization.of(context).translate("free_pet_pick_up"),
+                      style: TextStyle(color: secondry,fontSize: 10)),
+                  GestureDetector(
+                    onTap: () {
+                      if(homeController.openCountry.value == false) {
+                        homeController.openCountry.value = true;
+                      } else {
+                        homeController.openCountry.value = false;
+                      }
+                    },
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                            width: 20, height: 20),
+                          homeController.openCountry.value == false ?
+                          Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,size: 20,) :
+                          Icon(Icons.keyboard_arrow_up_outlined,color: Colors.white,size: 20,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Row(
@@ -741,12 +922,32 @@ class App {
                               children: [
                                 titleHeader(context,0,"home",homeController,10),
                                 titleHeader(context,1,"about",homeController,10),
-                                titleHeader(context,2,"gallery",homeController,10),
-                                titleHeader(context,3,"contact",homeController,10),
-                                titleHeader(context,4,"services",homeController,10),
-                                titleHeader(context,5,"rates",homeController,10),
-                                titleHeader(context,6,"news",homeController,10),
-                                titleHeader(context,7,"reviews",homeController,10),
+                                titleHeader(context,2,"services",homeController,10),
+                                titleHeader(context,3,"rates",homeController,10),
+                                titleHeader(context,4,"gallery",homeController,10),
+                                OnHover(builder: (isHovered){
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if(homeController.btmNavBarIndex.value == 5){
+                                        homeController.openNews.value = -1;
+                                      }else{
+                                        homeController.openNews.value = 5;
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        titleHeader(context,5,"news",homeController,10),
+                                        Icon(homeController.btmNavBarIndex.value != 5 ?
+                                        Icons.arrow_drop_down : Icons.arrow_drop_up,
+                                          color: homeController.btmNavBarIndex.value == 5 || isHovered
+                                              ? primery : Colors.black,
+                                          size: 18,
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }),
+                                titleHeader(context,6,"contact_us",homeController,10),
                               ],
                             ),
                           )
@@ -981,6 +1182,11 @@ class App {
         Get.back();
         Get.back();
         homeController.btmNavBarIndex.value = index;
+        if(homeController.btmNavBarIndex.value == 5){
+          homeController.openNews.value = -1;
+        }else{
+          homeController.openNews.value = 5;
+        }
       },
       child: OnHover(builder: (isHovered){
         return Container(
@@ -3501,6 +3707,106 @@ class App {
   }
   static medLanguageBar(BuildContext context,ShopController shopController) {
     return shopController.openCountry.value ==true ?
+    Column(
+      children: [
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.28,
+          height: 35,
+          color: Colors.grey[400],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                    width: 15, height: 15),
+                SizedBox(width: 5),
+                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold
+                ),),
+                SizedBox(width: 5),
+                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
+                  fontSize: 9,
+                ),)
+              ],
+            ),
+          ),
+        )
+      ],
+    ) : Center();
+  }
+
+  ////////////////// LanguageBarHome //////////////////
+  static languageBarHome(BuildContext context,HomeController homeController) {
+    return MediaQuery.of(context).size.width>App.larg?largeLanguageBarHome(context,homeController)
+        : MediaQuery.of(context).size.width>App.big ? bigLanguageBarHome(context,homeController) :
+    medLanguageBarHome(context,homeController);
+  }
+  static largeLanguageBarHome(BuildContext context,HomeController homeController) {
+    return homeController.openCountry.value == true ?
+    Column(
+      children: [
+        SizedBox(height: 35,),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.21,
+          height: 40,
+          color: Colors.grey[400],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                    width: 20, height: 20),
+                SizedBox(width: 6),
+                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold
+                ),),
+                SizedBox(width: 10,),
+                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
+                  fontSize: 13,
+                ),)
+              ],
+            ),
+          ),
+        )
+      ],
+    ) : Center();
+  }
+  static bigLanguageBarHome(BuildContext context,HomeController homeController) {
+    return homeController.openCountry.value ==true ?
+    Column(
+      children: [
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          height: 40,
+          color: Colors.grey[400],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                    width: 18, height: 18),
+                SizedBox(width: 5),
+                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold
+                ),),
+                SizedBox(width: 5),
+                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
+                  fontSize: 10,
+                ),)
+              ],
+            ),
+          ),
+        )
+      ],
+    ) : Center();
+  }
+  static medLanguageBarHome(BuildContext context,HomeController homeController) {
+    return homeController.openCountry.value ==true ?
     Column(
       children: [
         SizedBox(height: 30),

@@ -39,10 +39,13 @@ class Gallery extends StatelessWidget {
                     ),
                   child: MediaQuery.of(context).size.width>App.larg?lgWegit(context)
                       :MediaQuery.of(context).size.width>App.big?bgWegit(context)
-                      :MediaQuery.of(context).size.width>App.mid?mdWegit(context)
-                      :MediaQuery.of(context).size.width>App.small?smWegit(context):xsmWegit(context)
+                      :mdWegit(context)
                 ),
                 Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(
+                    right: 0,
+                    child: App.languageBarHome(context, homeController)
+                ),
               ],
             ),
           ),
@@ -56,51 +59,37 @@ class Gallery extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.height*0.1),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("gallery"),style: const TextStyle(color: App.lightOrang,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-
-                    ],
-                  ),
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 6/4
                 ),
-                GridView.custom(
-                  gridDelegate: SliverQuiltedGridDelegate(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    repeatPattern: QuiltedGridRepeatPattern.inverted,
-                    pattern: [
-                      //h*w
-                      const QuiltedGridTile(2, 2),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                    ],
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => tile(index),
-                      childCount: 10
-                  ),
-                ),
+                scrollDirection: Axis.vertical,
+                itemCount: homeController.gallary.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(()=>ImageShow(index.obs));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                homeController.gallary[index].image!
+                              ),
+                              fit: BoxFit.fill)),
+                    )
+                  );
+                }),
 
-              ],
-            ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.height*0.4),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -122,52 +111,37 @@ class Gallery extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.height*0.1),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("gallery"),style: const TextStyle(color: App.lightOrang,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-
-                    ],
-                  ),
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 6/4
                 ),
-                GridView.custom(
-                  gridDelegate: SliverQuiltedGridDelegate(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    repeatPattern: QuiltedGridRepeatPattern.inverted,
-                    pattern: [
-                      //h*w
-                      const QuiltedGridTile(2, 2),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                    ],
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: homeController.gallary.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Get.to(()=>ImageShow(index.obs));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    homeController.gallary[index].image!
+                                ),
+                                fit: BoxFit.fill)),
+                      )
+                  );
+                }),
 
-                  childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => tile(index),
-                      childCount: 10
-                  ),
-                ),
-
-              ],
-            ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.height*0.4),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -189,52 +163,37 @@ class Gallery extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.height*0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("gallery"),style: const TextStyle(color: App.lightOrang,fontSize:30,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-
-                    ],
-                  ),
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 6/4
                 ),
-                GridView.custom(
-                  gridDelegate: SliverQuiltedGridDelegate(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    repeatPattern: QuiltedGridRepeatPattern.inverted,
-                    pattern: [
-                      //h*w
-                      const QuiltedGridTile(2, 2),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                    ],
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: homeController.gallary.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Get.to(()=>ImageShow(index.obs));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    homeController.gallary[index].image!
+                                ),
+                                fit: BoxFit.fill)),
+                      )
+                  );
+                }),
 
-                  childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => tile(index),
-                      childCount: 10
-                  ),
-                ),
-
-              ],
-            ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.height*0.3),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -251,157 +210,5 @@ class Gallery extends StatelessWidget {
       ),
     );
   }
-  smWegit(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.1,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("gallery"),style: const TextStyle(color: App.lightOrang,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
 
-                    ],
-                  ),
-                ),
-                GridView.custom(
-                  gridDelegate: SliverQuiltedGridDelegate(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    repeatPattern: QuiltedGridRepeatPattern.inverted,
-                    pattern: [
-                      //h*w
-                      const QuiltedGridTile(2, 2),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                    ],
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-
-                  childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => tile(index),
-                      childCount: 10
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-          App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  xsmWegit(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.1,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("gallery"),style: const TextStyle(color: App.lightOrang,fontSize:20,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-
-                    ],
-                  ),
-                ),
-                GridView.custom(
-                  gridDelegate: SliverQuiltedGridDelegate(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    repeatPattern: QuiltedGridRepeatPattern.inverted,
-                    pattern: [
-                      //h*w
-                      const QuiltedGridTile(2, 2),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                      const QuiltedGridTile(1, 1),
-                    ],
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-
-                  childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => tile(index),
-                      childCount: 10
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-          App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  tile (int index){
-    return GestureDetector(
-      onTap: (){
-        Get.to(()=>ImageShow(index.obs));
-      },
-      child: Container(
-
-                decoration: BoxDecoration(
-
-                  image: DecorationImage(
-                    image: NetworkImage(homeController.gallary[index].image!),
-                    fit: BoxFit.fill
-                  )
-                ),
-
-      ),
-    );
-  }
 }

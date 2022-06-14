@@ -42,6 +42,10 @@ class Services extends StatelessWidget {
                         : medWidget(context)
                 ),
                 Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(
+                    right: 0,
+                    child: App.languageBarHome(context, homeController)
+                ),
               ],
             ),
           ),
@@ -64,14 +68,14 @@ class Services extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height*0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("services"),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
+                        height: MediaQuery.of(context).size.height*0.2,
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -102,7 +106,6 @@ class Services extends StatelessWidget {
       ),
     );
   }
-  final hovered = Matrix4.identity()..translate(0,-10,0);
   largeService({required int count, required double ratio, required double height,required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       height: height,
@@ -140,8 +143,8 @@ class Services extends StatelessWidget {
                           flex: 3,
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: homeController.selectedServices.value == index ?
-                              App.primery : Colors.transparent,width: 1),
+                              // border: Border.all(color: homeController.selectedServices.value == index ?
+                              // App.primery : Colors.grey,width: 1),
                                 borderRadius: img_radius == null
                                     ? null
                                     : BorderRadius.only(
@@ -152,7 +155,7 @@ class Services extends StatelessWidget {
                                         .image!
                                         .replaceAll(
                                         "localhost", "10.0.2.2")),
-                                    fit: BoxFit.fill)),
+                                    fit: BoxFit.cover)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
                               child: Padding(
@@ -162,7 +165,7 @@ class Services extends StatelessWidget {
                                   style: TextStyle(
                                       color:
                                       homeController.selectedServices.value == index ? App.primery :
-                                      inHovered ? App.primery : Colors.black,
+                                      inHovered ? App.primery : Colors.white,
                                       fontWeight: FontWeight.bold,fontSize: 20),
                                 ),
                               ),
@@ -188,7 +191,7 @@ class Services extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width * 0.3,
+                height:  MediaQuery.of(context).size.width * 0.25,
                 decoration:BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(homeController.service[index].image!),
@@ -199,27 +202,26 @@ class Services extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width*0.3,
+                height: MediaQuery.of(context).size.width*0.3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text(homeController.service[index].title.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: App.blue,
-                              fontSize: 35,
-                            ),maxLines: 2,)
-                      ),
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Text(homeController.service[index].title.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: App.blue,
+                          fontSize: 30,
+                        ),maxLines: 2,)
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width*0.03,),
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(fontSize: 18,color: Colors.black.withOpacity(0.8)),
+                        style: TextStyle(
+                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                        color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
                     ),
@@ -247,14 +249,14 @@ class Services extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
+                  height: MediaQuery.of(context).size.height*0.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("services"),style: const TextStyle(color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
+                        height: MediaQuery.of(context).size.height*0.2,
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -322,8 +324,8 @@ class Services extends StatelessWidget {
                           flex: 3,
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: homeController.selectedServices.value == index ?
-                              App.primery : Colors.transparent,width: 1),
+                              // border: Border.all(color: homeController.selectedServices.value == index ?
+                              // App.primery : Colors.grey,width: 1),
                                 borderRadius: img_radius == null
                                     ? null
                                     : BorderRadius.only(
@@ -343,7 +345,7 @@ class Services extends StatelessWidget {
                                   posts[index].title!,
                                   style: TextStyle(
                                       color: homeController.selectedServices.value == index ? App.primery :
-                                      inHovered ? App.primery : Colors.black,
+                                      inHovered ? App.primery : Colors.white,
                                       fontWeight: FontWeight.bold,fontSize: 15),
                                 ),
                               ),
@@ -428,14 +430,14 @@ class Services extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.15,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("services"),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -490,8 +492,8 @@ class Services extends StatelessWidget {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      border: Border.all(color: homeController.selectedServices.value == index ?
-                      App.primery : Colors.transparent,width: 1),
+                      // border: Border.all(color: homeController.selectedServices.value == index ?
+                      // App.primery : Colors.grey,width: 1),
                       boxShadow: [shadow ? App.boxShadow : App.noShadow],
                       borderRadius:
                       radius == null ? null : BorderRadius.only(
@@ -523,7 +525,7 @@ class Services extends StatelessWidget {
                                   posts[index].title!,
                                   style: TextStyle(
                                       color: homeController.selectedServices.value == index ? App.primery :
-                                      inHovered ? App.primery : Colors.black,
+                                      inHovered ? App.primery : Colors.white,
                                       fontWeight: FontWeight.bold,fontSize: 12),
                                 ),
                               ),

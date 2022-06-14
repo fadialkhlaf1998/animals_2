@@ -216,6 +216,7 @@ class Post {
     required this.favorite,
     required this.my_rate,
     required this.cartCount,
+    required this.posts,
   });
 
   int id;
@@ -253,6 +254,7 @@ class Post {
   int? count;
   Rx<int> cartCount;
   Rx<bool> favorite;
+  List<Post>? posts;
 
   factory Post.fromJson(String str) => Post.fromMap(json.decode(str));
 
@@ -293,6 +295,7 @@ class Post {
     jsonData: json["json_data"]==null?null:List<JsonDatum>.from(json["json_data"].map((x) => JsonDatum.fromMap(x))),
     count: json["count"],
     favorite:json["wishlist"]==null?false.obs: json["wishlist"]==0?false.obs:true.obs,
+    posts:json["posts"]==null?null: List<Post>.from(json["posts"].map((x) => Post.fromMap(x))),
     cartCount:1.obs
   );
 
