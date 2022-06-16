@@ -62,7 +62,6 @@ class Home extends StatelessWidget {
           Get.offAllNamed("/");
         },
         child: Stack(
-          alignment: Alignment.center,
           children: [
             Zoom(
               maxZoomWidth: MediaQuery.of(context).size.width,
