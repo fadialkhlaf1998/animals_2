@@ -14,7 +14,6 @@ class Services extends StatelessWidget {
   final HomeController homeController = Get.find();
   final GlobalKey<ScaffoldState> myKey = GlobalKey();
 
-
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -61,7 +60,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -76,7 +75,12 @@ class Services extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
                         height: MediaQuery.of(context).size.height*0.2,
-                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                            style: TextStyle(
+                                color: App.primery,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                fontSize:40,
+                                fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -88,9 +92,9 @@ class Services extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
           largDescription(context,homeController.selectedServices.value),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -99,7 +103,10 @@ class Services extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                    )),
               ],
             ),
           ),
@@ -144,8 +151,6 @@ class Services extends StatelessWidget {
                           flex: 3,
                           child: Container(
                             decoration: BoxDecoration(
-                              // border: Border.all(color: homeController.selectedServices.value == index ?
-                              // App.primery : Colors.grey,width: 1),
                                 borderRadius: img_radius == null
                                     ? null
                                     : BorderRadius.only(
@@ -161,16 +166,17 @@ class Services extends StatelessWidget {
                               alignment: AlignmentDirectional.bottomStart,
                               child: Container(
                                 width: MediaQuery.of(context).size.width*0.25,
-                                color:  Colors.grey.withOpacity(0.2),
+                                // color:  posts[index].color,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(20),
+                                  padding: const EdgeInsets.all(15),
                                   child: Text(
                                     posts[index].title!,
                                     style: TextStyle(
-                                        color:
-                                        homeController.selectedServices.value == index ? App.primery :
+                                        color: homeController.selectedServices.value == index ? App.primery :
                                         inHovered ? App.primery : Colors.white,
-                                        fontWeight: FontWeight.bold,fontSize: 20),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                                    ),
                                   ),
                                 ),
                               ),
@@ -196,7 +202,6 @@ class Services extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width * 0.25,
                 decoration:BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(homeController.service[index].image!),
@@ -207,17 +212,18 @@ class Services extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height: MediaQuery.of(context).size.width*0.3,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    Container(
+                      alignment: Alignment.topRight,
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: Text(homeController.service[index].title.toString(),
                         style: TextStyle(
+                          fontFamily: "FOUNDRYGRIDNIK",
                           fontWeight: FontWeight.bold,
                           color: App.blue,
-                          fontSize: 30,
+                          fontSize: 35,
                         ),maxLines: 2,)
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width*0.03,),
@@ -225,37 +231,41 @@ class Services extends StatelessWidget {
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Text(homeController.service[index].stringDescription.toString(),
                         style: TextStyle(
+                          fontFamily: "POPPINS",
                         fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
                         color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(() => BookAssessment());
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width>App.larg ?
-                        MediaQuery.of(context).size.width * 0.15 : MediaQuery.of(context).size.width>App.big?
-                        MediaQuery.of(context).size.width * 0.2 : MediaQuery.of(context).size.width * 0.23,
-                        height: MediaQuery.of(context).size.width>App.larg ?
-                        40 : MediaQuery.of(context).size.width>App.big?
-                        35 : 30,
-                        decoration: BoxDecoration(
-                            color: App.primery,
-                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                        ),
-                        child: Center(
-                          child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
-                              color: Colors.white ,
-                              fontSize: MediaQuery.of(context).size.width>App.larg ?
-                              15 : MediaQuery.of(context).size.width>App.big?
-                              12 : 10,
-                              fontWeight: FontWeight.bold),),
-                        ) ,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              homeController.btmNavBarIndex.value = 7;
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: BoxDecoration(
+                                  color: App.primery,
+                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
+                                      color: Colors.white,
+                                      fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                      fontWeight: FontWeight.bold),),
+                                ),
+                              ) ,
+                            ),
+                          )
+                        ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -272,7 +282,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -287,7 +297,11 @@ class Services extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
                         height: MediaQuery.of(context).size.height*0.2,
-                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                            style: const TextStyle(color: App.primery,
+                                fontSize:35,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -299,9 +313,9 @@ class Services extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.08),
           bigDescription(context,homeController.selectedServices.value),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.08),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -310,7 +324,9 @@ class Services extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -355,8 +371,6 @@ class Services extends StatelessWidget {
                           flex: 3,
                           child: Container(
                             decoration: BoxDecoration(
-                              // border: Border.all(color: homeController.selectedServices.value == index ?
-                              // App.primery : Colors.grey,width: 1),
                                 borderRadius: img_radius == null
                                     ? null
                                     : BorderRadius.only(
@@ -367,20 +381,22 @@ class Services extends StatelessWidget {
                                         .image!
                                         .replaceAll(
                                         "localhost", "10.0.2.2")),
-                                    fit: BoxFit.fill)),
+                                    fit: BoxFit.cover)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
                               child: Container(
                                 width: MediaQuery.of(context).size.width*0.25,
-                                color:  Colors.grey.withOpacity(0.2),
+                                // color:  posts[index].color,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(20),
+                                  padding: const EdgeInsets.all(10),
                                   child: Text(
                                     posts[index].title!,
                                     style: TextStyle(
                                         color: homeController.selectedServices.value == index ? App.primery :
                                         inHovered ? App.primery : Colors.white,
-                                        fontWeight: FontWeight.bold,fontSize: 15),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12
+                                    ),
                                   ),
                                 ),
                               ),
@@ -406,7 +422,6 @@ class Services extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width * 0.3,
                 decoration:BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(homeController.service[index].image!),
@@ -417,18 +432,18 @@ class Services extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width*0.3,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.topRight,
                           child: Text(homeController.service[index].title.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: App.blue,
+                              fontFamily: "FOUNDRYGRIDNIK",
                               fontSize: 30,
                             ),maxLines: 2,)
                       ),
@@ -437,36 +452,41 @@ class Services extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.8)),
+                        style: TextStyle(
+                            fontFamily: "POPPINS",
+                            fontSize: 12,color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(() => BookAssessment());
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width>App.larg ?
-                        MediaQuery.of(context).size.width * 0.15 : MediaQuery.of(context).size.width>App.big?
-                        MediaQuery.of(context).size.width * 0.2 : MediaQuery.of(context).size.width * 0.23,
-                        height: MediaQuery.of(context).size.width>App.larg ?
-                        40 : MediaQuery.of(context).size.width>App.big?
-                        35 : 30,
-                        decoration: BoxDecoration(
-                            color: App.primery,
-                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                        ),
-                        child: Center(
-                          child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
-                              color: Colors.white ,
-                              fontSize: MediaQuery.of(context).size.width>App.larg ?
-                              15 : MediaQuery.of(context).size.width>App.big?
-                              12 : 10,
-                              fontWeight: FontWeight.bold),),
-                        ) ,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              homeController.btmNavBarIndex.value = 7;
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: BoxDecoration(
+                                  color: App.primery,
+                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),),
+                                ),
+                              ) ,
+                            ),
+                          )
+                        ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -483,7 +503,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.2),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -498,7 +518,12 @@ class Services extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.3,
                         height: MediaQuery.of(context).size.height * 0.15,
-                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                            style: const TextStyle(
+                                color: App.primery,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                fontSize:25,
+                                fontWeight: FontWeight.bold),maxLines: 1)),
                       ),
                     ],
                   ),
@@ -510,9 +535,9 @@ class Services extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
           medDescription(context,homeController.selectedServices.value),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -521,7 +546,9 @@ class Services extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -577,20 +604,20 @@ class Services extends StatelessWidget {
                                         .image!
                                         .replaceAll(
                                         "localhost", "10.0.2.2")),
-                                    fit: BoxFit.fill)),
+                                    fit: BoxFit.cover)),
                             child: Align(
                               alignment: AlignmentDirectional.bottomStart,
                               child: Container(
                                 width: MediaQuery.of(context).size.width*0.25,
-                                color:  Colors.grey.withOpacity(0.2),
+                                // color:  posts[index].color,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(15),
+                                  padding: const EdgeInsets.all(8),
                                   child: Text(
                                     posts[index].title!,
                                     style: TextStyle(
                                         color: homeController.selectedServices.value == index ? App.primery :
                                         inHovered ? App.primery : Colors.white,
-                                        fontWeight: FontWeight.bold,fontSize: 12),
+                                        fontWeight: FontWeight.bold,fontSize: 10),
                                   ),
                                 ),
                               ),
@@ -609,14 +636,14 @@ class Services extends StatelessWidget {
   medDescription(BuildContext context,int index){
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.3,
+      height:  MediaQuery.of(context).size.width * 0.4,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Row(
           children: [
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width * 0.3,
+                // height:  MediaQuery.of(context).size.width * 0.4,
                 decoration:BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(homeController.service[index].image!),
@@ -627,18 +654,18 @@ class Services extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height:  MediaQuery.of(context).size.width*0.3,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.topRight,
                           child: Text(homeController.service[index].title.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: App.blue,
+                              fontFamily: "FOUNDRYGRIDNIK",
                               fontSize: 25,
                             ),maxLines: 2,)
                       ),
@@ -647,36 +674,41 @@ class Services extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(fontSize: 11,color: Colors.black.withOpacity(0.8)),
+                        style: TextStyle(
+                            fontFamily: "POPPINS",
+                            fontSize: 10,color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(() => BookAssessment());
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width>App.larg ?
-                        MediaQuery.of(context).size.width * 0.15 : MediaQuery.of(context).size.width>App.big?
-                        MediaQuery.of(context).size.width * 0.2 : MediaQuery.of(context).size.width * 0.23,
-                        height: MediaQuery.of(context).size.width>App.larg ?
-                        40 : MediaQuery.of(context).size.width>App.big?
-                        35 : 30,
-                        decoration: BoxDecoration(
-                            color: App.primery,
-                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                        ),
-                        child: Center(
-                          child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
-                              color: Colors.white ,
-                              fontSize: MediaQuery.of(context).size.width>App.larg ?
-                              15 : MediaQuery.of(context).size.width>App.big?
-                              12 : 10,
-                              fontWeight: FontWeight.bold),),
-                        ) ,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              homeController.btmNavBarIndex.value = 7;
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.12,
+                              decoration: BoxDecoration(
+                                  color: App.primery,
+                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text(App_Localization.of(context).translate("book_now"),style:TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),),
+                                ),
+                              ) ,
+                            ),
+                          )
+                        ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

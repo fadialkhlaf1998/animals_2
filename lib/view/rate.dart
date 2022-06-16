@@ -59,28 +59,28 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.2,
-                        child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width*0.3,
+                      height: MediaQuery.of(context).size.height*0.2,
+                      child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),
+                          style: const TextStyle(
+                              color: App.primery,
+                              fontFamily: "FOUNDRYGRIDNIK",
+                              fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
+                    ),
+                  ],
                 ),
                 largRates(count:1,posts:homeController.service,background: const Color(0xffffffff)),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.2),
               ],
             ),
           ),
@@ -92,7 +92,9 @@ class Rate extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width))),
               ],
             ),
           ),
@@ -121,14 +123,16 @@ class Rate extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.6,
                     height: 40,
                     color: homeController.openServiceIndex.value==index ?
-                    App.blue : Colors.grey,
+                    homeController.service[index].color : Colors.grey[400],
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(posts[index].title!, style: TextStyle(
-                              color: Colors.white,fontSize: 14),),
+                              color: Colors.white,
+                              fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                          ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 25,) :
                           Icon(Icons.remove, color: Colors.white,size: 25,
@@ -138,19 +142,23 @@ class Rate extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: 10),
                 AnimatedSize(
-                  // vsync: this,
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeIn,
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.6+16,
                       child: !(homeController.openServiceIndex.value == index)
                           ? Center()
-                          :  Center(child: App.ratesTable(posts[index].jsonData!.first.data, context,MediaQuery.of(context).size.width * 0.6,14,16),)
+                          :  Center(child: App.ratesTable(posts[index].jsonData!.first.data,
+                          context,
+                          MediaQuery.of(context).size.width * 0.6,
+                          App.largeFontSize(MediaQuery.of(context).size.width),
+                          App.largeFontSize(MediaQuery.of(context).size.width) + 2
+                      ),)
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: 10),
               ],
             ));
           }),
@@ -162,28 +170,22 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width*0.3,
                   height: MediaQuery.of(context).size.height*0.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.2,
-                        child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-                    ],
-                  ),
+                  child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),
+                      style: const TextStyle(
+                          fontFamily: "FOUNDRYGRIDNIK",
+                          color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
                 ),
                 bigRates(count:1,posts:homeController.service,background: const Color(0xffffffff)),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.2),
               ],
             ),
           ),
@@ -195,7 +197,9 @@ class Rate extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -224,7 +228,7 @@ class Rate extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                     height: 30,
                     color: homeController.openServiceIndex.value==index ?
-                    App.blue : Colors.grey,
+                    homeController.service[index].color : Colors.grey[400],
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
@@ -241,19 +245,18 @@ class Rate extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: 10),
                 AnimatedSize(
-                  // vsync: this,
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeIn,
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.7+16,
                       child: !(homeController.openServiceIndex.value == index)
                           ? Center()
-                          :  Center(child: App.ratesTable(posts[index].jsonData!.first.data, context,MediaQuery.of(context).size.width * 0.7,12,14),)
+                          :  Center(child: App.ratesTable(posts[index].jsonData!.first.data, context,MediaQuery.of(context).size.width * 0.7,12,13),)
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: 10),
               ],
             ));
           }),
@@ -264,28 +267,22 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.2),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width*0.3,
                   height: MediaQuery.of(context).size.height*0.15,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.15,
-                        child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-                    ],
-                  ),
+                  child: Center(child: Text(App_Localization.of(context).translate("rates").toUpperCase(),
+                      style: const TextStyle(
+                          fontFamily: "FOUNDRYGRIDNIK",
+                          color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
                 ),
                 medRates(count:1,posts:homeController.service,background: const Color(0xffffffff)),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.2),
               ],
             ),
           ),
@@ -297,7 +294,9 @@ class Rate extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -326,7 +325,7 @@ class Rate extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                     height: 30,
                     color: homeController.openServiceIndex.value==index ?
-                           App.blue : Colors.grey,
+                    homeController.service[index].color : Colors.grey[400],
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
@@ -343,7 +342,7 @@ class Rate extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: 10),
                 AnimatedSize(
                   // vsync: this,
                   duration: Duration(milliseconds: 500),
@@ -352,10 +351,10 @@ class Rate extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.7+16,
                       child: !(homeController.openServiceIndex.value == index)
                           ? Center()
-                          :  Center(child: App.ratesTable(posts[index].jsonData!.first.data, context,MediaQuery.of(context).size.width * 0.7,10,12),)
+                          :  Center(child: App.ratesTable(posts[index].jsonData!.first.data, context,MediaQuery.of(context).size.width * 0.7,10,11),)
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: 10),
               ],
             ));
           }),

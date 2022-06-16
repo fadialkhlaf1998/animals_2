@@ -156,6 +156,8 @@
 //
 //     final postDecoder = postDecoderFromMap(jsonString);
 
+import 'package:animals/helper/app.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
@@ -217,6 +219,7 @@ class Post {
     required this.my_rate,
     required this.cartCount,
     required this.posts,
+    required this.color,
   });
 
   int id;
@@ -235,6 +238,7 @@ class Post {
   String? slug;
   double? price;
   double? regularPrice;
+  Color color;
   dynamic likes;
   // Description description;
   int? availability;
@@ -279,6 +283,7 @@ class Post {
     price: json["price"]==null?null:double.parse(json["price"].toString()),
     regularPrice: json["regular_price"]==null?null:double.parse(json["regular_price"].toString()),
     likes: json["likes"],
+    color: App.hexToColor(json["color"]),
     availability: json["availability"],
     companyId: json["company_id"],
     metaTitle: json["meta_title"],

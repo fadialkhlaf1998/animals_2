@@ -56,13 +56,14 @@ class BookAssessment extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
             child: Center(
                 child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
                     style: const TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
                         color: App.primery,fontSize:40,
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
@@ -72,10 +73,11 @@ class BookAssessment extends StatelessWidget {
               height: 40,
               color: Colors.grey[200],
               child: TextField(
+                style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -85,16 +87,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.5,
               height: 40,
               color: Colors.grey[200],
               child: TextField(
+                style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -104,16 +107,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.5,
               height: 40,
               color: Colors.grey[200],
               child: TextField(
+                style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -123,16 +127,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.5,
               height: 40,
               color: Colors.grey[200],
               child: TextField(
+                style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -142,17 +147,19 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.05),
+          SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
             height: MediaQuery.of(context).size.height*0.05,
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
-                  color: App.purple,fontSize:20,
+                fontFamily: "FOUNDRYGRIDNIK",
+                  fontSize: MediaQuery.of(context).size.width > 2000 ? App.largeFontSize(MediaQuery.of(context).size.width) : 20,
+                  color: App.purple,
                   fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.015),
           Container(
             width: MediaQuery.of(context).size.width*0.5,
             child: Row(
@@ -163,10 +170,11 @@ class BookAssessment extends StatelessWidget {
                     height: 40,
                     color: Colors.grey[200],
                     child: TextField(
+                      style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500]),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -182,9 +190,10 @@ class BookAssessment extends StatelessWidget {
                     color: Colors.grey[200],
                     child: TextField  (
                       textAlignVertical: TextAlignVertical.bottom,
+                      style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500]),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -197,7 +206,7 @@ class BookAssessment extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
             width: MediaQuery.of(context).size.width*0.5,
             child: Row(
@@ -208,10 +217,11 @@ class BookAssessment extends StatelessWidget {
                     height: 40,
                     color: Colors.grey[200],
                     child: TextField(
+                      style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500]),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -228,10 +238,11 @@ class BookAssessment extends StatelessWidget {
                         height: 40,
                         color: Colors.grey[200],
                         child: TextField (
+                          style: TextStyle(fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                           textAlignVertical: TextAlignVertical.bottom,
                           decoration:  InputDecoration(
                             hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500]),
+                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: App.largeFontSize(MediaQuery.of(context).size.width)),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                             ),
@@ -269,25 +280,31 @@ class BookAssessment extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.1),
+          SizedBox(height: MediaQuery.of(context).size.width*0.06),
           GestureDetector(
             onTap: () {
               //todo submit
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                width: MediaQuery.of(context).size.width*0.15,
-                height: 40,
+                width: MediaQuery.of(context).size.width*0.12,
                 decoration: BoxDecoration(
                     color: App.primery,
                     borderRadius: BorderRadius.circular(50/2)
                 ),
                 child: Center(
-                  child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 18),),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
+                    TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                        ),),
+                  ),
                 )
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.5),
+          SizedBox(height: MediaQuery.of(context).size.width*0.3),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -296,7 +313,9 @@ class BookAssessment extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 12)),
               ],
             ),
           ),
@@ -308,13 +327,14 @@ class BookAssessment extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
             child: Center(
                 child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
                     style: const TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
                         color: App.primery,fontSize:30,
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
@@ -325,10 +345,10 @@ class BookAssessment extends StatelessWidget {
               color: Colors.grey[200],
               child: TextField(
                 textAlignVertical: TextAlignVertical.bottom,
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 12),
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -338,17 +358,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.5,
               height: 35,
               color: Colors.grey[200],
               child: TextField(
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 12),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -358,17 +378,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.5,
               height: 35,
               color: Colors.grey[200],
               child: TextField(
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 12),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -378,17 +398,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.5,
               height: 35,
               color: Colors.grey[200],
               child: TextField(
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 12),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -398,17 +418,18 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.05),
+          SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
             height: MediaQuery.of(context).size.height*0.05,
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
+                  fontFamily: "FOUNDRYGRIDNIK",
                   color: App.purple,fontSize:16,
                   fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.015),
           Container(
             width: MediaQuery.of(context).size.width*0.5,
             child: Row(
@@ -419,11 +440,11 @@ class BookAssessment extends StatelessWidget {
                     height: 35,
                     color: Colors.grey[200],
                     child: TextField(
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 12),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -438,11 +459,11 @@ class BookAssessment extends StatelessWidget {
                     height: 35,
                     color: Colors.grey[200],
                     child: TextField  (
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 12),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -455,7 +476,7 @@ class BookAssessment extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
             width: MediaQuery.of(context).size.width*0.5,
             child: Row(
@@ -466,11 +487,11 @@ class BookAssessment extends StatelessWidget {
                     height: 35,
                     color: Colors.grey[200],
                     child: TextField(
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 12),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -487,11 +508,11 @@ class BookAssessment extends StatelessWidget {
                         height: 35,
                         color: Colors.grey[200],
                         child: TextField (
-                          style: TextStyle(fontSize: 14),
+                          style: TextStyle(fontSize: 12),
                           textAlignVertical: TextAlignVertical.bottom,
                           decoration:  InputDecoration(
                             hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                             ),
@@ -529,25 +550,30 @@ class BookAssessment extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.1),
+          SizedBox(height: MediaQuery.of(context).size.width*0.06),
           GestureDetector(
             onTap: () {
               //todo submit
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                width: MediaQuery.of(context).size.width*0.15,
-                height: 35,
+                width: MediaQuery.of(context).size.width*0.13,
                 decoration: BoxDecoration(
                     color: App.primery,
                     borderRadius: BorderRadius.circular(50/2)
                 ),
                 child: Center(
-                  child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 15),),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                          fontWeight: FontWeight.bold,color: Colors.white,fontSize: 12),),
+                  ),
                 )
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.5),
+          SizedBox(height: MediaQuery.of(context).size.width*0.3),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -556,7 +582,9 @@ class BookAssessment extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -568,14 +596,14 @@ class BookAssessment extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.2),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           SizedBox(
-            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.15,
             child: Center(
                 child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
                     style: const TextStyle(
-                        color: App.primery,fontSize:25,
+                      fontFamily: "FOUNDRYGRIDNIK",
+                        color: App.primery,fontSize:20,
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
           ),
@@ -585,10 +613,10 @@ class BookAssessment extends StatelessWidget {
               color: Colors.grey[200],
               child: TextField(
                 textAlignVertical: TextAlignVertical.bottom,
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 11),
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -598,17 +626,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.6,
               height: 30,
               color: Colors.grey[200],
               child: TextField(
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 11),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -618,17 +646,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.6,
               height: 30,
               color: Colors.grey[200],
               child: TextField(
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 11),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -638,17 +666,17 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
               width: MediaQuery.of(context).size.width*0.6,
               height: 30,
               color: Colors.grey[200],
               child: TextField(
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 11),
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration:  InputDecoration(
                   hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                   ),
@@ -658,17 +686,18 @@ class BookAssessment extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.04),
+          SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.6,
             height: MediaQuery.of(context).size.height*0.05,
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
+                fontFamily: "FOUNDRYGRIDNIK",
                   color: App.purple,fontSize:13,
                   fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.04),
+          SizedBox(height: MediaQuery.of(context).size.width*0.015),
           Container(
             width: MediaQuery.of(context).size.width*0.6,
             child: Row(
@@ -679,11 +708,11 @@ class BookAssessment extends StatelessWidget {
                     height: 30,
                     color: Colors.grey[200],
                     child: TextField(
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 11),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -698,11 +727,11 @@ class BookAssessment extends StatelessWidget {
                     height: 30,
                     color: Colors.grey[200],
                     child: TextField  (
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 11),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -715,7 +744,7 @@ class BookAssessment extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
           Container(
             width: MediaQuery.of(context).size.width*0.6,
             child: Row(
@@ -726,11 +755,11 @@ class BookAssessment extends StatelessWidget {
                     height: 30,
                     color: Colors.grey[200],
                     child: TextField(
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 11),
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration:  InputDecoration(
                         hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                         ),
@@ -747,11 +776,11 @@ class BookAssessment extends StatelessWidget {
                         height: 30,
                         color: Colors.grey[200],
                         child: TextField (
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 11),
                           textAlignVertical: TextAlignVertical.bottom,
                           decoration:  InputDecoration(
                             hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12),
+                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: 11),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                             ),
@@ -789,25 +818,30 @@ class BookAssessment extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.1),
+          SizedBox(height: MediaQuery.of(context).size.width*0.06),
           GestureDetector(
             onTap: () {
               //todo submit
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                width: MediaQuery.of(context).size.width*0.18,
-                height: 30,
+                width: MediaQuery.of(context).size.width*0.16,
                 decoration: BoxDecoration(
                     color: App.primery,
                     borderRadius: BorderRadius.circular(50/2)
                 ),
                 child: Center(
-                  child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 13),),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
+                      style: TextStyle(
+                          fontFamily: "FOUNDRYGRIDNIK",
+                          fontWeight: FontWeight.bold,color: Colors.white,fontSize: 11),),
+                  ),
                 )
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.4),
+          SizedBox(height: MediaQuery.of(context).size.width*0.3),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -816,7 +850,9 @@ class BookAssessment extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),

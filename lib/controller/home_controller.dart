@@ -2,6 +2,7 @@
 
 import 'package:animals/controller/cart_contoller.dart';
 import 'package:animals/controller/shop_controller.dart';
+import 'package:animals/helper/app.dart';
 import 'package:animals/helper/store.dart';
 import 'package:animals/model/login_info.dart';
 import 'package:animals/model/start_up.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:animals/helper/api.dart';
 import 'package:animals/model/post.dart';
 import 'package:animals/view/no_internet.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 class HomeController extends GetxController {
 
@@ -25,6 +27,7 @@ class HomeController extends GetxController {
   List<Post> reviews = <Post>[];
   List<Post> events = <Post>[];
   List<Post> blogs = <Post>[];
+
 
   CartController cartController = Get.put(CartController());
   ShopController shopController = Get.put(ShopController());
@@ -40,6 +43,8 @@ class HomeController extends GetxController {
   var ready = false.obs;
   var openCountry = false.obs;
   var openNews = (-1).obs;
+  RxBool subscribe = false.obs;
+  RxBool popUp = true.obs;
 
   //review slider
   var activeIndex = 0.obs;
@@ -113,14 +118,6 @@ class HomeController extends GetxController {
           if(startUp != null){
             banner = startUp.banners.posts;
             category = startUp.super_category.posts;
-            // print('super category');
-            // print(category.length);
-            // print('category');
-            // print(category.first.posts!.length);
-            // print('sub category');
-            // print(category.first.posts!.first.posts!.length);
-            // print('Product');
-            // print(category.first.posts!.first.posts!.first.posts!.length);
             service = startUp.services.posts;
             brand = startUp.brand.posts;
             gallary = startUp.gallary.posts;

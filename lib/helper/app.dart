@@ -3,6 +3,7 @@ import 'package:animals/controller/home_controller.dart';
 import 'package:animals/controller/shop_controller.dart';
 import 'package:animals/helper/store.dart';
 import 'package:animals/model/post.dart';
+import 'package:animals/view/book_assessment.dart';
 import 'package:animals/view/on_hover.dart';
 import 'package:animals/view/shop.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,18 @@ class App {
 
   static ScrollController scrollController = ScrollController();
 
+  ////////////////// Services Colors  //////////////////
+  static Color hexToColor(String? code) {
+    try{
+      if(code == null){
+        return Colors.blue;
+      }else{
+        return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+      }
+    }catch(e){
+      return Colors.blue;
+    }
+  }
 
   ////////////////// FontSize //////////////////
   static largeFontSize(double width){
@@ -115,7 +128,6 @@ class App {
   ////////////////////////////////// Home //////////////////////////////////////
 
   ////////////////// Header //////////////////
-
   //todo clear code
   static largeNews(BuildContext context) {
     return Column(
@@ -172,18 +184,18 @@ class App {
   static header(BuildContext context,HomeController homeController,GlobalKey<ScaffoldState> globalKey) {
     return MediaQuery.of(context).size.width>App.larg?largeHeader(context,homeController)
         :MediaQuery.of(context).size.width>App.big?bigHeader(context,homeController)
-        :MediaQuery.of(context).size.width>App.mid?mediumHeader(context,homeController):smallHeader(context, homeController,globalKey);
+        :mediumHeader(context,homeController);
   }
   static largeHeader(BuildContext context,HomeController homeController){
     return Container(
-      height: MediaQuery.of(context).size.height*0.25,
+      height: MediaQuery.of(context).size.width * 0.12,
       width: MediaQuery.of(context).size.width,
       color: Colors.white,
       child: Column(
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 35,
+            height: 30,
             color: Colors.grey[900],
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -191,8 +203,15 @@ class App {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(),
-                  Text(App_Localization.of(context).translate("free_pet_pick_up"),
-                      style: TextStyle(color: secondry,fontSize: 12)),
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text(App_Localization.of(context).translate("free_pet_pick_up"),
+                        style: TextStyle(
+                          color: secondry,
+                          fontSize: 14,
+                          fontFamily: "FOUNDRYGRIDNIK"
+                        )),
+                  ),
                   GestureDetector(
                     onTap: () {
                       if(homeController.openCountry.value == false) {
@@ -201,17 +220,15 @@ class App {
                         homeController.openCountry.value = false;
                       }
                     },
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SvgPicture.asset("assets/image/united-arab-emirates.svg",
-                            width: 30, height: 30,),
-                          homeController.openCountry.value == false ?
-                          Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,) :
-                          Icon(Icons.keyboard_arrow_up_outlined,color: Colors.white,)
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                          width: 25, height: 25,),
+                        homeController.openCountry.value == false ?
+                        Icon(Icons.arrow_drop_down,color: Colors.white,size: 20,) :
+                        Icon(Icons.arrow_drop_up,color: Colors.white,size: 20,)
+                      ],
                     ),
                   ),
                 ],
@@ -222,7 +239,6 @@ class App {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: MediaQuery.of(context).size.height*0.05),
               GestureDetector(
                 onTap: (){
                   if( homeController.btmNavBarIndex.value == 0 ){
@@ -235,27 +251,25 @@ class App {
                   }
                 },
                 child: Container(
-                    height: MediaQuery.of(context).size.height*0.25 - 35,
-                    width: MediaQuery.of(context).size.width*0.1,
-                    child: Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width*0.15,
-                        height:  MediaQuery.of(context).size.height*0.25 - 35,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                                image: AssetImage("assets/image/logo.png"),
-                                fit: BoxFit.fill
-                            )
-                        ),
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  child: Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.12,
+                      height:  MediaQuery.of(context).size.width * 0.12 - 30,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: AssetImage("assets/image/logo.png"),
+                              fit: BoxFit.fill
+                          )
                       ),
                     ),
-                )
+                  ),
+                ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width*0.6,
-                height: MediaQuery.of(context).size.height* 0.25 - 35,
-                color: Colors.white,
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.width * 0.12 - 30,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -266,27 +280,29 @@ class App {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: MediaQuery.of(context).size.height*0.03),
+                            SizedBox(height: MediaQuery.of(context).size.width * 0.02),
                             Container(
-                              width: MediaQuery.of(context).size.width*0.6,
-                              height: MediaQuery.of(context).size.height * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: 40,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Stack(
                                     children: [
                                       Container(
-                                        width: MediaQuery.of(context).size.width*0.5,
-                                        height: MediaQuery.of(context).size.height*0.07,
+                                        width: MediaQuery.of(context).size.width * 0.4,
                                         decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.07/2)
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(20)
                                         ),
                                         child: TextField(
                                           onSubmitted: (query){
                                             homeController.search(context, query);
                                           },
-                                          style: TextStyle(fontSize: 18),
+                                          style: TextStyle(
+                                            fontSize: largeFontSize(MediaQuery.of(context).size.width),
+
+                                          ),
                                           controller: homeController.searchController,
                                           decoration: InputDecoration(
                                             enabledBorder:const OutlineInputBorder(
@@ -299,8 +315,8 @@ class App {
                                             ),
                                             hintText: App_Localization.of(context).translate("search"),
                                             hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: 18
+                                                color: Colors.grey[500],
+                                                fontSize: largeFontSize(MediaQuery.of(context).size.width)
                                             ),
                                           ),
                                           textAlignVertical: TextAlignVertical.bottom,
@@ -315,13 +331,15 @@ class App {
                                             child: OnHover(
                                               builder: (isHover){
                                                 return Container(
-                                                  height: MediaQuery.of(context).size.height*0.07,
-                                                  width: MediaQuery.of(context).size.height*0.07+10,
+                                                  height: 40,
+                                                  width: 45,
                                                   decoration: BoxDecoration(
                                                       color: isHover?App.lightOrang:App.primery,
-                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(MediaQuery.of(context).size.height*0.07/2),bottomRight: Radius.circular(MediaQuery.of(context).size.height*0.07/2))
+                                                      borderRadius: BorderRadius.only(
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20))
                                                   ),
-                                                  child: Icon(Icons.search,color: Colors.white,size: 35,),
+                                                  child: Icon(Icons.search,color: Colors.white,),
                                                 );
                                               },
                                             )
@@ -337,62 +355,37 @@ class App {
                         ),
                       ],
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.01),
                     Container(
-                      width: MediaQuery.of(context).size.width*0.5,
-                      height: MediaQuery.of(context).size.height*0.05,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       child: Row(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width*0.5,
+                            width: MediaQuery.of(context).size.width*0.35,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                titleHeader(context,0,"home",homeController,15),
-                                titleHeader(context,1,"about",homeController,15),
-                                titleHeader(context,2,"services",homeController,15),
-                                titleHeader(context,3,"rates",homeController,15),
-                                titleHeader(context,4,"gallery",homeController,15),
-                                OnHover(builder: (isHovered){
-                                  return GestureDetector(
-                                    onTap: () {
-                                      if(homeController.btmNavBarIndex.value == 5){
-                                        homeController.openNews.value = -1;
-                                      }else{
-                                        homeController.openNews.value = 5;
-                                      }
-                                    },
-                                    child: Stack(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            titleHeader(context,5,"news",homeController,15),
-                                            Icon(homeController.btmNavBarIndex.value != 5 ?
-                                            Icons.arrow_drop_down : Icons.arrow_drop_up,
-                                              color: homeController.btmNavBarIndex.value == 5 || isHovered
-                                                  ? primery : Colors.black,
-                                              size: 25,
-                                            )
-                                          ],
-                                        ),
-                                        //largeNews(context)
-                                      ],
-                                    ),
-                                  );
-                                }),
-                                titleHeader(context,6,"contact_us",homeController,15),
+                                titleHeader(context,0,"home",homeController,largeFontSize(MediaQuery.of(context).size.width)),
+                                titleHeader(context,1,"about",homeController,largeFontSize(MediaQuery.of(context).size.width)),
+                                titleHeader(context,2,"services",homeController,largeFontSize(MediaQuery.of(context).size.width)),
+                                titleHeader(context,3,"rates",homeController,largeFontSize(MediaQuery.of(context).size.width)),
+                                titleHeader(context,4,"gallery",homeController,largeFontSize(MediaQuery.of(context).size.width)),
+                                titleHeader(context,5,"news",homeController,largeFontSize(MediaQuery.of(context).size.width)),
+                                titleHeader(context,6,"contact_us",homeController,largeFontSize(MediaQuery.of(context).size.width)),
                               ],
                             ),
                           )
                         ],
                       ),
-                    )
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.01),
                   ],
                 ),
               ),
+              SizedBox(width: 35,),
               Container(
-                height: MediaQuery.of(context).size.height*0.25 - 35,
+                height: MediaQuery.of(context).size.width*0.12 - 30,
                 width: MediaQuery.of(context).size.width * 0.2,
-                color: Colors.red,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -402,49 +395,67 @@ class App {
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.1,
-                          height: MediaQuery.of(context).size.height*0.25 - 35,
                           color: purple,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.shopping_cart_outlined,color: Colors.white,size: 35,),
-                                Center(
-                                  child: Text(App_Localization.of(context).translate("go_to_shop").toUpperCase(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white ,
-                                        fontSize: 18,fontWeight: FontWeight.bold),),
-                                )
-                              ],
-                            ),
-                          )
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.025,
+                                height: MediaQuery.of(context).size.width * 0.025,
+                                child: Image.asset("assets/image/bag.png",
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Center(
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width * 0.1 / 2,
+                                    child: Text(App_Localization.of(context).translate("go_to_shop").toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white ,
+                                          fontSize: largeFontSize(MediaQuery.of(context).size.width),
+                                          fontWeight: FontWeight.bold,
+                                          height: 1.2
+                                      ),),
+                                  )
+                              )
+                            ],
+                          ),
                       ),
                     ),
                     GestureDetector(
                       onTap: (){
-                        // App.bookNow();
-                        largeDialog(context, homeController);
+                        homeController.btmNavBarIndex.value = 7;
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.1,
-                          height: MediaQuery.of(context).size.height*0.25 - 35,
                           color: primery,
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.home_repair_service_outlined,color: Colors.white,size: 35,),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.025,
+                                  height: MediaQuery.of(context).size.width * 0.025,
+                                  child: Image.asset("assets/image/book.png",
+                                  ),
+                                ),
+                                SizedBox(height: 10),
                                 Center(
-                                  child: Text(App_Localization.of(context).translate("book_a_boarding").toUpperCase(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white ,
-                                        fontSize: 18,fontWeight: FontWeight.bold),),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.1/2,
+                                      child: Text(App_Localization.of(context).translate("book_a_boarding").toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white ,
+                                            fontSize: largeFontSize(MediaQuery.of(context).size.width),
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.2
+                                        ),),
+                                  )
                                 ),
                               ],
                             ),
@@ -462,342 +473,57 @@ class App {
   }
   static bigHeader(BuildContext context,HomeController homeController){
     return Container(
-      height: MediaQuery.of(context).size.height*0.25,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 30,
-            color: Colors.grey[900],
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(),
-                  Text(App_Localization.of(context).translate("free_pet_pick_up"),
-                      style: TextStyle(color: secondry,fontSize: 10)),
-                  GestureDetector(
-                    onTap: () {
-                      if(homeController.openCountry.value == false) {
-                        homeController.openCountry.value = true;
-                      } else {
-                        homeController.openCountry.value = false;
-                      }
-                    },
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SvgPicture.asset("assets/image/united-arab-emirates.svg",
-                            width: 25, height: 25,),
-                          homeController.openCountry.value == false ?
-                          Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,) :
-                          Icon(Icons.keyboard_arrow_up_outlined,color: Colors.white,)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: MediaQuery.of(context).size.height*0.03),
-              GestureDetector(
-                  onTap: (){
-                    if( homeController.btmNavBarIndex.value == 0 ){
-                      scrollController.animateTo(
-                          scrollController.position.minScrollExtent,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease);
-                    }else{
-                      homeController.btmNavBarIndex.value = 0 ;
-                    }
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height*0.25 - 30,
-                    child: Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width*0.1,
-                        height:  MediaQuery.of(context).size.height*0.25 - 30,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                                image: AssetImage("assets/image/logo.png"),
-                                fit: BoxFit.fill
-                            )
-                        ),
-                      ),
-                    ),
-                  )
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width*0.6,
-                height: MediaQuery.of(context).size.height* 0.25 - 30,
-                color: Colors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: MediaQuery.of(context).size.height*0.03),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.6,
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        width: MediaQuery.of(context).size.width*0.45,
-                                        height: MediaQuery.of(context).size.height*0.06,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.07/2)
-                                        ),
-                                        child: TextField(
-                                          onSubmitted: (query){
-                                            homeController.search(context, query);
-                                          },
-                                          style: TextStyle(fontSize: 15),
-                                          controller: homeController.searchController,
-                                          decoration: InputDecoration(
-                                            enabledBorder:const OutlineInputBorder(
-                                              // width: 0.0 produces a thin "hairline" border
-                                              borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                                            ),
-                                            focusedBorder: const OutlineInputBorder(
-                                              // width: 0.0 produces a thin "hairline" border
-                                              borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                                            ),
-                                            hintText: App_Localization.of(context).translate("search"),
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: 15
-                                            ),
-                                          ),
-                                          textAlignVertical: TextAlignVertical.bottom,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right: 0,
-                                        child: GestureDetector(
-                                            onTap: (){
-                                              homeController.search(context, homeController.searchController.text);
-                                            },
-                                            child: OnHover(
-                                              builder: (isHover){
-                                                return Container(
-                                                  height: MediaQuery.of(context).size.height*0.06,
-                                                  width: MediaQuery.of(context).size.height*0.06+10,
-                                                  decoration: BoxDecoration(
-                                                      color: isHover?App.lightOrang:App.primery,
-                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(MediaQuery.of(context).size.height*0.07/2),bottomRight: Radius.circular(MediaQuery.of(context).size.height*0.07/2))
-                                                  ),
-                                                  child: Icon(Icons.search,color: Colors.white,size: 25),
-                                                );
-                                              },
-                                            )
-                                        ),
-
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width*0.45,
-                      height: MediaQuery.of(context).size.height*0.05,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width*0.45,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                titleHeader(context,0,"home",homeController,11),
-                                titleHeader(context,1,"about",homeController,11),
-                                titleHeader(context,2,"services",homeController,11),
-                                titleHeader(context,3,"rates",homeController,11),
-                                titleHeader(context,4,"gallery",homeController,11),
-                                OnHover(builder: (isHovered){
-                                  return GestureDetector(
-                                    onTap: () {
-                                      if(homeController.btmNavBarIndex.value == 5){
-                                        homeController.openNews.value = -1;
-                                      }else{
-                                        homeController.openNews.value = 5;
-                                      }
-                                    },
-                                    child: Row(
-                                      children: [
-                                        titleHeader(context,5,"news",homeController,11),
-                                        Icon(homeController.btmNavBarIndex.value != 5 ?
-                                        Icons.arrow_drop_down : Icons.arrow_drop_up,
-                                          color: homeController.btmNavBarIndex.value == 5 || isHovered
-                                              ? primery : Colors.black,
-                                          size: 20,
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
-                                titleHeader(context,6,"contact_us",homeController,11),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.25 - 30,
-                width: MediaQuery.of(context).size.width * 0.23,
-                color: Colors.red,
+        height: MediaQuery.of(context).size.width * 0.12,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 25,
+              color: Colors.grey[900],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(() => Shop());
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // homeController.btmNavBarIndex.value = 8;
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.23/2,
-                          height: MediaQuery.of(context).size.height*0.25 - 30,
-                          color: purple,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.shopping_cart_outlined,color: Colors.white,size: 30),
-                                Center(
-                                    child: Text(App_Localization.of(context).translate("go_to_shop"),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white ,
-                                          fontSize: 16,fontWeight: FontWeight.bold),),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
+                    Container(),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(App_Localization.of(context).translate("free_pet_pick_up"),
+                          style: TextStyle(color: secondry,
+                              fontSize: 12,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          )),
                     ),
                     GestureDetector(
-                      onTap: (){
-                        bigDialog(context, homeController);
-                        // App.bookNow();
+                      onTap: () {
+                        if(homeController.openCountry.value == false) {
+                          homeController.openCountry.value = true;
+                        } else {
+                          homeController.openCountry.value = false;
+                        }
                       },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.23/2,
-                          height: MediaQuery.of(context).size.height*0.25 - 30,
-                          color: primery,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.home_repair_service_outlined,color: Colors.white,size: 30),
-                                Center(
-                                  child: Text(App_Localization.of(context).translate("book_a_boarding"),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,fontWeight: FontWeight.bold),),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-  static mediumHeader(BuildContext context,HomeController homeController){
-    return Container(
-      height: MediaQuery.of(context).size.height*0.2,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 30,
-            color: Colors.grey[900],
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(),
-                  Text(App_Localization.of(context).translate("free_pet_pick_up"),
-                      style: TextStyle(color: secondry,fontSize: 10)),
-                  GestureDetector(
-                    onTap: () {
-                      if(homeController.openCountry.value == false) {
-                        homeController.openCountry.value = true;
-                      } else {
-                        homeController.openCountry.value = false;
-                      }
-                    },
-                    child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SvgPicture.asset("assets/image/united-arab-emirates.svg",
                             width: 20, height: 20),
                           homeController.openCountry.value == false ?
-                          Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,size: 20,) :
-                          Icon(Icons.keyboard_arrow_up_outlined,color: Colors.white,size: 20,)
+                          Icon(Icons.arrow_drop_down,color: Colors.white,size: 15,) :
+                          Icon(Icons.arrow_drop_up,color: Colors.white,size: 15)
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: MediaQuery.of(context).size.height*0.03),
-              GestureDetector(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
                   onTap: (){
                     if( homeController.btmNavBarIndex.value == 0 ){
                       scrollController.animateTo(
@@ -809,11 +535,11 @@ class App {
                     }
                   },
                   child: Container(
-                    height: MediaQuery.of(context).size.height*0.2 - 30,
+                    width: MediaQuery.of(context).size.width * 0.2,
                     child: Center(
                       child: Container(
-                        width: MediaQuery.of(context).size.width*0.12,
-                        height:  MediaQuery.of(context).size.height*0.13,
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        height:  MediaQuery.of(context).size.width * 0.12 - 25,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             image: DecorationImage(
@@ -823,355 +549,491 @@ class App {
                         ),
                       ),
                     ),
-                  )
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width*0.6,
-                height: MediaQuery.of(context).size.height* 0.2 - 30,
-                color: Colors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: MediaQuery.of(context).size.height*0.02),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.6,
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        width: MediaQuery.of(context).size.width*0.45,
-                                        height: MediaQuery.of(context).size.height*0.06,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.07/2)
-                                        ),
-                                        child: TextField(
-                                          onSubmitted: (query){
-                                            homeController.search(context, query);
-                                          },
-                                          style: TextStyle(fontSize: 14),
-                                          controller: homeController.searchController,
-                                          decoration: InputDecoration(
-                                            enabledBorder:const OutlineInputBorder(
-                                              // width: 0.0 produces a thin "hairline" border
-                                              borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                                            ),
-                                            focusedBorder: const OutlineInputBorder(
-                                              // width: 0.0 produces a thin "hairline" border
-                                              borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                                            ),
-                                            hintText: App_Localization.of(context).translate("search"),
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: 14
-                                            ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.width * 0.12 - 25,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 30,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius: BorderRadius.circular(20)
                                           ),
-                                          textAlignVertical: TextAlignVertical.bottom,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right: 0,
-                                        child: GestureDetector(
-                                            onTap: (){
-                                              homeController.search(context, homeController.searchController.text);
+                                          child: TextField(
+                                            onSubmitted: (query){
+                                              homeController.search(context, query);
                                             },
-                                            child: OnHover(
-                                              builder: (isHover){
-                                                return Container(
-                                                  height: MediaQuery.of(context).size.height*0.06,
-                                                  width: MediaQuery.of(context).size.height*0.06+10,
-                                                  decoration: BoxDecoration(
-                                                      color: isHover?App.lightOrang:App.primery,
-                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(MediaQuery.of(context).size.height*0.07/2),bottomRight: Radius.circular(MediaQuery.of(context).size.height*0.07/2))
-                                                  ),
-                                                  child: Icon(Icons.search,color: Colors.white,size: 20),
-                                                );
-                                              },
-                                            )
+                                            style: TextStyle(
+                                                fontSize: 13
+                                            ),
+                                            controller: homeController.searchController,
+                                            decoration: InputDecoration(
+                                              enabledBorder:const OutlineInputBorder(
+                                                // width: 0.0 produces a thin "hairline" border
+                                                borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                                              ),
+                                              focusedBorder: const OutlineInputBorder(
+                                                // width: 0.0 produces a thin "hairline" border
+                                                borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                                              ),
+                                              hintText: App_Localization.of(context).translate("search"),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[500],
+                                                  fontSize: 13
+                                              ),
+                                            ),
+                                            textAlignVertical: TextAlignVertical.bottom,
+                                          ),
                                         ),
-
-                                      )
-                                    ],
-                                  )
+                                        Positioned(
+                                          right: 0,
+                                          child: GestureDetector(
+                                              onTap: (){
+                                                homeController.search(context, homeController.searchController.text);
+                                              },
+                                              child: OnHover(
+                                                builder: (isHover){
+                                                  return Container(
+                                                    height: 30,
+                                                    width: 40,
+                                                    decoration: BoxDecoration(
+                                                        color: isHover?App.lightOrang:App.primery,
+                                                        borderRadius: BorderRadius.only(
+                                                            topRight: Radius.circular(20),
+                                                            bottomRight: Radius.circular(20))
+                                                    ),
+                                                    child: Icon(Icons.search,color: Colors.white,),
+                                                  );
+                                                },
+                                              )
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.4,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  titleHeader(context,0,"home",homeController,11),
+                                  titleHeader(context,1,"about",homeController,11),
+                                  titleHeader(context,2,"services",homeController,11),
+                                  titleHeader(context,3,"rates",homeController,11),
+                                  titleHeader(context,4,"gallery",homeController,11),
+                                  titleHeader(context,5,"news",homeController,11),
+                                  titleHeader(context,6,"contact_us",homeController,11),
                                 ],
                               ),
                             )
                           ],
                         ),
-                      ],
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width*0.45,
-                      height: MediaQuery.of(context).size.height*0.05,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width*0.45,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                titleHeader(context,0,"home",homeController,9),
-                                titleHeader(context,1,"about",homeController,9),
-                                titleHeader(context,2,"services",homeController,9),
-                                titleHeader(context,3,"rates",homeController,9),
-                                titleHeader(context,4,"gallery",homeController,9),
-                                OnHover(builder: (isHovered){
-                                  return GestureDetector(
-                                    onTap: () {
-                                      if(homeController.btmNavBarIndex.value == 5){
-                                        homeController.openNews.value = -1;
-                                      }else{
-                                        homeController.openNews.value = 5;
-                                      }
-                                    },
-                                    child: Row(
-                                      children: [
-                                        titleHeader(context,5,"news",homeController,9),
-                                        Icon(homeController.btmNavBarIndex.value != 5 ?
-                                        Icons.arrow_drop_down : Icons.arrow_drop_up,
-                                          color: homeController.btmNavBarIndex.value == 5 || isHovered
-                                              ? primery : Colors.black,
-                                          size: 18,
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
-                                titleHeader(context,6,"contact_us",homeController,9),
-                              ],
-                            ),
-                          )
-                        ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.2 - 30,
-                width: MediaQuery.of(context).size.width * 0.23,
-                color: Colors.red,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(() => Shop());
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // Get.back();
-                        // homeController.btmNavBarIndex.value = 8;
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.23/2,
-                          height: MediaQuery.of(context).size.height*0.2 - 30,
-                          color: purple,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.shopping_cart_outlined,color: Colors.white,size: 25),
-                                Center(
-                                  child: Text(App_Localization.of(context).translate("go_to_shop"),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white ,
-                                        fontSize: 14,fontWeight: FontWeight.bold),),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        midDialog(context, homeController);
-                        // App.bookNow();
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.23/2,
-                          height: MediaQuery.of(context).size.height * 0.2 - 30,
-                          color: primery,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.home_repair_service_outlined,color: Colors.white,size: 25),
-                                Center(
-                                  child: Text(App_Localization.of(context).translate("book_a_boarding"),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white ,
-                                        fontSize: 14,fontWeight: FontWeight.bold),),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-  static smallHeader(BuildContext context,HomeController homeController,GlobalKey<ScaffoldState> globalKey){
-    return Container(
-      height: MediaQuery.of(context).size.height*0.1,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: (){
-              if( homeController.btmNavBarIndex.value == 0 ){
-                scrollController.animateTo(
-                    scrollController.position.minScrollExtent,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.ease);
-              }else{
-                homeController.btmNavBarIndex.value = 0 ;
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.2,
-              height:  MediaQuery.of(context).size.width*0.2,
-              child: Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.height*0.07,
-                  height:  MediaQuery.of(context).size.height*0.07,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage("assets/image/logo.png"),
-                          fit: BoxFit.fill
-                      )
+                      SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+                    ],
                   ),
                 ),
-              ),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width*0.6,
-            color: Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+                SizedBox(width: 10,),
                 Container(
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  height: MediaQuery.of(context).size.width * 0.12 - 25,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width*0.6,
-                        height: MediaQuery.of(context).size.height*0.07,
-                        child: Row(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width*0.6,
-                                  height: MediaQuery.of(context).size.height*0.05,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xfff5f5f5),
-                                      borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.05/2)
-                                  ),
-                                  child: TextField(
-                                    onSubmitted: (query){
-                                      // homeController.search(context, query);
-                                    },
-                                    // controller: homeController.searchController,
-                                    decoration: InputDecoration(
-                                        enabledBorder:const OutlineInputBorder(
-                                          // width: 0.0 produces a thin "hairline" border
-                                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                                        ),
-                                        focusedBorder: const OutlineInputBorder(
-                                          // width: 0.0 produces a thin "hairline" border
-                                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                                        ),
-
-                                        hintText: App_Localization.of(context).translate("search"),
-                                        hintStyle: TextStyle(fontSize: 13)
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(() => Shop());
+                        },
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            color: purple,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.025,
+                                    height: MediaQuery.of(context).size.width * 0.025,
+                                    child: Image.asset("assets/image/bag.png",
                                     ),
-                                    textAlignVertical: TextAlignVertical.bottom,
                                   ),
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  child: GestureDetector(
-                                      onTap: (){
-                                        // homeController.search(context, homeController.searchController.text);
-                                      },
-                                      child: OnHover(
-                                        builder: (isHover){
-                                          return Container(
-                                            height: MediaQuery.of(context).size.height*0.05,
-                                            width: MediaQuery.of(context).size.height*0.05+10,
-                                            decoration: BoxDecoration(
-                                                color: isHover?App.lightOrang:App.primery,
-                                                borderRadius: BorderRadius.only(topRight: Radius.circular(MediaQuery.of(context).size.height*0.05/2),bottomRight: Radius.circular(MediaQuery.of(context).size.height*0.05/2))
-                                            ),
-                                            child: Icon(Icons.search,color: Colors.white),
-                                          );
-                                        },
+                                  Center(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width * 0.1 / 2,
+                                        child: Text(App_Localization.of(context).translate("go_to_shop").toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white ,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1.2
+                                          ),),
+                                      )
+                                  )
+                                ],
+                              ),
+                            )
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.btmNavBarIndex.value = 7;
+                        },
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            color: primery,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.025,
+                                    height: MediaQuery.of(context).size.width * 0.025,
+                                    child: Image.asset("assets/image/book.png",
+                                    ),
+                                  ),
+                                  Center(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width * 0.12/2,
+                                        child: Text(App_Localization.of(context).translate("book_a_boarding").toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1.2
+                                          ),),
                                       )
                                   ),
-
-                                )
-                              ],
+                                ],
+                              ),
                             )
-                          ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height*0.1,
-            width: MediaQuery.of(context).size.width*0.2,
-            color: Colors.white,
-            child:  Center(
-              child: GestureDetector(
-                onTap: (){
-                  globalKey.currentState!.openEndDrawer();
-                },
-                child: Container(
-                  height:  MediaQuery.of(context).size.height*0.07,
-                  width: MediaQuery.of(context).size.width*0.1,
-                  child: FittedBox(child: Icon(Icons.list,color: App.primery)),
+          ],
+        )
+    );
+  }
+  static mediumHeader(BuildContext context,HomeController homeController){
+    return Container(
+        height: MediaQuery.of(context).size.width * 0.14,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 25,
+              color: Colors.grey[900],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(App_Localization.of(context).translate("free_pet_pick_up"),
+                          style: TextStyle(color: secondry,
+                              fontSize: 10,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if(homeController.openCountry.value == false) {
+                          homeController.openCountry.value = true;
+                        } else {
+                          homeController.openCountry.value = false;
+                        }
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset("assets/image/united-arab-emirates.svg",
+                              width: 20, height: 20),
+                          homeController.openCountry.value == false ?
+                          Icon(Icons.arrow_drop_down,color: Colors.white,size: 15,) :
+                          Icon(Icons.arrow_drop_up,color: Colors.white,size: 15)
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    if( homeController.btmNavBarIndex.value == 0 ){
+                      scrollController.animateTo(
+                          scrollController.position.minScrollExtent,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease);
+                    }else{
+                      homeController.btmNavBarIndex.value = 0 ;
+                    }
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    child: Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        height:  MediaQuery.of(context).size.width * 0.14 - 25,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            image: DecorationImage(
+                                image: AssetImage("assets/image/logo.png"),
+                                fit: BoxFit.fill
+                            )
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.width * 0.14 - 25,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.43,
+                                height: 30,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.43,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius: BorderRadius.circular(20)
+                                          ),
+                                          child: TextField(
+                                            onSubmitted: (query){
+                                              homeController.search(context, query);
+                                            },
+                                            style: TextStyle(
+                                                fontSize: 10
+                                            ),
+                                            controller: homeController.searchController,
+                                            decoration: InputDecoration(
+                                              enabledBorder:const OutlineInputBorder(
+                                                // width: 0.0 produces a thin "hairline" border
+                                                borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                                              ),
+                                              focusedBorder: const OutlineInputBorder(
+                                                // width: 0.0 produces a thin "hairline" border
+                                                borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                                              ),
+                                              hintText: App_Localization.of(context).translate("search"),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[500],
+                                                  fontSize: 10
+                                              ),
+                                            ),
+                                            textAlignVertical: TextAlignVertical.bottom,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 0,
+                                          child: GestureDetector(
+                                              onTap: (){
+                                                homeController.search(context, homeController.searchController.text);
+                                              },
+                                              child: OnHover(
+                                                builder: (isHover){
+                                                  return Container(
+                                                    height: 30,
+                                                    width: 40,
+                                                    decoration: BoxDecoration(
+                                                        color: isHover?App.lightOrang:App.primery,
+                                                        borderRadius: BorderRadius.only(
+                                                            topRight: Radius.circular(20),
+                                                            bottomRight: Radius.circular(20))
+                                                    ),
+                                                    child: Icon(Icons.search,color: Colors.white,size: 20,),
+                                                  );
+                                                },
+                                              )
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.43,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.43,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  titleHeader(context,0,"home",homeController,9),
+                                  titleHeader(context,1,"about",homeController,9),
+                                  titleHeader(context,2,"services",homeController,9),
+                                  titleHeader(context,3,"rates",homeController,9),
+                                  titleHeader(context,4,"gallery",homeController,9),
+                                  titleHeader(context,5,"news",homeController,9),
+                                  titleHeader(context,6,"contact_us",homeController,9),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.22,
+                  height: MediaQuery.of(context).size.width * 0.14 - 25,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(() => Shop());
+                        },
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.22/2,
+                            color: purple,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.025,
+                                    height: MediaQuery.of(context).size.width * 0.025,
+                                    child: Image.asset("assets/image/bag.png",
+                                    ),
+                                  ),
+                                  Center(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width * 0.1 / 2,
+                                        child: Text(App_Localization.of(context).translate("go_to_shop").toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white ,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1.2
+                                          ),),
+                                      )
+                                  )
+                                ],
+                              ),
+                            )
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.btmNavBarIndex.value = 7;
+                        },
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.22/2,
+                            color: primery,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.025,
+                                    height: MediaQuery.of(context).size.width * 0.025,
+                                    child: Image.asset("assets/image/book.png",
+                                    ),
+                                  ),
+                                  Center(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        child: Text(App_Localization.of(context).translate("book_a_boarding").toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1.2
+                                          ),),
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )
     );
   }
   static titleHeader(BuildContext context,int index,String title,HomeController homeController,double font){
@@ -1193,7 +1055,11 @@ class App {
           child: Center(child: Text(
               App_Localization.of(context).translate(title).toUpperCase(),
               style: TextStyle(
-                  color: index == homeController.btmNavBarIndex.value||isHovered ?App.primery:Color(0xff212121),fontSize: font,fontWeight: FontWeight.bold),maxLines: 1),),
+                  color: index == homeController.btmNavBarIndex.value||isHovered ?App.primery:Color(0xff212121),
+                  fontSize: font,
+                  fontFamily: "FOUNDRYGRIDNIK",
+                  fontWeight: FontWeight.normal),maxLines: 1),
+          ),
         );
       }),
     );
@@ -1203,12 +1069,11 @@ class App {
   static footer(BuildContext context,HomeController homeController){
     return MediaQuery.of(context).size.width>App.larg?largFooter(context,homeController)
         :MediaQuery.of(context).size.width>App.big?bigFooter(context,homeController)
-        :MediaQuery.of(context).size.width>App.mid?midFooter(context,homeController)
-        :MediaQuery.of(context).size.width>App.small?smallFooter(context,homeController):xsmallFooter(context, homeController);
+        : midFooter(context,homeController);
 
   }
   static largFooter(BuildContext context,HomeController homeController){
-    return SizedBox(
+    return Obx(() => SizedBox(
       width: MediaQuery.of(context).size.width,
       height:  MediaQuery.of(context).size.width * 0.23,
       child: Row(
@@ -1226,11 +1091,11 @@ class App {
           ),
           Expanded(
             child: Container(
-              color: Colors.green,
+              color: green,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width*0.03,
-                  vertical: MediaQuery.of(context).size.width*0.03
+                    horizontal: MediaQuery.of(context).size.width*0.03,
+                    vertical: MediaQuery.of(context).size.width*0.03
                 ),
                 child: Center(
                   child: Row(
@@ -1242,19 +1107,34 @@ class App {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(App_Localization.of(context).translate("footer1"),
-                                style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
+                                style: TextStyle(
+                                    fontFamily: "POPPINS",
+                                    fontSize: largeFontSize(MediaQuery.of(context).size.width) + 2,
+                                    color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
-                              style: TextStyle(fontSize: 15,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(
+                                  fontFamily: "POPPINS",
+                                  fontSize: largeFontSize(MediaQuery.of(context).size.width) - 2,
+                                  color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
-                              style: TextStyle(fontSize: 15,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(
+                                  fontFamily: "POPPINS",
+                                  fontSize: largeFontSize(MediaQuery.of(context).size.width) - 2,
+                                  color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
-                              style: TextStyle(fontSize: 15,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(
+                                  fontFamily: "POPPINS",
+                                  fontSize: largeFontSize(MediaQuery.of(context).size.width) - 2,
+                                  color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
-                              style: TextStyle(fontSize: 15,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(
+                                  fontFamily: "POPPINS",
+                                  fontSize: largeFontSize(MediaQuery.of(context).size.width) - 2,
+                                  color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
                       ),
@@ -1263,17 +1143,24 @@ class App {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
+                            Text(App_Localization.of(context).translate("footer4"),
+                              style: TextStyle(
+                                  fontFamily: "POPPINS",
+                                  fontSize: largeFontSize(MediaQuery.of(context).size.width) + 2,
+                                  color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Container(
                                 width: MediaQuery.of(context).size.width*0.2,
                                 height: 40,
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withOpacity(0.9),
                                 child: TextField(
+                                  style: TextStyle(
+                                    fontSize: largeFontSize(MediaQuery.of(context).size.width),
+                                  ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration:  InputDecoration(
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: TextStyle(color: Colors.grey,  fontSize: largeFontSize(MediaQuery.of(context).size.width),),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                                     ),
@@ -1284,24 +1171,44 @@ class App {
                                 )
                             ),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                            Container(
-                                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                                width: MediaQuery.of(context).size.width*0.15,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: primery,
-                                    borderRadius: BorderRadius.circular(50/2)
-                                ),
-                                child: Center(
-                                  child: FittedBox(
-                                    child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 15),),
+                            GestureDetector(
+                              onTap: () {
+                                if (homeController.subscribe.value == false){
+                                  homeController.subscribe.value = true;
+                                }
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
+                                  width: MediaQuery.of(context).size.width*0.15,
+                                  decoration: BoxDecoration(
+                                      color: primery,
+                                      borderRadius: BorderRadius.circular(50/2)
                                   ),
-                                )
+                                  child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                                            fontFamily: "POPPINS",
+                                            fontSize: largeFontSize(MediaQuery.of(context).size.width) ,
+                                          ),),
+                                      )
+                                  )
+                              ),
                             ),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                            Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontSize: 14,color: Colors.white.withOpacity(0.5),fontWeight: FontWeight.normal)),
-                            SizedBox(height: MediaQuery.of(context).size.width*0.02,child: Center(),),
-                            Text(App_Localization.of(context).translate("become_our_friends"),style: TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.normal)),
+                            homeController.subscribe.isTrue ?
+                            Text(App_Localization.of(context).translate("footer4_content_thank"),style:
+                            TextStyle(
+                                fontFamily: "POPPINS",
+                                fontSize: largeFontSize(MediaQuery.of(context).size.width) - 2,
+                                color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.normal)) : Center(),
+                            SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
+                            Text(App_Localization.of(context).translate("become_our_friends"),style:
+                            TextStyle(
+                                fontFamily: "POPPINS",
+                                fontSize: largeFontSize(MediaQuery.of(context).size.width) + 2,
+                                color: Colors.white,fontWeight: FontWeight.normal)),
                             SizedBox(height: 10,child: Center(),),
                             Row(
                               children: [
@@ -1310,8 +1217,8 @@ class App {
                                     //todo
                                   },
                                   child: Container(
-                                    width: 25,
-                                    height: 25,
+                                    width: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
+                                    height: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
                                     child: Padding(
                                       padding: const EdgeInsets.all(2),
                                       child: SvgPicture.asset("assets/socialMedia/facebook.svg",
@@ -1326,8 +1233,8 @@ class App {
                                     //todo
                                   },
                                   child: Container(
-                                    width: 25,
-                                    height: 25,
+                                    width: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
+                                    height: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
                                     child: Padding(
                                       padding: const EdgeInsets.all(2),
                                       child: SvgPicture.asset("assets/socialMedia/instagram.svg",
@@ -1342,8 +1249,8 @@ class App {
                                     //todo
                                   },
                                   child: Container(
-                                    width: 25,
-                                    height: 25,
+                                    width: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
+                                    height: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
                                     child: Padding(
                                       padding: const EdgeInsets.all(2),
                                       child: SvgPicture.asset("assets/socialMedia/twitter.svg",
@@ -1358,8 +1265,8 @@ class App {
                                     //todo
                                   },
                                   child: Container(
-                                    width: 25,
-                                    height: 25,
+                                    width: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
+                                    height: MediaQuery.of(context).size.width > 2000 ? 40 : 25,
                                     child: Padding(
                                       padding: const EdgeInsets.all(2),
                                       child: SvgPicture.asset("assets/socialMedia/linkedin.svg",
@@ -1380,7 +1287,7 @@ class App {
           ),
         ],
       ),
-    );
+    ));
   }
   static bigFooter(BuildContext context,HomeController homeController){
     return SizedBox(
@@ -1401,7 +1308,7 @@ class App {
           ),
           Expanded(
             child: Container(
-              color: Colors.green,
+              color: green,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: MediaQuery.of(context).size.width*0.03,
@@ -1417,19 +1324,21 @@ class App {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(App_Localization.of(context).translate("footer1"),
-                                style: TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.bold)),
+                                style: TextStyle(
+                                    fontFamily: "POPPINS",
+                                    fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
-                              style: TextStyle(fontSize: 12,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 12, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
-                              style: TextStyle(fontSize: 12,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 12, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
-                              style: TextStyle(fontSize: 12,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 12, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
-                              style: TextStyle(fontSize: 12,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 12, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
                       ),
@@ -1438,18 +1347,18 @@ class App {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
+                            Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 14, fontFamily: "POPPINS",color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: 10,child: Center(),),
                             Container(
                                 width: MediaQuery.of(context).size.width*0.23,
                                 height: 30,
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withOpacity(0.9),
                                 child: TextField(
                                   textAlignVertical: TextAlignVertical.bottom,
-                                  style: TextStyle(fontSize: 14),
+                                  style: TextStyle(fontSize: 13),
                                   decoration:  InputDecoration(
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
-                                    hintStyle: TextStyle(color: Colors.grey,fontSize: 14),
+                                    hintStyle: TextStyle(color: Colors.grey,fontSize: 13),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                                     ),
@@ -1460,24 +1369,35 @@ class App {
                                 )
                             ),
                             SizedBox(height: 10,child: Center(),),
-                            Container(
-                                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                                width: MediaQuery.of(context).size.width*0.15,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: primery,
-                                    borderRadius: BorderRadius.circular(50/2)
-                                ),
-                                child: Center(
-                                  child: FittedBox(
-                                    child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 14),),
+                            GestureDetector(
+                              onTap: () {
+                                if (homeController.subscribe.value == false){
+                                  homeController.subscribe.value = true;
+                                }
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
+                                  width: MediaQuery.of(context).size.width*0.15,
+                                  decoration: BoxDecoration(
+                                      color: primery,
+                                      borderRadius: BorderRadius.circular(50/2)
                                   ),
-                                )
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6),
+                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),
+                                        style: TextStyle(
+                                            fontFamily: "POPPINS",
+                                            fontWeight: FontWeight.bold,color: Colors.white,fontSize: 13),),
+                                    )
+                                  )
+                              ),
                             ),
                             SizedBox(height: 10,child: Center(),),
-                            Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontSize: 12,color: Colors.white.withOpacity(0.5),fontWeight: FontWeight.normal)),
-                            SizedBox(height: MediaQuery.of(context).size.width*0.02,child: Center(),),
-                            Text(App_Localization.of(context).translate("become_our_friends"),style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.normal)),
+                            homeController.subscribe.isTrue ?
+                            Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontSize: 11,fontFamily: "POPPINS",color: Colors.white.withOpacity(0.5),fontWeight: FontWeight.normal)) : Center(),
+                            SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
+                            Text(App_Localization.of(context).translate("become_our_friends"),style: TextStyle(fontSize: 13,fontFamily: "POPPINS",color: Colors.white,fontWeight: FontWeight.normal)),
                             SizedBox(height: 5,child: Center(),),
                             Row(
                               children: [
@@ -1570,14 +1490,14 @@ class App {
               decoration:BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/image/map.PNG"),
-                      fit: BoxFit.fill
+                      fit: BoxFit.cover
                   )
               ),
             ),
           ),
           Expanded(
             child: Container(
-              color: Colors.green,
+              color: green,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: MediaQuery.of(context).size.width*0.03,
@@ -1592,19 +1512,19 @@ class App {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(App_Localization.of(context).translate("footer1"),
-                              style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontFamily: "POPPINS",fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold)),
                           SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
                           Text("Warehouse S01, Ras Al Khor 2",
-                            style: TextStyle(fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           SizedBox(height: 10,child: Center(),),
                           Text("Dubai, United Arab Emirates",
-                            style: TextStyle(fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           SizedBox(height: 10,child: Center(),),
                           Text("04 333 5843",
-                            style: TextStyle(fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           SizedBox(height: 10,child: Center(),),
                           Text("+971 54 204 6700",
-                            style: TextStyle(fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 10,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                         ],
                       ),
                     ),
@@ -1612,18 +1532,18 @@ class App {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold)),
+                          Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontFamily: "POPPINS",fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold)),
                           SizedBox(height: 10,child: Center(),),
                           Container(
                               width: MediaQuery.of(context).size.width*0.2,
                               height: 28,
-                              color: Colors.white.withOpacity(0.7),
+                              color: Colors.white.withOpacity(0.9),
                               child: TextField(
                                 textAlignVertical: TextAlignVertical.bottom,
-                                style: TextStyle(fontSize: 12),
+                                style: TextStyle(fontSize: 11),
                                 decoration:  InputDecoration(
                                   hintText: App_Localization.of(context).translate("footer4_content_email"),
-                                  hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+                                  hintStyle: TextStyle(color: Colors.grey,fontSize: 11),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                                   ),
@@ -1634,24 +1554,33 @@ class App {
                               )
                           ),
                           SizedBox(height: 10,child: Center(),),
-                          Container(
-                              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                              width: MediaQuery.of(context).size.width*0.15,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                  color: primery,
-                                  borderRadius: BorderRadius.circular(50/2)
-                              ),
-                              child: Center(
-                                child: FittedBox(
-                                  child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 12),),
+                          GestureDetector(
+                            onTap: () {
+                              if (homeController.subscribe.value == false){
+                                homeController.subscribe.value = true;
+                              }
+                            },
+                            child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
+                                width: MediaQuery.of(context).size.width*0.15,
+                                decoration: BoxDecoration(
+                                    color: primery,
+                                    borderRadius: BorderRadius.circular(50/2)
                                 ),
-                              )
+                                child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),
+                                    style: TextStyle(fontFamily: "POPPINS",fontWeight: FontWeight.bold,color: Colors.white,fontSize: 11),),
+                                ),
+                                )
+                            ),
                           ),
                           SizedBox(height: 10,child: Center(),),
-                          Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontSize: 10,color: Colors.white.withOpacity(0.5),fontWeight: FontWeight.normal)),
-                          SizedBox(height: MediaQuery.of(context).size.width*0.02,child: Center(),),
-                          Text(App_Localization.of(context).translate("become_our_friends"),style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.normal)),
+                          homeController.subscribe.isTrue ?
+                          Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontFamily: "POPPINS",fontSize: 9,color: Colors.white.withOpacity(0.5),fontWeight: FontWeight.normal)): Center(),
+                          SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
+                          Text(App_Localization.of(context).translate("become_our_friends"),style: TextStyle(fontFamily: "POPPINS",fontSize: 11,color: Colors.white,fontWeight: FontWeight.normal)),
                           SizedBox(height: 5,child: Center(),),
                           Row(
                             children: [
@@ -1728,305 +1657,6 @@ class App {
             ),
           ),
         ],
-      ),
-    );
-  }
-  static smallFooter(BuildContext context,HomeController homeController){
-    return Container(
-      color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width*0.35,
-      child: Padding(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
-        child: Container(
-          color: App.green,
-          child: Center(
-            child: Row(
-              children: [
-                //11111111111111111111111
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9*0.25,
-                  height: MediaQuery.of(context).size.width*0.4,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05),
-                    child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(App_Localization.of(context).translate("footer1"),style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        Text(App_Localization.of(context).translate("footer1_content"),style: TextStyle(fontSize: 8,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,),
-                      ],
-                    ),
-                  ),
-                ),
-
-                //2222222222222222222222
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9*0.25,
-                  height: MediaQuery.of(context).size.width*0.4,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05),
-                    child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(onTap: (){
-                          homeController.goToShop(-1);
-                        },child: Text(App_Localization.of(context).translate("shop"),style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,)),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: homeController.category.map((e) {
-                            return GestureDetector(onTap: (){homeController.goToShop(e.id);},child: Text(e.title!,style: TextStyle(fontSize: 8,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,));
-                          }).toList(),
-                        )
-
-                        // Text("Cats",style: TextStyle(fontSize: 200,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,minFontSize: 0Text,),
-                      ],
-                    ),
-                  ),
-                ),
-
-                //3333333333333333333333
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9*0.25,
-                  height: MediaQuery.of(context).size.width*0.4,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05),
-                    child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(App_Localization.of(context).translate("footer3"),style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        GestureDetector(onTap: (){homeController.btmNavBarIndex.value=1;},child: Text(App_Localization.of(context).translate("our_story"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,)),
-                        GestureDetector(onTap: (){homeController.btmNavBarIndex.value=2;},child: Text(App_Localization.of(context).translate("gallery"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,)),
-                        GestureDetector(onTap: (){homeController.btmNavBarIndex.value=3;},child: Text(App_Localization.of(context).translate("contact"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,)),
-                        //Text("",style: TextStyle(fontSize: 200,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,minFontSize: 0Text,),
-                        //Text("Contact",style: TextStyle(fontSize: 200,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,minFontSize: 0Text,),
-
-                      ],
-                    ),
-                  ),
-                ),
-                //4444444444444444444
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9*0.25,
-                  height: MediaQuery.of(context).size.width*0.4,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05,),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 15,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        Text(App_Localization.of(context).translate("footer4_content_email"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                        Container(
-                            width: MediaQuery.of(context).size.width*0.2,
-                            height: MediaQuery.of(context).size.width*0.1/5,
-                            color: Colors.white,
-                            child: TextField(
-                              // keyboardType: TextInputType.multiline,
-                              // maxLength: null,
-                              // maxLines: null,
-                              style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width*0.2/10
-                              ),
-                              decoration:const InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                                ),
-                                enabledBorder:const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                                ),
-
-                              ),
-                            )
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                        Container(
-                            width: MediaQuery.of(context).size.width*0.2,
-                            height: MediaQuery.of(context).size.width*0.1/5,
-                            color: Colors.black,
-                            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                            child: Center(
-                              child: FittedBox(
-                                child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 10),),
-                              ),
-                            )
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                        Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  static xsmallFooter(BuildContext context,HomeController homeController){
-    return Container(
-      color: App.green,
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
-        child: Container(
-          color: App.green,
-          child: Center(
-            child: Column(
-              children: [
-                //11111111111111111111111
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05),
-                    child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(App_Localization.of(context).translate("footer1"),style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        Text(App_Localization.of(context).translate("footer1_content"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                //2222222222222222222222
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05),
-                    child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(onTap: (){
-                          homeController.goToShop(-1);
-                        },child: Text(App_Localization.of(context).translate("shop"),style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,)),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: homeController.category.map((e) {
-                            return GestureDetector(onTap: (){homeController.goToShop(e.id);},child: Text(e.title!,style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,));
-                          }).toList(),
-                        )
-
-                        // Text("Cats",style: TextStyle(fontSize: 200,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,minFontSize: 0Text,),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                //3333333333333333333333
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05),
-                    child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(App_Localization.of(context).translate("footer3"),style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        GestureDetector(onTap: (){homeController.btmNavBarIndex.value=1;},child: Text(App_Localization.of(context).translate("our_story"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,)),
-                        GestureDetector(onTap: (){homeController.btmNavBarIndex.value=2;},child: Text(App_Localization.of(context).translate("gallery"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,)),
-                        GestureDetector(onTap: (){homeController.btmNavBarIndex.value=3;},child: Text(App_Localization.of(context).translate("contact"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,)),
-                        //Text("",style: TextStyle(fontSize: 200,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,minFontSize: 0Text,),
-                        //Text("Contact",style: TextStyle(fontSize: 200,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,minFontSize: 0Text,),
-
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                //4444444444444444444
-                Container(
-                  width:MediaQuery.of(context).size.width*0.9,
-                  decoration: BoxDecoration(
-                    color: App.green,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05,top: MediaQuery.of(context).size.width*0.05,),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),maxLines: 1,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
-                        Text(App_Localization.of(context).translate("footer4_content_email"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10,),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                        Container(
-                            width: MediaQuery.of(context).size.width*0.2,
-                            height: MediaQuery.of(context).size.width*0.1/5,
-                            color: Colors.white,
-                            child: TextField(
-                              // keyboardType: TextInputType.multiline,
-                              // maxLength: null,
-                              // maxLines: null,
-                              style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width*0.2/10
-                              ),
-                              decoration:const InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                                ),
-                                enabledBorder:const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                                ),
-
-                              ),
-                            )
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                        Container(
-                            width: MediaQuery.of(context).size.width*0.2,
-                            height: MediaQuery.of(context).size.width*0.1/5,
-                            color: Colors.black,
-                            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                            child: Center(
-                              child: FittedBox(
-                                child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 10),),
-                              ),
-                            )
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
-                        Text(App_Localization.of(context).translate("footer4_content_thank"),style: TextStyle(fontSize: 10,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.normal),maxLines: 10),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -2702,25 +2332,27 @@ class App {
     return Html(data:data,
         style: {
           "table":Style(
-            width: width ,
+            width: width,
           ),
           "td":Style(
               textAlign: TextAlign.left,
               padding: EdgeInsets.all(8),
               width: width/3,
+              color: Colors.black,
               fontSize: FontSize(tdSize),
-              border: Border.all(color: Colors.black.withOpacity(0.3))
+              border: Border.all(width: 0.5,color: Colors.grey.withOpacity(0.5))
           ),
           "th":Style(
               textAlign: TextAlign.left,
               padding: EdgeInsets.all(8),
               fontWeight: FontWeight.bold,
               width: width/3,
+              color: Colors.black,
               fontSize: FontSize(thSize),
-              border: Border.all(color: Colors.black.withOpacity(0.3))
+              border: Border.all(width: 0.5,color: Colors.grey.withOpacity(0.5))
           ),
           ".grey":Style(
-            backgroundColor: Color(0xffe6e7e7),
+            backgroundColor: Colors.grey[200],
           )
         }
     );
@@ -3747,25 +3379,25 @@ class App {
     return homeController.openCountry.value == true ?
     Column(
       children: [
-        SizedBox(height: 35,),
+        SizedBox(height: 30),
         Container(
-          width: MediaQuery.of(context).size.width * 0.21,
-          height: 40,
-          color: Colors.grey[400],
+          color: Colors.grey[300],
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(10),
             child: Row(
               children: [
                 SvgPicture.asset("assets/image/united-arab-emirates.svg",
-                    width: 20, height: 20),
+                    width: 25, height: 25),
                 SizedBox(width: 6),
                 Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
+                    fontSize: largeFontSize(MediaQuery.of(context).size.width),
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "FOUNDRYGRIDNIK"
                 ),),
                 SizedBox(width: 10,),
                 Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                  fontSize: 13,
+                  fontSize: largeFontSize(MediaQuery.of(context).size.width) -1,
+                    fontFamily: "FOUNDRYGRIDNIK"
                 ),)
               ],
             ),
@@ -3778,25 +3410,25 @@ class App {
     return homeController.openCountry.value ==true ?
     Column(
       children: [
-        SizedBox(height: 30),
+        SizedBox(height: 25),
         Container(
-          width: MediaQuery.of(context).size.width * 0.25,
-          height: 40,
-          color: Colors.grey[400],
+          color: Colors.grey[300],
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(8),
             child: Row(
               children: [
                 SvgPicture.asset("assets/image/united-arab-emirates.svg",
-                    width: 18, height: 18),
+                    width: 20, height: 20),
                 SizedBox(width: 5),
                 Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "FOUNDRYGRIDNIK"
                 ),),
                 SizedBox(width: 5),
                 Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 11,
+                    fontFamily: "FOUNDRYGRIDNIK"
                 ),)
               ],
             ),
@@ -3809,25 +3441,25 @@ class App {
     return homeController.openCountry.value ==true ?
     Column(
       children: [
-        SizedBox(height: 30),
+        SizedBox(height: 25),
         Container(
-          width: MediaQuery.of(context).size.width * 0.28,
-          height: 35,
-          color: Colors.grey[400],
+          color: Colors.grey[300],
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(5),
             child: Row(
               children: [
                 SvgPicture.asset("assets/image/united-arab-emirates.svg",
-                    width: 15, height: 15),
+                    width: 18, height: 18),
                 SizedBox(width: 5),
                 Text(App_Localization.of(context).translate("uae"),style: TextStyle(
                     fontSize: 10,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "FOUNDRYGRIDNIK"
                 ),),
                 SizedBox(width: 5),
                 Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
                   fontSize: 9,
+                    fontFamily: "FOUNDRYGRIDNIK"
                 ),)
               ],
             ),

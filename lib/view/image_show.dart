@@ -69,20 +69,29 @@ class ImageShow extends StatelessWidget {
                   Positioned(
                       left: 20,
                       top: MediaQuery.of(context).size.height*0.5,
-                      child: index.value==0?const Center():CircleAvatar(
-                        backgroundColor: App.grey,
-                        child: IconButton(icon: Padding(
-                          padding: const EdgeInsets.only(left: 3),
-                          child: const Icon(Icons.arrow_back_ios,color: App.primery,),
-                        ),onPressed: (){index.value--;}),
+                      child: index.value==0?const Center(): Container(
+                        width: MediaQuery.of(context).size.width > App.larg ? 60 : 40,
+                        height: MediaQuery.of(context).size.width > App.larg ? 60 : 40,
+                        child: CircleAvatar(
+                          backgroundColor: App.grey,
+                          child: IconButton(icon: Padding(
+                            padding: const EdgeInsets.only(left: 3),
+                            child: const Icon(Icons.arrow_back_ios,color: App.primery,),
+                          ),onPressed: (){index.value--;}),
+                        ),
                       ),
                   ),
                   Positioned(
                     right: 20,
                     top: MediaQuery.of(context).size.height*0.5,
-                    child: index.value==homeController.gallary.length-1?const Center():CircleAvatar(
-                      backgroundColor: App.grey,
-                      child: IconButton(icon: const Icon(Icons.arrow_forward_ios,color: App.primery,),onPressed: (){index.value++;}),
+                    child: index.value==homeController.gallary.length-1?const Center():
+                    Container(
+                      width: MediaQuery.of(context).size.width > App.larg ? 60 : 40,
+                      height: MediaQuery.of(context).size.width > App.larg ? 60 : 40,
+                      child: CircleAvatar(
+                        backgroundColor: App.grey,
+                        child: IconButton(icon: const Icon(Icons.arrow_forward_ios,color: App.primery,),onPressed: (){index.value++;}),
+                      ),
                     ),
                   ),
                 ],

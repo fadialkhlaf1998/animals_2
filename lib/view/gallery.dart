@@ -58,8 +58,8 @@ class Gallery extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
-          SizedBox(height: MediaQuery.of(context).size.height*0.1),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
             child: GridView.builder(
@@ -83,13 +83,12 @@ class Gallery extends StatelessWidget {
                               image: NetworkImage(
                                 homeController.gallary[index].image!
                               ),
-                              fit: BoxFit.fill)),
+                              fit: BoxFit.cover)),
                     )
                   );
                 }),
-
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.4),
+          SizedBox(height: MediaQuery.of(context).size.width*0.2),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -98,7 +97,10 @@ class Gallery extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                        )),
               ],
             ),
           ),
@@ -110,8 +112,8 @@ class Gallery extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
-          SizedBox(height: MediaQuery.of(context).size.height*0.1),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
             child: GridView.builder(
@@ -135,13 +137,12 @@ class Gallery extends StatelessWidget {
                                 image: NetworkImage(
                                     homeController.gallary[index].image!
                                 ),
-                                fit: BoxFit.fill)),
+                                fit: BoxFit.cover)),
                       )
                   );
                 }),
-
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.4),
+          SizedBox(height: MediaQuery.of(context).size.width*0.2),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -150,7 +151,9 @@ class Gallery extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -162,8 +165,8 @@ class Gallery extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
-          SizedBox(height: MediaQuery.of(context).size.height*0.05),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
             child: GridView.builder(
@@ -187,13 +190,12 @@ class Gallery extends StatelessWidget {
                                 image: NetworkImage(
                                     homeController.gallary[index].image!
                                 ),
-                                fit: BoxFit.fill)),
+                                fit: BoxFit.cover)),
                       )
                   );
                 }),
-
           ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.3),
+          SizedBox(height: MediaQuery.of(context).size.width*0.2),
           App.footer(context,homeController),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -202,7 +204,9 @@ class Gallery extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),

@@ -38,8 +38,8 @@ class About extends StatelessWidget {
                   ),
                   child:MediaQuery.of(context).size.width>App.larg?lgWidget(context)
                   :MediaQuery.of(context).size.width>App.big?bgWidget(context)
-                  :MediaQuery.of(context).size.width>App.mid?mdWidget(context)
-                  :MediaQuery.of(context).size.width>App.small?smWidget(context):xsmWidget(context),
+                  : mdWidget(context)
+
                 ),
                 Positioned(child: App.header(context, homeController,myKey)),
                 Positioned(
@@ -58,7 +58,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.12),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -86,7 +86,9 @@ class About extends StatelessWidget {
                         child: Center(
                             child: Text(App_Localization.of(context).translate("about_us").toUpperCase(),
                                 style: const TextStyle(
-                                    color: App.primery,fontSize:40,
+                                    color: App.primery,
+                                    fontFamily: "FOUNDRYGRIDNIK",
+                                    fontSize:40,
                                     fontWeight: FontWeight.bold),maxLines: 1)
                         ),
                       ),
@@ -103,6 +105,7 @@ class About extends StatelessWidget {
                         child: Text(homeController.aboutPage!.jsonData![0].data,
                             style: TextStyle(color: App.auto,
                               height: 1.5,
+                              fontFamily: "POPPINS",
                               fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
                             ),
                             textAlign: TextAlign.justify,
@@ -114,7 +117,8 @@ class About extends StatelessWidget {
                         child: Text(homeController.aboutPage!.jsonData![1].data,
                             style: TextStyle(color: App.auto,
                                 fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
-                                height: 1.5
+                                height: 1.5,
+                              fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.width*0.01,),
@@ -123,7 +127,8 @@ class About extends StatelessWidget {
                         child: Text(homeController.aboutPage!.jsonData![2].data,
                             style: TextStyle(color: App.auto,
                                 fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
-                                height: 1.5
+                                height: 1.5,
+                              fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
                     ],
@@ -141,7 +146,10 @@ class About extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                    )),
               ],
             ),
           ),
@@ -153,7 +161,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width *0.12),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -181,7 +189,8 @@ class About extends StatelessWidget {
                         child: Center(
                             child: Text(App_Localization.of(context).translate("about_us").toUpperCase(),
                                 style: const TextStyle(
-                                    color: App.primery,fontSize:30,
+                                    fontFamily: "FOUNDRYGRIDNIK",
+                                    color: App.primery,fontSize: 30,
                                     fontWeight: FontWeight.bold),maxLines: 1)
                         ),
                       ),
@@ -196,8 +205,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,fontSize: 14,
-                              height: 1.5
+                          style: TextStyle(color: App.auto,fontSize: 13,
+                              height: 1.5,
+                            fontFamily: "POPPINS",
                           ),
                           textAlign: TextAlign.justify,
                         ),
@@ -206,16 +216,18 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,fontSize: 14,
-                                height: 1.5
+                            style: TextStyle(color: App.auto,fontSize: 13,
+                                height: 1.5,
+                              fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.width*0.01,),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,fontSize: 14,
-                                height: 1.5
+                            style: TextStyle(color: App.auto,fontSize: 13,
+                                height: 1.5,
+                              fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
                     ],
@@ -233,7 +245,9 @@ class About extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -245,7 +259,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.2),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -273,6 +287,7 @@ class About extends StatelessWidget {
                         child: Center(
                             child: Text(App_Localization.of(context).translate("about_us").toUpperCase(),
                                 style: const TextStyle(
+                                    fontFamily: "FOUNDRYGRIDNIK",
                                     color: App.primery,fontSize:25,
                                     fontWeight: FontWeight.bold),maxLines: 1)
                         ),
@@ -288,7 +303,8 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,fontSize: 12,
+                          style: TextStyle(color: App.auto,fontSize: 11,
+                              fontFamily: "POPPINS",
                               height: 1.5
                           ),
                           textAlign: TextAlign.justify,
@@ -298,7 +314,8 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,fontSize: 12,
+                            style: TextStyle(color: App.auto,fontSize: 11,
+                                fontFamily: "POPPINS",
                                 height: 1.5
                             ),textAlign: TextAlign.justify),
                       ),
@@ -306,7 +323,8 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,fontSize: 12,
+                            style: TextStyle(color: App.auto,fontSize: 11,
+                                fontFamily: "POPPINS",
                                 height: 1.5
                             ),textAlign: TextAlign.justify),
                       ),
@@ -325,276 +343,13 @@ class About extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-  smWidget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.1,),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("our_story"),style: const TextStyle(color: App.green,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          height: MediaQuery.of(context).size.height*0.05,
-                          child: Text(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 14,fontWeight: FontWeight.bold),),
-                        ),
-
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    height: MediaQuery.of(context).size.width*0.6/2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(homeController.aboutPage!.image!),
-                            fit: BoxFit.fill
-                        )
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  xsmWidget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.1,),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            // color: const Color(0xfff5f5f5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.6,
-                        height: MediaQuery.of(context).size.height*0.1,
-                        child: Center(child: Text(App_Localization.of(context).translate("our_story"),style: const TextStyle(color: App.green,fontSize:18,fontWeight: FontWeight.bold),maxLines: 1)),
-                      ),
-
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 10,fontWeight: FontWeight.bold),),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 9),textAlign: TextAlign.justify),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 9),textAlign: TextAlign.justify),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          child: Text(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 10),textAlign: TextAlign.justify),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                      ],
-                    ),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.6,
-                    height: MediaQuery.of(context).size.width*0.6/2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(homeController.aboutPage!.image!),
-                            fit: BoxFit.fill
-                        )
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-          App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  bigWidget(BuildContext context){
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.6,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.25,
-              height: MediaQuery.of(context).size.height*0.05,
-              child: AutoSizeText(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 30,fontWeight: FontWeight.bold),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.25,
-                      child: AutoSizeText(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.01,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.25,
-                      child: AutoSizeText(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.25,
-                  child: AutoSizeText(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-                )
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-          ],
-        ),
-      ),
-    );
-  }
-  smallWidget(BuildContext context){
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.6,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
-              height: MediaQuery.of(context).size.height*0.05,
-              child: AutoSizeText(homeController.aboutPage!.subTitle!,style: const TextStyle(color: App.primery,fontSize: 30,fontWeight: FontWeight.bold),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,maxLines: 1),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.6,
-                  child: AutoSizeText(homeController.aboutPage!.jsonData![0].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.6,
-                  child: AutoSizeText(homeController.aboutPage!.jsonData![1].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.6,
-                  child: AutoSizeText(homeController.aboutPage!.jsonData![2].data,style: TextStyle(color: App.auto,fontSize: 14),textAlign: TextAlign.justify,minFontSize: 0,stepGranularity: 0.1,),
-                )
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-          ],
-        ),
       ),
     );
   }

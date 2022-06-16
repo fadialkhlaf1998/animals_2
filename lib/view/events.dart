@@ -44,14 +44,14 @@ class Events extends StatelessWidget {
                     right: 0,
                     child: App.languageBarHome(context, homeController)
                 ),
-                Positioned(
-                  left: MediaQuery.of(context).size.width>App.larg ?
-                  MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.38
-                      : MediaQuery.of(context).size.width>App.big ?
-                  MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.43
-                      : MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.41,
-                    child: news(context)
-                ),
+                // Positioned(
+                //   left: MediaQuery.of(context).size.width>App.larg ?
+                //   MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.38
+                //       : MediaQuery.of(context).size.width>App.big ?
+                //   MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.43
+                //       : MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.41,
+                //     child: news(context)
+                // ),
               ],
             ),
           ),
@@ -65,11 +65,14 @@ class Events extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
+            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+                style: const TextStyle(
+                  fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:40,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
@@ -84,7 +87,9 @@ class Events extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 12)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 12)),
               ],
             ),
           ),
@@ -132,6 +137,7 @@ class Events extends StatelessWidget {
                               posts[index].title!,
                               style: TextStyle(
                                   color: Colors.white,
+                                  fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
                                   fontSize: App.largeFontSize(
                                       MediaQuery.of(context).size.width
@@ -144,6 +150,7 @@ class Events extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
+                                  fontFamily: "POPPINS",
                                   fontSize: App.largeFontSize(
                                       MediaQuery.of(context).size.width
                                   )
@@ -164,11 +171,14 @@ class Events extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.25),
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:30,fontWeight: FontWeight.bold),maxLines: 1)),
+            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+                style: const TextStyle(
+                  fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:30,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
@@ -183,7 +193,9 @@ class Events extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    fontSize: 10)),
               ],
             ),
           ),
@@ -231,21 +243,19 @@ class Events extends StatelessWidget {
                               posts[index].title!,
                               style: TextStyle(
                                   color: Colors.white,
+                                  fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: App.largeFontSize(
-                                      MediaQuery.of(context).size.width
-                                  )
+                                  fontSize: 13
                               ),
                             ),
                             SizedBox(height: 5),
                             Text(
                               posts[index].subTitle!,
                               style: TextStyle(
+                                  fontFamily: "POPPINS",
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: App.largeFontSize(
-                                      MediaQuery.of(context).size.width
-                                  )
+                                  fontSize: 13
                               ),
                             ),
                           ],
@@ -263,11 +273,13 @@ class Events extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height*0.2),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.15,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),style: const TextStyle(color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
+            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),style: const TextStyle(
+                fontFamily: "FOUNDRYGRIDNIK",
+                color: App.primery,fontSize:25,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
@@ -282,7 +294,9 @@ class Events extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(fontSize: 10)),
+                    style: TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        fontSize: 10)),
               ],
             ),
           ),
@@ -331,9 +345,8 @@ class Events extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: App.largeFontSize(
-                                      MediaQuery.of(context).size.width
-                                  )
+                                  fontSize: 11,
+                                  fontFamily: "POPPINS"
                               ),
                             ),
                             SizedBox(height: 5),
@@ -342,9 +355,8 @@ class Events extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: App.largeFontSize(
-                                      MediaQuery.of(context).size.width
-                                  )
+                                  fontSize: 11,
+                                  fontFamily: "POPPINS"
                               ),
                             ),
                           ],
