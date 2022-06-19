@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:ui';
-
 import 'package:animals/app_localization.dart';
 import 'package:animals/helper/app.dart';
 import 'package:animals/helper/store.dart';

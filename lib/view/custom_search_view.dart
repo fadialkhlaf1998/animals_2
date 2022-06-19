@@ -41,8 +41,7 @@ class CustomSearchView extends StatelessWidget {
                       height: MediaQuery.of(context).size.height,
                       child:MediaQuery.of(context).size.width>App.larg?lgWidget(context)
                           :MediaQuery.of(context).size.width>App.big?bgWidget(context)
-                          :MediaQuery.of(context).size.width>App.mid?mdWidget(context)
-                          :MediaQuery.of(context).size.width>App.small?smWidget(context):xsmWidget(context),
+                          :mdWidget(context),
                     );
                   }
                 ),

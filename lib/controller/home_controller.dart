@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:animals/helper/api.dart';
 import 'package:animals/model/post.dart';
 import 'package:animals/view/no_internet.dart';
-import 'package:palette_generator/palette_generator.dart';
 
 class HomeController extends GetxController {
 
@@ -32,6 +31,9 @@ class HomeController extends GetxController {
   CartController cartController = Get.put(CartController());
   ShopController shopController = Get.put(ShopController());
 
+  final key = GlobalKey<ScaffoldState>();
+
+
   Post? aboutHomePage;
   Post? aboutPage;
   Rx<bool> loading = false.obs;
@@ -42,7 +44,7 @@ class HomeController extends GetxController {
   TextEditingController searchController = TextEditingController();
   var ready = false.obs;
   var openCountry = false.obs;
-  var openNews = (-1).obs;
+  var openNews = false.obs;
   RxBool subscribe = false.obs;
   RxBool popUp = true.obs;
 
@@ -65,7 +67,7 @@ class HomeController extends GetxController {
     scrollController.animateTo(
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 500),
-      scrollController.position.maxScrollExtent / 2,
+      scrollController.position.maxScrollExtent / 2.5,
     );
   }
 
@@ -80,7 +82,6 @@ class HomeController extends GetxController {
     if(id == -1){
       shopController.posts = product;
       shopController.postsView.value = product;
-
       shopController.selectedCategory.value = id;
       Get.to(()=>Shop());
       loading.value=false;

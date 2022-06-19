@@ -1,9 +1,9 @@
 import 'package:animals/view/about.dart';
+import 'package:animals/view/blogs.dart';
 import 'package:animals/view/book_assessment.dart';
 import 'package:animals/view/contact.dart';
 import 'package:animals/view/events.dart';
 import 'package:animals/view/gallery.dart';
-import 'package:animals/view/on_hover.dart';
 import 'package:animals/view/rate.dart';
 import 'package:animals/view/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,6 +33,7 @@ class Home extends StatelessWidget {
             : homeController.btmNavBarIndex.value == 2 ? Services()
             : homeController.btmNavBarIndex.value == 3? Rate() :
               homeController.btmNavBarIndex.value == 4 ? Gallery() :
+              // homeController.btmNavBarIndex.value == 5 ? Blogs() :
               homeController.btmNavBarIndex.value == 5 ? Events() :
               homeController.btmNavBarIndex.value == 6 ? Contact() :
               BookAssessment();
@@ -76,7 +77,9 @@ class Home extends StatelessWidget {
                             image: AssetImage("assets/image/Background.png")
                         )
                     ),
-                    child: MediaQuery.of(context).size.width>App.larg?largHome(context)
+                    child: MediaQuery.of(context).size.width>App.extra ? extraHome(context) :
+                    MediaQuery.of(context).size.width > App.xLarge ? xLargHome(context) :
+                    MediaQuery.of(context).size.width>App.larg?largHome(context)
                         :MediaQuery.of(context).size.width>App.big?bgHome(context)
                         : mdHome(context)
                 ),
@@ -94,10 +97,11 @@ class Home extends StatelessWidget {
                  width: MediaQuery.of(context).size.width,
                  height: MediaQuery.of(context).size.height,
                  color: Colors.black.withOpacity(0.5),
-                 child:Row(
+                 child: Column(
                    mainAxisAlignment: MainAxisAlignment.center,
                    children: [
-                     BookDialog(context, homeController),
+                     SizedBox(height: MediaQuery.of(context).size.width * 0.13),
+                     popUp(context, homeController),
                    ],
                  )
              ) : Text(''),
@@ -110,171 +114,178 @@ class Home extends StatelessWidget {
     );
   }
 
-  //************************ Large ************************
-  largHome(BuildContext context){
-    return OnHover(builder: (hover) {
-      return Stack(
-        children: [
-          SingleChildScrollView(
-            controller: App.scrollController,
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.width*0.12),
-                _slider(context),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.03),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width*0.5,
-                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
-                            style: TextStyle(
-                                color: App.primery,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "FOUNDRYGRIDNIK"
-                            ))),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.15),
-                  child:largService(count:3,ratio:1,posts:homeController.service,radius:50,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 50,op: 1),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                largAbout(context),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width*0.9,
-                        child: Center(
-                          child: Container(
-                            padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
-                            width: MediaQuery.of(context).size.width*0.7,
-                            child: Center(child: Text(App_Localization.of(context).translate("partner_brands"),
-                              style: const TextStyle(color: App.primery,
-                                  fontSize: 40,
-                                  fontFamily: "FOUNDRYGRIDNIK",
-                                  fontWeight: FontWeight.bold),)),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Center(
-                          child:largBrands(count:1,ratio:4/4,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.15,radius:0,circle:false,background: const Color(0xfff5f5f5),shadow: false,img_radius: null,op: 1),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: App.green,
+
+  //************************ Extra ************************
+  extraHome(BuildContext context){
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          controller: App.scrollController,
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.width*0.13),
+              _slider(context),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(App_Localization.of(context).translate("love_your_pets"),
-                            style: TextStyle(color: Colors.white,fontSize: 20,
-                                fontFamily: "FOUNDRYGRIDNIK",
-                                fontWeight: FontWeight.bold)),
-                        SizedBox(height: 20,),
-                        GestureDetector(
-                          onTap: (){
-                            homeController.btmNavBarIndex.value = 7;
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.15,
-                            decoration: BoxDecoration(
-                                color: App.primery,
-                                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                    color: Colors.white ,
-                                    fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
-                                    fontWeight: FontWeight.bold),),
-                              ),
-                            ) ,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.9,
-                  child: Center(
+                    padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.03),
                     child: Container(
-                      padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
-                      width: MediaQuery.of(context).size.width*0.7,
-                      child: Center(child: Text(App_Localization.of(context).translate("reviews").toUpperCase(),
-                        style: TextStyle(color: App.primery,
-                            fontSize: 40,
-                            fontFamily: "FOUNDRYGRIDNIK",
-                            fontWeight: FontWeight.bold
-                        ),)),
+                      width: MediaQuery.of(context).size.width*0.5,
+                      child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                          style: TextStyle(
+                              color: App.primery,
+                              fontSize: 70,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          ))),
                     ),
                   ),
                 ),
-                largReview(context),
-                SizedBox(height: MediaQuery.of(context).size.width*0.03),
-                App.footer(context,homeController),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: Row(
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.15),
+                child:extraService(count:3,ratio:1,posts:homeController.service,radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+              extraAbout(context),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.9,
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: Center(child: Text(App_Localization.of(context).translate("partner_brands"),
+                            style: const TextStyle(color: App.primery,
+                                fontSize: 70,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                fontWeight: FontWeight.bold),)),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Center(
+                        child:extraBrands(count:1,ratio:4/6,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.12,radius:0,circle:false,background: Colors.transparent,shadow: false,img_radius: null,op: 1),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.1,
+                color: App.green,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("© 2022 by The Barkley Pet Camp",
-                          style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
-                            fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
-                          )),
+                      Text(App_Localization.of(context).translate("love_your_pets"),
+                          style: TextStyle(color: Colors.white,
+                              fontSize: 50,
+                              fontFamily: "FOUNDRYGRIDNIK",
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(height: 30,),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.btmNavBarIndex.value = 6;
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.14,
+                          decoration: BoxDecoration(
+                              color: App.primery,
+                              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
+                                  color: Colors.white ,
+                                  fontFamily: "POPPINS",
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),),
+                            ),
+                          ) ,
+                        ),
+                      )
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Positioned(child: App.header(context,homeController,myKey),),
-          homeController.loading.value
-              ? Positioned(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                color: App.primery.withOpacity(0.5),
-                child: const Center(
-                  child: CircularProgressIndicator(),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width*0.9,
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
+                    width: MediaQuery.of(context).size.width*0.7,
+                    child: Center(child: Text(App_Localization.of(context).translate("reviews").toUpperCase(),
+                      style: TextStyle(color: App.primery,
+                          fontSize: 70,
+                          fontFamily: "FOUNDRYGRIDNIK",
+                          fontWeight: FontWeight.bold
+                      ),)),
+                  ),
                 ),
-              ))
-              : const Center()
-        ],
-      );
-    });
+              ),
+              extraReview(context),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              App.footer(context,homeController),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("© 2022 by The Barkley Pet Camp",
+                        style: TextStyle(
+                            fontFamily: "POPPINS",
+                            fontSize: 20)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(child: App.header(context,homeController,myKey),),
+        homeController.loading.value
+            ? Positioned(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: App.primery.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ))
+            : const Center()
+      ],
+    );
   }
-  largService({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  extraService({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
+              mainAxisSpacing: 50,
+              crossAxisSpacing: 50,
               childAspectRatio: ratio),
           itemCount: posts.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                //homeController.doFunction(op, posts[index].id, context);
+                homeController.btmNavBarIndex.value = 2;
+                homeController.selectedServices.value = index;
+                Future.delayed(Duration(milliseconds: 500)).then((value) {
+                  homeController.scrollDown();
+                });
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -308,13 +319,914 @@ class Home extends StatelessWidget {
                             width: MediaQuery.of(context).size.width*0.25,
                             // color:  posts[index].color,
                             child: Padding(
-                              padding: const EdgeInsets.all(20),
+                              padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 35),
                               child: Text(
                                 posts[index].title!,
                                 style: TextStyle(
+                                    fontFamily: "POPPINS",
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                                    fontSize: 25
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+  extraAbout(BuildContext context){
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height:  MediaQuery.of(context).size.width*0.3,
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height:  MediaQuery.of(context).size.width*0.25,
+              color: App.primery,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.4,
+                    child: Align(alignment: Alignment.centerLeft,
+                        child: Text(homeController.aboutHomePage!.subTitle!,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 60,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          ), textAlign: TextAlign.left,maxLines: 2,)),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.4,
+                    child: Text(homeController.aboutHomePage!.stringDescription!,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "POPPINS",
+                          color: Colors.white.withOpacity(0.8)),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height:  MediaQuery.of(context).size.width*0.25,
+              decoration:BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(homeController.aboutHomePage!.image!),
+                      fit: BoxFit.fill
+                  )
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  extraReview(BuildContext context){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            carouselController.previousPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 200,
+            width: 200,
+            child: Icon(Icons.arrow_back_ios_outlined,size: 100,color: App.primery,),
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 400,
+          height: MediaQuery.of(context).size.width * 0.25,
+          child: CarouselSlider.builder(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width * 0.2,
+                autoPlay: false,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                enlargeStrategy:
+                CenterPageEnlargeStrategy.height,
+                autoPlayInterval: Duration(seconds: 2),
+                onPageChanged: (index, reason) {
+                  homeController.set_index(index);
+                }),
+            itemCount: homeController.reviews.length ,
+            itemBuilder: (BuildContext context, int index, int realIndex) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 5,),
+                                    Image.asset("assets/image/quote.png",
+                                      width: 100,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 20),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child: Align(alignment: Alignment.centerLeft,child:
+                                      Text(homeController.reviews[index].title!,
+                                          style: TextStyle(
+                                            fontFamily: "POPPINS",
+                                            fontWeight: FontWeight.bold,color: App.primery,
+                                            fontSize: 25,
+                                          ), textAlign: TextAlign.left,maxLines: 1),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(width: 120),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  height: MediaQuery.of(context).size.width * 0.1,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Text(homeController.reviews[index].stringDescription!,
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.black,
+                                        fontFamily: "POPPINS",
+                                      ),
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 3),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width*0.2,
+                    decoration:BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(homeController.reviews[index].image!),
+                            fit: BoxFit.cover
+                        )
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            carouselController.nextPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 200,
+            width: 200,
+            child: Icon(Icons.arrow_forward_ios_outlined,size: 100,color: App.primery,),
+          ),
+        )
+      ],
+    );
+  }
+  extraBrands({required int count, required double ratio, required List<Post> posts, required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+    return SizedBox(
+      height: height,
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+              childAspectRatio: ratio),
+          scrollDirection: Axis.horizontal,
+          itemCount: posts.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.all(height/5),
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      //todo brand page
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(posts[index]
+                                    .image!
+                                    .replaceAll(
+                                    "localhost", "10.0.2.2")),
+                                fit: BoxFit.fill)),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
+  //************************ xLarge ************************
+  xLargHome(BuildContext context){
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          controller: App.scrollController,
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.width*0.12),
+              _slider(context),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.03),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*0.5,
+                      child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                          style: TextStyle(
+                              color: App.primery,
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          ))),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.15),
+                child:xLargeService(count:3,ratio:1,posts:homeController.service,radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+              xLargAbout(context),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.9,
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: Center(child: Text(App_Localization.of(context).translate("partner_brands"),
+                            style: const TextStyle(color: App.primery,
+                                fontSize: 60,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                fontWeight: FontWeight.bold),)),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Center(
+                        child:xLargBrands(count:1,ratio:4/6,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.1,radius:0,circle:false,background: Colors.transparent,shadow: false,img_radius: null,op: 1),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.1,
+                color: App.green,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(App_Localization.of(context).translate("love_your_pets"),
+                          style: TextStyle(color: Colors.white,
+                              fontSize: 40,
+                              fontFamily: "FOUNDRYGRIDNIK",
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(height: 30,),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.btmNavBarIndex.value = 6;
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.14,
+                          decoration: BoxDecoration(
+                              color: App.primery,
+                              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(13),
+                              child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
+                                  color: Colors.white ,
+                                  fontFamily: "POPPINS",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),),
+                            ),
+                          ) ,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width*0.9,
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
+                    width: MediaQuery.of(context).size.width*0.7,
+                    child: Center(child: Text(App_Localization.of(context).translate("reviews").toUpperCase(),
+                      style: TextStyle(color: App.primery,
+                          fontSize: 60,
+                          fontFamily: "FOUNDRYGRIDNIK",
+                          fontWeight: FontWeight.bold
+                      ),)),
+                  ),
+                ),
+              ),
+              xLargReview(context),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              App.footer(context,homeController),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 45,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("© 2022 by The Barkley Pet Camp",
+                        style: TextStyle(
+                            fontFamily: "POPPINS",
+                            fontSize: 15)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(child: App.header(context,homeController,myKey),),
+        homeController.loading.value
+            ? Positioned(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: App.primery.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ))
+            : const Center()
+      ],
+    );
+  }
+  xLargeService({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 50,
+              crossAxisSpacing: 50,
+              childAspectRatio: ratio),
+          itemCount: posts.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                homeController.btmNavBarIndex.value = 2;
+                homeController.selectedServices.value = index;
+                Future.delayed(Duration(milliseconds: 500)).then((value) {
+                  homeController.scrollDown();
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: background,
+                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
+                  borderRadius:
+                  radius == null ? null : BorderRadius.only(
+                      topLeft: Radius.circular(radius),
+                      topRight: Radius.circular(radius)),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: img_radius == null
+                                ? null
+                                : BorderRadius.only(
+                                topLeft: Radius.circular(radius!),
+                                topRight: Radius.circular(radius)),
+                            image: DecorationImage(
+                                image: NetworkImage(posts[index]
+                                    .image!
+                                    .replaceAll(
+                                    "localhost", "10.0.2.2")),
+                                fit: BoxFit.cover)),
+                        child: Align(
+                          alignment: AlignmentDirectional.bottomStart,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 30),
+                              child: Text(
+                                posts[index].title!,
+                                style: TextStyle(
+                                    fontFamily: "POPPINS",
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+  xLargAbout(BuildContext context){
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height:  MediaQuery.of(context).size.width*0.25,
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height:  MediaQuery.of(context).size.width*0.3,
+              color: App.primery,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.4,
+                    child: Align(alignment: Alignment.centerLeft,
+                        child: Text(homeController.aboutHomePage!.subTitle!,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 50,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          ), textAlign: TextAlign.left,maxLines: 2,)),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.4,
+                    child: Text(homeController.aboutHomePage!.stringDescription!,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "POPPINS",
+                          color: Colors.white.withOpacity(0.8)),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height:  MediaQuery.of(context).size.width*0.25,
+              decoration:BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(homeController.aboutHomePage!.image!),
+                      fit: BoxFit.fill
+                  )
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  xLargReview(BuildContext context){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            carouselController.previousPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 150,
+            width: 150,
+            child: Icon(Icons.arrow_back_ios_outlined,size: 90,color: App.primery,),
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 300,
+          height: MediaQuery.of(context).size.width * 0.25,
+          child: CarouselSlider.builder(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width * 0.2,
+                autoPlay: false,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                enlargeStrategy:
+                CenterPageEnlargeStrategy.height,
+                autoPlayInterval: Duration(seconds: 2),
+                onPageChanged: (index, reason) {
+                  homeController.set_index(index);
+                }),
+            itemCount: homeController.reviews.length ,
+            itemBuilder: (BuildContext context, int index, int realIndex) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 5,),
+                                    Image.asset("assets/image/quote.png",
+                                      width: 100,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 20),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child: Align(alignment: Alignment.centerLeft,child:
+                                      Text(homeController.reviews[index].title!,
+                                          style: TextStyle(
+                                            fontFamily: "POPPINS",
+                                            fontWeight: FontWeight.bold,color: App.primery,
+                                            fontSize: 20,
+                                          ), textAlign: TextAlign.left,maxLines: 1),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(width: 120),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  height: MediaQuery.of(context).size.width * 0.1,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Text(homeController.reviews[index].stringDescription!,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontFamily: "POPPINS",
+                                      ),
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width*0.2,
+                    decoration:BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(homeController.reviews[index].image!),
+                            fit: BoxFit.cover
+                        )
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            carouselController.nextPage(duration: Duration(milliseconds: 700));
+          },
+          child: Container(
+            height: 150,
+            width: 150,
+            child: Icon(Icons.arrow_forward_ios_outlined,size: 90,color: App.primery,),
+          ),
+        )
+      ],
+    );
+  }
+  xLargBrands({required int count, required double ratio, required List<Post> posts, required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+    return SizedBox(
+      height: height,
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+              childAspectRatio: ratio),
+          scrollDirection: Axis.horizontal,
+          itemCount: posts.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.all(height/5),
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      //todo brand page
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(posts[index]
+                                    .image!
+                                    .replaceAll(
+                                    "localhost", "10.0.2.2")),
+                                fit: BoxFit.fill)),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
+  //************************ Large ************************
+  largHome(BuildContext context){
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          controller: App.scrollController,
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.width*0.12),
+              _slider(context),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.03),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*0.5,
+                      child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                          style: TextStyle(
+                              color: App.primery,
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "FOUNDRYGRIDNIK"
+                          ))),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.15),
+                child:largService(count:3,ratio: 1,posts:homeController.service,radius:50,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 50,op: 1),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+              largAbout(context),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.9,
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: Center(child: Text(App_Localization.of(context).translate("partner_brands"),
+                            style: const TextStyle(color: App.primery,
+                                fontSize: 50,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                fontWeight: FontWeight.bold),)),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child:largBrands(count:1,ratio:4/5,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.14,radius:0,circle:false,background: Colors.transparent,shadow: false,img_radius: null,op: 1),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.1,
+                color: App.green,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(App_Localization.of(context).translate("love_your_pets"),
+                          style: TextStyle(color: Colors.white,
+                              fontSize: 30,
+                              fontFamily: "FOUNDRYGRIDNIK",
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(height: 30,),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.btmNavBarIndex.value = 6;
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.14,
+                          decoration: BoxDecoration(
+                              color: App.primery,
+                              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
+                                  color: Colors.white ,
+                                  fontFamily: "POPPINS",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),),
+                            ),
+                          ) ,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width*0.9,
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
+                    width: MediaQuery.of(context).size.width*0.7,
+                    child: Center(child: Text(App_Localization.of(context).translate("reviews").toUpperCase(),
+                      style: TextStyle(color: App.primery,
+                          fontSize: 50,
+                          fontFamily: "FOUNDRYGRIDNIK",
+                          fontWeight: FontWeight.bold
+                      ),)),
+                  ),
+                ),
+              ),
+              largReview(context),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
+              App.footer(context,homeController),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("© 2022 by The Barkley Pet Camp",
+                        style: TextStyle(
+                            fontFamily: "POPPINS",
+                            fontSize: 11)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(child: App.header(context,homeController,myKey),),
+        homeController.loading.value
+            ? Positioned(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: App.primery.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ))
+            : const Center()
+      ],
+    );
+  }
+  largService({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio: ratio),
+          itemCount: posts.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                homeController.btmNavBarIndex.value = 2;
+                homeController.selectedServices.value = index;
+                Future.delayed(Duration(milliseconds: 500)).then((value) {
+                  homeController.scrollDown();
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: background,
+                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
+                  borderRadius:
+                  radius == null ? null : BorderRadius.only(
+                      topLeft: Radius.circular(radius),
+                      topRight: Radius.circular(radius)),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: img_radius == null
+                                ? null
+                                : BorderRadius.only(
+                                topLeft: Radius.circular(radius!),
+                                topRight: Radius.circular(radius)),
+                            image: DecorationImage(
+                                image: NetworkImage(posts[index]
+                                    .image!
+                                    .replaceAll(
+                                    "localhost", "10.0.2.2")),
+                                fit: BoxFit.cover)),
+                        child: Align(
+                          alignment: AlignmentDirectional.bottomStart,
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 25),
+                              child: Text(
+                                posts[index].title!,
+                                style: TextStyle(
+                                    fontFamily: "POPPINS",
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16
                                 ),
                               ),
                             ),
@@ -331,7 +1243,7 @@ class Home extends StatelessWidget {
   largAbout(BuildContext context){
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width*0.3,
+      height: MediaQuery.of(context).size.width*0.25,
       child: Row(
         children: [
           Expanded(
@@ -348,7 +1260,7 @@ class Home extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 40,
                             fontFamily: "FOUNDRYGRIDNIK"
                           ), textAlign: TextAlign.left,maxLines: 2,)),
                   ),
@@ -357,7 +1269,7 @@ class Home extends StatelessWidget {
                     width: MediaQuery.of(context).size.width*0.4,
                     child: Text(homeController.aboutHomePage!.stringDescription!,
                       style: TextStyle(
-                          fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                          fontSize: 16,
                           fontFamily: "POPPINS",
                           color: Colors.white.withOpacity(0.8)),
                       textAlign: TextAlign.justify,
@@ -369,7 +1281,7 @@ class Home extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height:  MediaQuery.of(context).size.width*0.3,
+              height:  MediaQuery.of(context).size.width*0.25,
               decoration:BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(homeController.aboutHomePage!.image!),
@@ -393,16 +1305,16 @@ class Home extends StatelessWidget {
           child: Container(
             height: 100,
             width: 100,
-            child: Icon(Icons.arrow_back_ios_outlined,size: 70,color: App.primery,),
+            child: Icon(Icons.arrow_back_ios_outlined,size: 80,color: App.primery,),
           ),
         ),
         Container(
           width: MediaQuery.of(context).size.width - 200,
-          height: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.width * 0.22,
           child: CarouselSlider.builder(
             carouselController: carouselController,
             options: CarouselOptions(
-                height: MediaQuery.of(context).size.width * 0.15,
+                height: MediaQuery.of(context).size.width * 0.17,
                 autoPlay: false,
                 viewportFraction: 1,
                 enlargeCenterPage: true,
@@ -412,17 +1324,17 @@ class Home extends StatelessWidget {
                 onPageChanged: (index, reason) {
                   homeController.set_index(index);
                 }),
-            itemCount: homeController.reviews.length  ,
+            itemCount: homeController.reviews.length ,
             itemBuilder: (BuildContext context, int index, int realIndex) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.width * 0.15,
+                    height: MediaQuery.of(context).size.width * 0.17,
                     child: Center(
                       child: Container(
-                        height: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.width * 0.12,
                         child: Column(
                           children: [
                             Row(
@@ -431,8 +1343,9 @@ class Home extends StatelessWidget {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
+                                    SizedBox(height: 5,),
                                     Image.asset("assets/image/quote.png",
-                                      width: 60,
+                                      width: 70,
                                     ),
                                   ],
                                 ),
@@ -442,12 +1355,13 @@ class Home extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: MediaQuery.of(context).size.width * 0.4,
-                                      child: Align(alignment: Alignment.centerLeft,child: Text(homeController.reviews[index].title!,
-                                        style: TextStyle(
-                                          fontFamily: "FOUNDRYGRIDNIK",
+                                      child: Align(alignment: Alignment.centerLeft,child:
+                                      Text(homeController.reviews[index].title!,
+                                          style: TextStyle(
+                                            fontFamily: "POPPINS",
                                             fontWeight: FontWeight.bold,color: App.primery,
-                                            fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
-                                        ), textAlign: TextAlign.left,maxLines: 1),
+                                            fontSize: 16,
+                                          ), textAlign: TextAlign.left,maxLines: 1),
                                       ),
                                     ),
                                   ],
@@ -455,43 +1369,26 @@ class Home extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(width: 80),
+                                SizedBox(width: 90),
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.4,
-                                  child: Text(homeController.reviews[index].stringDescription!,
-                                    maxLines: 3,
-                                    style: TextStyle(
-                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                  height: MediaQuery.of(context).size.width * 0.05,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Text(homeController.reviews[index].stringDescription!,
+                                      style: TextStyle(
+                                        fontSize: 16,
                                         color: Colors.black,
-                                        overflow: TextOverflow.ellipsis,
-                                      fontFamily: "POPPINS",
+                                        fontFamily: "POPPINS",
+                                      ),
+                                      textAlign: TextAlign.justify,
                                     ),
-                                    textAlign: TextAlign.justify,
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 3),
-                            GestureDetector(
-                              onTap: () {
-                                //todo go review page
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: Center(
-                                    child: Text(App_Localization.of(context).translate("view_more"),
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
-                                        color: App.primery,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "FOUNDRYGRIDNIK"
-                                      ),
-                                    )
-                                ),
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -499,11 +1396,11 @@ class Home extends StatelessWidget {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.width*0.2,
+                    height: MediaQuery.of(context).size.width*0.17,
                     decoration:BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(homeController.reviews[index].image!),
-                            fit: BoxFit.fill
+                            fit: BoxFit.cover
                         )
                     ),
                   ),
@@ -519,7 +1416,7 @@ class Home extends StatelessWidget {
           child: Container(
             height: 100,
             width: 100,
-            child: Icon(Icons.arrow_forward_ios_outlined,size: 70,color: App.primery,),
+            child: Icon(Icons.arrow_forward_ios_outlined,size: 80,color: App.primery,),
           ),
         )
       ],
@@ -597,7 +1494,7 @@ class Home extends StatelessWidget {
           controller: App.scrollController,
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).size.width * 0.12,),
+              SizedBox(height: MediaQuery.of(context).size.width * 0.13),
               _slider(context),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -643,14 +1540,14 @@ class Home extends StatelessWidget {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width*0.9,
-                      // color: const Color(0xfff5f5f5),
                       child: Center(
-                        child:bgBrands(count:1,ratio:4/4,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.15,radius:0,circle:false,background: const Color(0xfff5f5f5),shadow: false,img_radius: null,op: 1),
+                        child:bgBrands(count:1,ratio:4/6,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.1,radius:0,circle:false,background: Colors.transparent,shadow: false,img_radius: null,op: 1),
                       ),
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
               Container(
                 width: MediaQuery.of(context).size.width,
                 color: App.green,
@@ -660,26 +1557,29 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(App_Localization.of(context).translate("love_your_pets"),
-                          style: TextStyle(color: Colors.white,fontSize: 18,
+                          style: TextStyle(color: Colors.white,fontSize: 20,
                               fontFamily: "FOUNDRYGRIDNIK",
                               fontWeight: FontWeight.bold)),
                       SizedBox(height: 20,),
                       GestureDetector(
                         onTap: (){
-                          homeController.btmNavBarIndex.value = 7;
+                          homeController.btmNavBarIndex.value = 6;
                         },
                         child: Container(
-                            width: MediaQuery.of(context).size.width / 6,
-                            height: 35,
+                            width: MediaQuery.of(context).size.width * 0.16,
                             decoration: BoxDecoration(
                                 color: App.primery,
                                 borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
                             ),
-                            child:  Center(
-                              child: Text(App_Localization.of(context).translate("book_an_assessment"),
-                                style: const TextStyle(
-                                    color: Colors.white ,fontSize: 13,fontWeight: FontWeight.bold
-                                ),),
+                            child:  Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Center(
+                                child: Text(App_Localization.of(context).translate("book_an_assessment"),
+                                  style: const TextStyle(
+                                      fontFamily: "POPPINS",
+                                      color: Colors.white ,fontSize: 12,fontWeight: FontWeight.bold
+                                  ),),
+                              ),
                             )
                         ),
                       ),
@@ -701,17 +1601,17 @@ class Home extends StatelessWidget {
                 ),
               ),
               BigReview(context),
-              SizedBox(height: MediaQuery.of(context).size.width*0.03),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
               App.footer(context,homeController),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 45,
+                height: 35,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("© 2022 by The Barkley Pet Camp",
                         style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
+                            fontFamily: "POPPINS",
                             fontSize: 10)),
                   ],
                 ),
@@ -746,64 +1646,75 @@ class Home extends StatelessWidget {
           itemCount: posts.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return Stack(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 2),
-                  decoration: BoxDecoration(
-                    color: background,
-                    boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                    borderRadius:
-                    radius == null ? null : BorderRadius.only(
-                        topLeft: Radius.circular(radius),
-                        topRight: Radius.circular(radius)),
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                          flex: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  borderRadius: img_radius == null
-                                      ? null
-                                      : BorderRadius.only(
-                                      topLeft: Radius.circular(radius!),
-                                      topRight: Radius.circular(radius)),
-                                  shape: circle
-                                      ? BoxShape.circle
-                                      : BoxShape.rectangle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(posts[index]
-                                          .image!
-                                          .replaceAll(
-                                          "localhost", "10.0.2.2")),
-                                      fit: BoxFit.cover)),
-                              child: Align(
-                                alignment: AlignmentDirectional.bottomStart,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width*0.25,
-                                  // color:  posts[index].color,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Text(
-                                      posts[index].title!,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
+            return GestureDetector(
+              onTap: () {
+                homeController.btmNavBarIndex.value = 2;
+                homeController.selectedServices.value = index;
+                Future.delayed(Duration(milliseconds: 500)).then((value) {
+                  homeController.scrollDown();
+                });
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 2),
+                    decoration: BoxDecoration(
+                      color: background,
+                      boxShadow: [shadow ? App.boxShadow : App.noShadow],
+                      borderRadius:
+                      radius == null ? null : BorderRadius.only(
+                          topLeft: Radius.circular(radius),
+                          topRight: Radius.circular(radius)),
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                    borderRadius: img_radius == null
+                                        ? null
+                                        : BorderRadius.only(
+                                        topLeft: Radius.circular(radius!),
+                                        topRight: Radius.circular(radius)),
+                                    shape: circle
+                                        ? BoxShape.circle
+                                        : BoxShape.rectangle,
+                                    image: DecorationImage(
+                                        image: NetworkImage(posts[index]
+                                            .image!
+                                            .replaceAll(
+                                            "localhost", "10.0.2.2")),
+                                        fit: BoxFit.cover)),
+                                child: Align(
+                                  alignment: AlignmentDirectional.bottomStart,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width*0.25,
+                                    child: Padding(
+                                      padding:  EdgeInsets.symmetric(horizontal: 20,vertical:
+                                      MediaQuery.of(context).size.width > 1250 ? 20 : 15
+                                      ),
+                                      child: Text(
+                                        posts[index].title!,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: "POPPINS",
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )),
-                    ],
+                            )),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           }),
     );
@@ -826,7 +1737,7 @@ class Home extends StatelessWidget {
                     child: Align(alignment: Alignment.centerLeft,child: Text(homeController.aboutHomePage!.subTitle!,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 28,
+                          fontSize: 30,
                           fontFamily: "FOUNDRYGRIDNIK",
                           color: Colors.white),
                       textAlign: TextAlign.left,maxLines: 2,)),
@@ -923,9 +1834,9 @@ class Home extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width * 0.35,
                                       child: Align(alignment: Alignment.centerLeft,child: Text(homeController.reviews[index].title!,
                                           style: TextStyle(
-                                            fontFamily: "FOUNDRYGRIDNIK",
+                                            fontFamily: "POPPINS",
                                             fontWeight: FontWeight.bold,color: App.primery,
-                                            fontSize:15,
+                                            fontSize:12,
                                           ), textAlign: TextAlign.left,maxLines: 1),
                                       ),
                                     ),
@@ -935,42 +1846,24 @@ class Home extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                SizedBox(width: 80),
+                                SizedBox(width: 70),
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.35,
-                                  child: Text(homeController.reviews[index].stringDescription!,
-                                    maxLines: 4,
-                                    style: TextStyle(
-                                      fontFamily: "POPPINS",
-                                        fontSize: 13,
+                                  height: MediaQuery.of(context).size.width * 0.07,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Text(homeController.reviews[index].stringDescription!,
+                                      style: TextStyle(
+                                        fontSize: 12,
                                         color: Colors.black,
-                                        overflow: TextOverflow.ellipsis
+                                        fontFamily: "POPPINS",
+                                      ),
+                                      textAlign: TextAlign.justify,
                                     ),
-                                    textAlign: TextAlign.justify,
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 3),
-                            GestureDetector(
-                              onTap: () {
-                                //todo go review page
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: Center(
-                                    child: Text(App_Localization.of(context).translate("view_more"),
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          fontSize: 13,
-                                          color: App.primery,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "FOUNDRYGRIDNIK"
-                                      ),
-                                    )
-                                ),
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -1077,7 +1970,7 @@ class Home extends StatelessWidget {
           controller: App.scrollController,
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).size.width*0.14),
+              SizedBox(height: MediaQuery.of(context).size.width*0.15),
               _slider(context),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -1090,7 +1983,7 @@ class Home extends StatelessWidget {
                           style: const TextStyle(
                               color: App.primery,
                               fontFamily: "FOUNDRYGRIDNIK",
-                              fontSize: 25,fontWeight: FontWeight.bold))),
+                              fontSize: 20,fontWeight: FontWeight.bold))),
                     ),
                   ),
                 ),
@@ -1099,9 +1992,8 @@ class Home extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.13),
                 child:mdService(count:3,ratio:1,posts:homeController.service,radius:50,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 50,op: 1),
               ),
-              SizedBox(height: MediaQuery.of(context).size.width*0.03,),
+              SizedBox(height: MediaQuery.of(context).size.width*0.03),
               mdAbout(context),
-              Container( color: Colors.white,height: MediaQuery.of(context).size.width*0.02,),
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -1114,25 +2006,25 @@ class Home extends StatelessWidget {
                           width: MediaQuery.of(context).size.width*0.7,
                           child: Center(child: Text(App_Localization.of(context).translate("partner_brands"),
                             style: const TextStyle(
-                              fontFamily: "FOUNDRYGRIDNIK",
-                                color: App.primery,fontSize: 25,
+                                fontFamily: "FOUNDRYGRIDNIK",
+                                color: App.primery,fontSize: 20,
                                 fontWeight: FontWeight.bold),)),
                         ),
                       ),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width*0.9,
-                      // color: const Color(0xfff5f5f5),
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.all( MediaQuery.of(context).size.width*0.03),
-                          child:mdBrands(count:1,ratio:4/4,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.15,radius:0,circle:false,background: const Color(0xfff5f5f5),shadow: false,img_radius: null,op: 1),
+                          child:mdBrands(count:1,ratio:1,posts:homeController.brand,height:MediaQuery.of(context).size.width*0.155,radius:0,circle:false,background: Colors.transparent,shadow: false,img_radius: null,op: 1),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.width*0.02),
               Container(
                 width: MediaQuery.of(context).size.width,
                 color: App.green,
@@ -1142,27 +2034,29 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(App_Localization.of(context).translate("love_your_pets"),
-                          style: TextStyle(color: Colors.white,fontSize: 14,
+                          style: TextStyle(color: Colors.white,fontSize: 15,
                               fontFamily: "FOUNDRYGRIDNIK",
                               fontWeight: FontWeight.bold)),
                       SizedBox(height: 20,),
                       GestureDetector(
                         onTap: (){
-                          homeController.btmNavBarIndex.value = 7;
+                          homeController.btmNavBarIndex.value = 6;
                         },
                         child: Container(
-                            width: MediaQuery.of(context).size.width / 6,
-                            height: 30,
+                            width:  MediaQuery.of(context).size.width * 0.2,
                             decoration: BoxDecoration(
                                 color: App.primery,
                                 borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
                             ),
-                            child:  Center(
-                              child: Text(App_Localization.of(context).translate("book_an_assessment"),
-                                style: const TextStyle(
-                                    fontFamily: "FOUNDRYGRIDNIK",
-                                    color: Colors.white ,fontSize: 10,fontWeight: FontWeight.bold
-                                ),),
+                            child:  Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Center(
+                                child: Text(App_Localization.of(context).translate("book_an_assessment"),
+                                  style: const TextStyle(
+                                      fontFamily: "POPPINS",
+                                      color: Colors.white ,fontSize: 10,fontWeight: FontWeight.bold
+                                  ),),
+                              ),
                             )
                         ),
                       ),
@@ -1179,22 +2073,22 @@ class Home extends StatelessWidget {
                     child: Center(child: Text(App_Localization.of(context).translate("reviews").toUpperCase(),
                       style: const TextStyle(
                           fontFamily: "FOUNDRYGRIDNIK",
-                          color: App.primery,fontSize: 25,fontWeight: FontWeight.bold),)),
+                          color: App.primery,fontSize: 20,fontWeight: FontWeight.bold),)),
                   ),
                 ),
               ),
               mdReview(context),
-              SizedBox(height: MediaQuery.of(context).size.height*0.03),
+              SizedBox(height: MediaQuery.of(context).size.height*0.02),
               App.footer(context,homeController),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 40,
+                height: 30,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("© 2022 by The Barkley Pet Camp",
                         style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
+                            fontFamily: "POPPINS",
                             fontSize: 10)),
                   ],
                 ),
@@ -1231,7 +2125,11 @@ class Home extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                //homeController.doFunction(op, posts[index].id, context);
+                homeController.btmNavBarIndex.value = 2;
+                homeController.selectedServices.value = index;
+                Future.delayed(Duration(milliseconds: 500)).then((value) {
+                  homeController.scrollDown();
+                });
               },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 2),
@@ -1273,10 +2171,13 @@ class Home extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width*0.25,
                                 // color:  posts[index].color,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(10),
+                                  padding:  EdgeInsets.symmetric(horizontal: 20,vertical:
+                                  MediaQuery.of(context).size.width > 850 ? 10 : 8
+                                  ),
                                   child: Text(
                                     posts[index].title!,
                                     style: const TextStyle(
+                                        fontFamily: "POPPINS",
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,fontSize: 10),
                                   ),
@@ -1295,12 +2196,12 @@ class Home extends StatelessWidget {
   mdAbout(BuildContext context){
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width*0.3,
+      height:  MediaQuery.of(context).size.width*0.34,
       child: Row(
         children: [
           Expanded(
             child: Container(
-              height:  MediaQuery.of(context).size.width*0.3,
+              height:  MediaQuery.of(context).size.width*0.34,
               color: App.primery,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -1308,7 +2209,7 @@ class Home extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width*0.4,
                     child: Align(alignment: Alignment.centerLeft,child: Text(homeController.aboutHomePage!.subTitle!,
-                      style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 13,
+                      style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20,
                           fontFamily: "FOUNDRYGRIDNIK",
                           color: Colors.white), textAlign: TextAlign.left,maxLines: 2,)),
                   ),
@@ -1328,7 +2229,7 @@ class Home extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height:  MediaQuery.of(context).size.width*0.3,
+              height:  MediaQuery.of(context).size.width*0.34,
               decoration:BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(homeController.aboutHomePage!.image!),
@@ -1402,9 +2303,9 @@ class Home extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width * 0.4,
                                       child: Align(alignment: Alignment.centerLeft,child: Text(homeController.reviews[index].title!,
                                           style: TextStyle(
-                                            fontFamily: "FOUNDRYGRIDNIK",
+                                            fontFamily: "POPPINS",
                                             fontWeight: FontWeight.bold,color: App.primery,
-                                            fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                            fontSize: 10,
                                           ), textAlign: TextAlign.left,maxLines: 1),
                                       ),
                                     ),
@@ -1417,39 +2318,21 @@ class Home extends StatelessWidget {
                                 SizedBox(width: 50),
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.4,
-                                  child: Text(homeController.reviews[index].stringDescription!,
-                                    maxLines: 3,
-                                    style: TextStyle(
-                                        fontFamily: "POPPINS",
-                                        fontSize: App.largeFontSize(MediaQuery.of(context).size.width),
+                                  height: MediaQuery.of(context).size.width * 0.07,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Text(homeController.reviews[index].stringDescription!,
+                                      style: TextStyle(
+                                        fontSize: 10,
                                         color: Colors.black,
-                                        overflow: TextOverflow.ellipsis
+                                        fontFamily: "POPPINS",
+                                      ),
+                                      textAlign: TextAlign.justify,
                                     ),
-                                    textAlign: TextAlign.justify,
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 3),
-                            GestureDetector(
-                              onTap: () {
-                                //todo go review page
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: Center(
-                                    child: Text(App_Localization.of(context).translate("view_more"),
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          fontSize: 10,
-                                          color: App.primery,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "FOUNDRYGRIDNIK"
-                                      ),
-                                    )
-                                ),
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -1577,43 +2460,59 @@ class Home extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                            horizontal: MediaQuery.of(context).size.width*0.15,
-                           vertical:  MediaQuery.of(context).size.width*0.12
+                           vertical:  MediaQuery.of(context).size.width*0.1
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width:MediaQuery.of(context).size.width * 0.25,
+                              width: MediaQuery.of(context).size.width>App.extra ? MediaQuery.of(context).size.width * 0.35 :
+                              MediaQuery.of(context).size.width>App.xLarge ? MediaQuery.of(context).size.width * 0.35 :
+                              MediaQuery.of(context).size.width>App.larg ? MediaQuery.of(context).size.width * 0.35  :
+                              MediaQuery.of(context).size.width>App.big? MediaQuery.of(context).size.width * 0.38 :
+                              MediaQuery.of(context).size.width * 0.4,
                               child: Text(homeController.banner[homeController.selder_selected.value].title!,
                                 style: TextStyle(
-                                    color: Colors.white ,
-                                    fontSize: MediaQuery.of(context).size.width>App.larg ? 35 :
-                                    MediaQuery.of(context).size.width>App.big? 20 : 15,
-                                    fontWeight: FontWeight.bold),),
+                                    fontFamily: "POPPINS",
+                                    color: Colors.white,
+                                    height: 1.2,
+                                    fontSize: MediaQuery.of(context).size.width > App.extra ? 80 :
+                                    MediaQuery.of(context).size.width>App.xLarge ? 65 :
+                                    MediaQuery.of(context).size.width>App.larg ? 50 :
+                                    MediaQuery.of(context).size.width>App.big? 35 : 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                            SizedBox(height: MediaQuery.of(context).size.width * 0.01),
                             GestureDetector(
                               onTap: (){
-                                Get.to(() => BookAssessment());
+                                homeController.btmNavBarIndex.value = 6;
                               },
                               child: Container(
-                                width: MediaQuery.of(context).size.width>App.larg ?
-                                MediaQuery.of(context).size.width * 0.15  : MediaQuery.of(context).size.width>App.big?
-                                MediaQuery.of(context).size.width * 0.16 : MediaQuery.of(context).size.width * 0.18,
+                                width: MediaQuery.of(context).size.width>App.extra ? MediaQuery.of(context).size.width * 0.14 :
+                                MediaQuery.of(context).size.width>App.xLarge ? MediaQuery.of(context).size.width * 0.14 :
+                                MediaQuery.of(context).size.width>App.larg ? MediaQuery.of(context).size.width * 0.14  :
+                                MediaQuery.of(context).size.width>App.big? MediaQuery.of(context).size.width * 0.16 :
+                                MediaQuery.of(context).size.width * 0.2,
                                 decoration: BoxDecoration(
                                     color: App.primery,
                                     borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: EdgeInsets.all(MediaQuery.of(context).size.width>App.extra ? 15 :
+                                    MediaQuery.of(context).size.width>App.xLarge ? 13 :
+                                    MediaQuery.of(context).size.width>App.larg ? 10  :
+                                    MediaQuery.of(context).size.width>App.big? 8 :
+                                    6),
                                     child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
                                         color: Colors.white ,
-                                        fontSize: MediaQuery.of(context).size.width>App.larg ?
-                                            App.largeFontSize(MediaQuery.of(context).size.width)
-                                         : MediaQuery.of(context).size.width>App.big?
-                                        11 : 9,
+                                        fontSize: MediaQuery.of(context).size.width > App.extra ? 25 :
+                                        MediaQuery.of(context).size.width>App.xLarge ? 20 :
+                                        MediaQuery.of(context).size.width>App.larg ? 16 :
+                                        MediaQuery.of(context).size.width>App.big? 12 : 10,
+                                        fontFamily: "POPPINS",
                                         fontWeight: FontWeight.bold),),
                                   ),
                                 ) ,
@@ -1642,412 +2541,765 @@ class Home extends StatelessWidget {
     );
   }
 
-  BookDialog(BuildContext context,HomeController homeController){
-    return MediaQuery.of(context).size.width>App.larg?largeDialog(context,homeController)
-        :MediaQuery.of(context).size.width>App.big?bigDialog(context,homeController)
-        : midDialog(context,homeController);
+  //************************ PopUp ************************
+  popUp(BuildContext context,HomeController homeController){
+    return MediaQuery.of(context).size.width>App.extra?extrapopUp(context,homeController) :
+    MediaQuery.of(context).size.width>App.xLarge?xlargepopUp(context,homeController) :
+    MediaQuery.of(context).size.width>App.larg?largepopUp(context,homeController)
+        :MediaQuery.of(context).size.width>App.big?bigpopUp(context,homeController)
+        : midpopUp(context,homeController);
   }
-  largeDialog(BuildContext context,HomeController homeController){
+  extrapopUp(BuildContext context,HomeController homeController){
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: MediaQuery.of(context).size.width * 0.21,
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width * 0.25,
       color: App.primery,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Flexible(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(App_Localization.of(context).translate("hello").toUpperCase(),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: App.largeFontSize( MediaQuery.of(context).size.width) + 3,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.2,
-                      child: Center(
-                        child: Text(App_Localization.of(context).translate("leave_your_details"),
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
-                            fontSize: App.largeFontSize( MediaQuery.of(context).size.width) - 1,
-
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.2,
-                      height: 30,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: App.largeFontSize( MediaQuery.of(context).size.width),color: Colors.grey),
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("name"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: App.largeFontSize( MediaQuery.of(context).size.width)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.2,
-                      height: 30,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: App.largeFontSize( MediaQuery.of(context).size.width),color: Colors.grey),
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("email"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: App.largeFontSize( MediaQuery.of(context).size.width)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.2,
-                      height: 30,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: App.largeFontSize( MediaQuery.of(context).size.width),color: Colors.grey),
-                        keyboardType: TextInputType.number,
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("phone"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: App.largeFontSize( MediaQuery.of(context).size.width)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      //todo submit
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      decoration: BoxDecoration(
-                        color: App.purple,
-                        borderRadius: BorderRadius.circular(25),
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.28,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(App_Localization.of(context).translate("hello").toUpperCase() + "!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontFamily: "POPPINS",
+                          fontWeight: FontWeight.bold
                       ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(App_Localization.of(context).translate("submit"),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("leave_your_details"),
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 25,
+                              fontFamily: "POPPINS",
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                        height: 70,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 25,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("name"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                              fontSize: 25,
+                              fontFamily: "POPPINS",
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        height: 70,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("email"),
+                            hintStyle: TextStyle(color: Colors.grey,fontSize: 25,
+                              fontFamily: "POPPINS",),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        height: 70,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 25,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          keyboardType: TextInputType.number,
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("phone"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                                fontFamily: "POPPINS",
+                                fontSize: 25
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        //todo submit
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.13,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: App.purple,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: App.largeFontSize(MediaQuery.of(context).size.width)
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "POPPINS",
+                                fontSize:25
                             ),),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/image/popUp.png")
-                ],
+                    )
+                  ],
+                ),
               )
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.15,
+            height: MediaQuery.of(context).size.width * 0.25,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/image/popUp.png"),
+                fit: BoxFit.cover
+              )
+            ),
           )
         ],
       ),
     );
   }
-  bigDialog(BuildContext context,HomeController homeController){
-    return  Container(
-      width: MediaQuery.of(context).size.width * 0.5,
-      height: MediaQuery.of(context).size.width * 0.26,
-      color: App.primery,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(App_Localization.of(context).translate("hello"),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      child: Center(
-                        child: Text(App_Localization.of(context).translate("leave_your_details"),
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
-                            fontSize: 10,
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      height: 28,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: 10,color: Colors.grey),
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("name"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      height: 28,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: 10,color: Colors.grey),
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("email"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      height: 28,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: 10,color: Colors.grey),
-                        keyboardType: TextInputType.number,
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("phone"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      //todo submit
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.13,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: App.purple,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(App_Localization.of(context).translate("submit"),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11
-                          ),),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/image/popUp.png")
-                ],
-              )
-          )
-        ],
-      ),
-    );
-  }
-  midDialog(BuildContext context,HomeController homeController){
+  xlargepopUp(BuildContext context,HomeController homeController){
     return Container(
-      width: MediaQuery.of(context).size.width * 0.55,
-      height: MediaQuery.of(context).size.width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width * 0.25,
       color: App.primery,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Flexible(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(App_Localization.of(context).translate("hello"),
-                    style: TextStyle(
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.28,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(App_Localization.of(context).translate("hello").toUpperCase() + "!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: "POPPINS",
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("leave_your_details"),
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 20,
+                              fontFamily: "POPPINS",
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        height: 60,
                         color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 20,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("name"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                              fontSize: 20,
+                              fontFamily: "POPPINS",
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
                     ),
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Center(
-                        child: Text(App_Localization.of(context).translate("leave_your_details"),
-                          textAlign: TextAlign.center,
+                    SizedBox(height: 15),
+                    Container(
+                        height: 60,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
-                            fontSize: 10,
+                              fontSize: 20,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("email"),
+                            hintStyle: TextStyle(color: Colors.grey,fontSize: 20,
+                              fontFamily: "POPPINS",),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
                           ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      height: 25,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: 10,color: Colors.grey),
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("name"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      height: 25,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: 10,color: Colors.grey),
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("email"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                      width: MediaQuery.of(context).size.width*0.3,
-                      height: 25,
-                      color: Colors.white,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.bottom,
-                        style: TextStyle(fontSize: 10,color: Colors.grey),
-                        keyboardType: TextInputType.number,
-                        decoration:  InputDecoration(
-                          hintText: App_Localization.of(context).translate("phone"),
-                          hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                          enabledBorder:const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                          ),
-                        ),
-                      )
-                  ),
-                  SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () {
-                      //todo submit
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: App.purple,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(App_Localization.of(context).translate("submit"),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10
-                          ),),
-                      ),
+                        )
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/image/popUp.png")
-                ],
+                    SizedBox(height: 15),
+                    Container(
+                        height: 60,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 20,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          keyboardType: TextInputType.number,
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("phone"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                                fontFamily: "POPPINS",
+                                fontSize: 20
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 25),
+                    GestureDetector(
+                      onTap: () {
+                        //todo submit
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: App.purple,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "POPPINS",
+                                fontSize:20
+                            ),),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               )
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.15,
+            height: MediaQuery.of(context).size.width * 0.25,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/image/popUp.png"),
+                    fit: BoxFit.cover
+                )
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  largepopUp(BuildContext context,HomeController homeController){
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width * 0.25,
+      color: App.primery,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 35),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.28,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(App_Localization.of(context).translate("hello").toUpperCase() + "!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: "POPPINS",
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("leave_your_details"),
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 15,
+                              fontFamily: "POPPINS",
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        height: 40,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 16,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("name"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                              fontSize: 16,
+                              fontFamily: "POPPINS",
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 15),
+                    Container(
+                        height: 40,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("email"),
+                            hintStyle: TextStyle(color: Colors.grey,fontSize: 16,
+                              fontFamily: "POPPINS",),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 15),
+                    Container(
+                        height: 40,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 16,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          keyboardType: TextInputType.number,
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("phone"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                                fontFamily: "POPPINS",
+                                fontSize: 16
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 25),
+                    GestureDetector(
+                      onTap: () {
+                        //todo submit
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: App.purple,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "POPPINS",
+                                fontSize:16
+                            ),),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.15,
+            height: MediaQuery.of(context).size.width * 0.25,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/image/popUp.png"),
+                    fit: BoxFit.cover
+                )
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  bigpopUp(BuildContext context,HomeController homeController){
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width * 0.25,
+      color: App.primery,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.33,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(App_Localization.of(context).translate("hello").toUpperCase() + "!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontFamily: "POPPINS",
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("leave_your_details"),
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 12,
+                              fontFamily: "POPPINS",
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        height: 35,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 12,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("name"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                              fontSize: 12,
+                              fontFamily: "POPPINS",
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        height: 35,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("email"),
+                            hintStyle: TextStyle(color: Colors.grey,fontSize: 12,
+                              fontFamily: "POPPINS",),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        height: 35,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 12,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          keyboardType: TextInputType.number,
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("phone"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                                fontFamily: "POPPINS",
+                                fontSize: 12
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () {
+                        //todo submit
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: App.purple,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "POPPINS",
+                                fontSize:12
+                            ),),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.16,
+            height: MediaQuery.of(context).size.width * 0.25,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/image/popUp.png"),
+                    fit: BoxFit.cover
+                )
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  midpopUp(BuildContext context,HomeController homeController){
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.6,
+      height: MediaQuery.of(context).size.width * 0.35,
+      color: App.primery,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.33,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(App_Localization.of(context).translate("hello").toUpperCase() + "!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontFamily: "POPPINS",
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("leave_your_details"),
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 10,
+                              fontFamily: "POPPINS",
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        height: 30,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 10,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("name"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                              fontSize: 10,
+                              fontFamily: "POPPINS",
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        height: 30,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("email"),
+                            hintStyle: TextStyle(color: Colors.grey,fontSize: 10,
+                              fontFamily: "POPPINS",),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        height: 30,
+                        color: Colors.white,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.bottom,
+                          style: TextStyle(fontSize: 10,
+                              fontFamily: "POPPINS",
+                              color: Colors.grey),
+                          keyboardType: TextInputType.number,
+                          decoration:  InputDecoration(
+                            hintText: App_Localization.of(context).translate("phone"),
+                            hintStyle: TextStyle(color: Colors.grey,
+                                fontFamily: "POPPINS",
+                                fontSize: 10
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                            enabledBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            ),
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () {
+                        //todo submit
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: App.purple,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Center(
+                          child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "POPPINS",
+                                fontSize:10
+                            ),),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.2,
+            height: MediaQuery.of(context).size.width * 0.3,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/image/popUp.png"),
+                    fit: BoxFit.cover
+                )
+            ),
           )
         ],
       ),

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
-class Events extends StatelessWidget {
-  Events({Key? key}) : super(key: key);
+class Blogs extends StatelessWidget {
+  Blogs({Key? key}) : super(key: key);
   final HomeController homeController = Get.find();
   final GlobalKey<ScaffoldState> myKey = GlobalKey();
 
@@ -27,33 +27,25 @@ class Events extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage("assets/image/Background.png")
-                      )
-                  ),
-                  child:  MediaQuery.of(context).size.width> App.extra ? extraWidget(context) :
-                  MediaQuery.of(context).size.width>App.xLarge ? xlargeWidget(context) :
-                  MediaQuery.of(context).size.width>App.larg ? largeWidget(context)
-                      : MediaQuery.of(context).size.width>App.big ? bigWidget(context)
-                      : medWidget(context)
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/image/Background.png")
+                        )
+                    ),
+                    child:  MediaQuery.of(context).size.width> App.extra ? extraWidget(context) :
+                    MediaQuery.of(context).size.width>App.xLarge ? xlargeWidget(context) :
+                    MediaQuery.of(context).size.width>App.larg ? largeWidget(context)
+                        : MediaQuery.of(context).size.width>App.big ? bigWidget(context)
+                        : medWidget(context)
                 ),
                 Positioned(child: App.header(context, homeController,myKey)),
                 Positioned(
                     right: 0,
                     child: App.languageBarHome(context, homeController)
                 ),
-                // Positioned(
-                //   left: MediaQuery.of(context).size.width>App.larg ?
-                //   MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.38
-                //       : MediaQuery.of(context).size.width>App.big ?
-                //   MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.43
-                //       : MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.41,
-                //     child: news(context)
-                // ),
               ],
             ),
           ),
@@ -70,14 +62,14 @@ class Events extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
                 style: const TextStyle(
                     fontFamily: "FOUNDRYGRIDNIK",
                     color: App.primery,fontSize:70,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:extraEvents(count:2,ratio:6/4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+            child:extraBlogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -98,7 +90,7 @@ class Events extends StatelessWidget {
       ),
     );
   }
-  extraEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  extraBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -172,14 +164,14 @@ class Events extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
                 style: const TextStyle(
                     fontFamily: "FOUNDRYGRIDNIK",
                     color: App.primery,fontSize:60,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:xlargeEvents(count:2,ratio:6/4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+            child:xlargeBlogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -200,7 +192,7 @@ class Events extends StatelessWidget {
       ),
     );
   }
-  xlargeEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  xlargeBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -273,14 +265,14 @@ class Events extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
                 style: const TextStyle(
-                  fontFamily: "FOUNDRYGRIDNIK",
+                    fontFamily: "FOUNDRYGRIDNIK",
                     color: App.primery,fontSize:50,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:largeEvents(count:2,ratio:6/4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+            child:largeBlogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -301,7 +293,7 @@ class Events extends StatelessWidget {
       ),
     );
   }
-  largeEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  largeBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -373,14 +365,14 @@ class Events extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
                 style: const TextStyle(
-                  fontFamily: "FOUNDRYGRIDNIK",
+                    fontFamily: "FOUNDRYGRIDNIK",
                     color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:bigEvents(count:2,ratio: 1.4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+            child:bigBlogs(count:2,ratio: 1.4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -401,7 +393,7 @@ class Events extends StatelessWidget {
       ),
     );
   }
-  bigEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  bigBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -475,13 +467,13 @@ class Events extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.15,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),style: const TextStyle(
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),style: const TextStyle(
                 fontFamily: "FOUNDRYGRIDNIK",
                 color: App.primery,fontSize:20,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:medEvents(count:2,ratio: 1.3,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+            child:medBlogs(count:2,ratio: 1.3,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -502,7 +494,7 @@ class Events extends StatelessWidget {
       ),
     );
   }
-  medEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  medBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -544,7 +536,8 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 10,
-                                  fontFamily: "POPPINS"
+                                  fontFamily: "POPPINS",
+                                overflow: TextOverflow.ellipsis
                               ),
                             ),
                             Text(
@@ -553,7 +546,8 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                   fontSize: 10,
-                                  fontFamily: "POPPINS"
+                                  fontFamily: "POPPINS",
+                                  overflow: TextOverflow.ellipsis
                               ),
                             ),
                           ],
@@ -565,7 +559,5 @@ class Events extends StatelessWidget {
             );
           }),
     );}
-
-
 
 }

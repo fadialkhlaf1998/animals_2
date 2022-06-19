@@ -40,8 +40,7 @@ class Cart extends StatelessWidget {
                     height: MediaQuery.of(context).size.height,
                     child: MediaQuery.of(context).size.width>App.larg?_lgWedget(context)
                         :MediaQuery.of(context).size.width>App.big?_bgWedget(context)
-                        :MediaQuery.of(context).size.width>App.mid?_mdWedget(context)
-                        :MediaQuery.of(context).size.width>App.small?_smWedget(context):_xsmWedget(context),
+                        :_mdWedget(context),
                   ),
                   Positioned(child: App.shopHeader(context,shopController, homeController,myKey)),
                   cartController.loading.value
@@ -1800,10 +1799,9 @@ class Cart extends StatelessWidget {
       return 20;
     }else if(MediaQuery.of(context).size.width>App.mid){
       return 15;
-    }else if(MediaQuery.of(context).size.width>App.small){
-      return 10;
+    }else {
+      return 8;
     }
-    return 8;
   }
   checkOutBtn(BuildContext context) {
     return GestureDetector(

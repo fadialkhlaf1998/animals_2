@@ -71,6 +71,7 @@ dependencies:
   country_picker: ^2.0.14
   auto_size_text: ^3.0.0
   palette_generator: ^0.3.3+1
+  hovering: ^1.0.4
 
 dev_dependencies:
   flutter_test:
@@ -106,6 +107,8 @@ flutter:
       fonts:
         - asset: assets/fonts/FOUNDRYGRIDNIK REGULAR.OTF
           weight: 400
+        - asset: assets/fonts/FOUNDRYGRIDNIK BOLD.OTF
+          weight: 700
     - family: POPPINS
       fonts:
         - asset: assets/fonts/POPPINS-REGULAR.TTF
