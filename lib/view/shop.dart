@@ -1122,7 +1122,8 @@ class Shop extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: Header()),
         homeController.loading.value
             ? Positioned(
             child: Container(
@@ -1412,7 +1413,7 @@ class Shop extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
         homeController.loading.value
             ? Positioned(
             child: Container(
@@ -1704,7 +1705,7 @@ class Shop extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
         homeController.loading.value
             ? Positioned(
             child: Container(

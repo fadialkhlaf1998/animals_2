@@ -14,7 +14,7 @@ void main() {
   setPathUrlStrategy();
   runApp(const MyApp());
 }
-
+//todo Fadi
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {

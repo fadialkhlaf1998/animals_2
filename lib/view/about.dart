@@ -1,6 +1,7 @@
 import 'package:animals/app_localization.dart';
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
+import 'package:animals/view/header.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,8 @@ class About extends StatelessWidget {
                   : mdWidget(context)
 
                 ),
-                Positioned(child: App.header(context, homeController,myKey)),
+                // Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(child: Header()),
                 Positioned(
                     right: 0,
                     child: App.languageBarHome(context, homeController)

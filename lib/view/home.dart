@@ -4,6 +4,7 @@ import 'package:animals/view/book_assessment.dart';
 import 'package:animals/view/contact.dart';
 import 'package:animals/view/events.dart';
 import 'package:animals/view/gallery.dart';
+import 'package:animals/view/header.dart';
 import 'package:animals/view/rate.dart';
 import 'package:animals/view/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,8 +34,7 @@ class Home extends StatelessWidget {
             : homeController.btmNavBarIndex.value == 2 ? Services()
             : homeController.btmNavBarIndex.value == 3? Rate() :
               homeController.btmNavBarIndex.value == 4 ? Gallery() :
-              // homeController.btmNavBarIndex.value == 5 ? Blogs() :
-              homeController.btmNavBarIndex.value == 5 ? Events() :
+              homeController.btmNavBarIndex.value == 5 ?homeController.selectedNews.value == 0? Events():Blogs() :
               homeController.btmNavBarIndex.value == 6 ? Contact() :
               BookAssessment();
     });
@@ -253,7 +253,8 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
+        Positioned(child: Header()),
         homeController.loading.value
             ? Positioned(
             child: Container(
@@ -268,6 +269,11 @@ class Home extends StatelessWidget {
       ],
     );
   }
+  ///////////////////////Hover
+
+
+
+
   extraService({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
     return SizedBox(
       child: GridView.builder(
@@ -705,7 +711,8 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
+        Positioned(child: Header()),
         homeController.loading.value
             ? Positioned(
             child: Container(
@@ -1155,7 +1162,8 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
+        Positioned(child: Header()),
         homeController.loading.value
             ? Positioned(
             child: Container(
@@ -1619,7 +1627,8 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
+        Positioned(child: Header()),
         homeController.loading.value
             ? Positioned(
             child: Container(
@@ -2096,7 +2105,8 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(child: App.header(context,homeController,myKey),),
+        // Positioned(child: App.header(context,homeController,myKey),),
+        Positioned(child: Header()),
         homeController.loading.value
             ? Positioned(
             child: Container(

@@ -38,15 +38,26 @@ class HomeController extends GetxController {
   Post? aboutPage;
   Rx<bool> loading = false.obs;
   Rx<bool> fake = false.obs;
+
   Rx<int> btmNavBarIndex = 0.obs;
+  Rx<int> hoverIndex = (-1).obs;
+  int hoverIndexValue = -1;
   Rx<int> selder_selected = 0.obs;
   RxList<Post> products = <Post>[].obs;
   TextEditingController searchController = TextEditingController();
   var ready = false.obs;
   var openCountry = false.obs;
-  var openNews = false.obs;
   RxBool subscribe = false.obs;
   RxBool popUp = true.obs;
+
+  Rx<bool> serviceHover = false.obs;
+  Rx<bool> serviceHoverContainer = false.obs;
+
+  Rx<bool> newsHover = false.obs;
+  Rx<bool> newsHoverContainer = false.obs;
+  Rx<int> selectedNews = 0.obs;
+
+
 
   //review slider
   var activeIndex = 0.obs;

@@ -2,6 +2,7 @@ import 'package:animals/app_localization.dart';
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
 import 'package:animals/model/post.dart';
+import 'package:animals/view/header.dart';
 import 'package:animals/view/on_hover.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,8 @@ class CustomSearchView extends StatelessWidget {
                     );
                   }
                 ),
-                Positioned(child: App.header(context, homeController,myKey)),
+                // Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(child: Header()),
               ],
             ),
           ),

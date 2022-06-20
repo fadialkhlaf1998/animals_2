@@ -59,7 +59,7 @@ class ProductList extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(child: App.header(context, homeController,myKey)),
+              // Positioned(child: App.header(context, homeController,myKey)),
               homeController.loading.value
                   ? Positioned(
                       child: Container(

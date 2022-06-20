@@ -1,5 +1,6 @@
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
+import 'package:animals/view/header.dart';
 import 'package:animals/view/image_show.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +42,8 @@ class Gallery extends StatelessWidget {
                       : MediaQuery.of(context).size.width>App.big?bigWidget(context)
                       : medWidget(context)
                 ),
-                Positioned(child: App.header(context, homeController,myKey)),
+                // Positioned(child: App.header(context, homeController,myKey)),
+                Positioned(child: Header()),
                 Positioned(
                     right: 0,
                     child: App.languageBarHome(context, homeController)
