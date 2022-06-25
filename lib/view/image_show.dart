@@ -25,10 +25,12 @@ class ImageShow extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           child: Obx( () {
               return  MediaQuery.of(context).size.width>App.extra ? extraWidget(context) :
-              MediaQuery.of(context).size.width>App.xLarge ? xLargeWidget(context) :
-              MediaQuery.of(context).size.width>App.larg?largeWidget(context)
-                  : MediaQuery.of(context).size.width>App.big?bigWidget(context)
-                  : medWidget(context);
+              MediaQuery.of(context).size.width>App.extra2 ? extra2Widget(context) :
+              MediaQuery.of(context).size.width>App.xLarge ? xlargeWidget(context) :
+              MediaQuery.of(context).size.width>App.xLarge2 ? xlarge2Widget(context) :
+              MediaQuery.of(context).size.width>App.larg?largeWidget(context) :
+              MediaQuery.of(context).size.width>App.larg2?large2Widget(context) :
+              bigWidget(context);
             }
           ),
         )),
@@ -36,7 +38,7 @@ class ImageShow extends StatelessWidget {
     );
   }
 
-  extraWidget(BuildContext context) {
+  body(BuildContext context, double top ,double left,double right,double width,double height,double fontSize) {
     return Stack(
       children: [
         RawKeyboardListener(
@@ -78,344 +80,63 @@ class ImageShow extends StatelessWidget {
             ),
           ),
         ),
-        // Positioned(child: IconButton(icon: Icon(Icons.arrow_back_ios,color: App.primery,),onPressed: (){index.value++;}),),
         Positioned(
-          left: 40,
-          top: MediaQuery.of(context).size.height*0.5,
+          left: left,
+          top: top,
           child: index.value==0?const Center(): Container(
-            width: 80,
-            height: 80,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: IconButton(icon: Icon(Icons.arrow_back_ios,size: 35,color: App.primery,),
-                    onPressed: (){index.value--;}),
+            width: width,
+            height: height,
+            child: GestureDetector(
+              onTap: () {
+                index.value--;
+              },
+              child: Container(
+                height: height,
+                width: width,
+                child: Icon(Icons.arrow_back_ios_outlined,size: fontSize,color: App.primery,),
               ),
             ),
           ),
         ),
         Positioned(
-          right: 40,
-          top: MediaQuery.of(context).size.height*0.5,
+          right: right,
+          top: top,
           child: index.value==homeController.gallary.length-1?const Center():
-          Container(
-            width: 80,
-            height: 80,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10,right: 5),
-                child: IconButton(icon: const Icon(Icons.arrow_forward_ios,size: 35,color: App.primery,)
-                    ,onPressed: (){index.value++;}),
-              ),
-
+          GestureDetector(
+            onTap: () {
+              index.value++;
+            },
+            child: Container(
+              height: height,
+              width: width,
+              child: Icon(Icons.arrow_forward_ios_outlined,size: fontSize,color: App.primery,),
             ),
           ),
         ),
       ],
     );
   }
-  xLargeWidget(BuildContext context) {
-    return Stack(
-      children: [
-        RawKeyboardListener(
-          autofocus: true,
-          onKey: (key){
-            if (key.runtimeType == RawKeyDownEvent) {
-              //right
-              if(key.data.logicalKey == LogicalKeyboardKey.arrowRight){
-                if(index<homeController.gallary.length-1) {
-                  index.value++;
-                }
-              }
-              //left
-              else if(key.data.logicalKey == LogicalKeyboardKey.arrowLeft){
-                if(index>0) {
-                  index.value--;
-                }
-              }
-            }
-          },
-          focusNode: FocusNode(),
-          child: Container(
-            color: App.primery,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height -
-                      (MediaQuery.of(context).size.height * 0.1),
-                  child: PhotoView(
-                    imageProvider:
-                    NetworkImage(homeController.gallary[index.value].image!.replaceAll("localhost", "10.0.2.2")),
-                    backgroundDecoration: const BoxDecoration(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          left: 40,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==0?const Center(): Container(
-            width: 80,
-            height: 80,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: IconButton(icon: Icon(Icons.arrow_back_ios,size: 35,color: App.primery,),
-                    onPressed: (){index.value--;}),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 40,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==homeController.gallary.length-1?const Center():
-          Container(
-            width: 80,
-            height: 80,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10,right: 5),
-                child: IconButton(icon: const Icon(Icons.arrow_forward_ios,size: 35,color: App.primery,)
-                    ,onPressed: (){index.value++;}),
-              ),
 
-            ),
-          ),
-        ),
-      ],
-    );
+  extraWidget(BuildContext context) {
+    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 200, 200,100);
+  }
+  extra2Widget(BuildContext context) {
+    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 190, 190,90);
+  }
+  xlargeWidget(BuildContext context) {
+    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 150, 150,80);
+  }
+  xlarge2Widget(BuildContext context) {
+    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 150, 150,70);
   }
   largeWidget(BuildContext context) {
-    return Stack(
-      children: [
-        RawKeyboardListener(
-          autofocus: true,
-          onKey: (key){
-            if (key.runtimeType == RawKeyDownEvent) {
-              //right
-              if(key.data.logicalKey == LogicalKeyboardKey.arrowRight){
-                if(index<homeController.gallary.length-1) {
-                  index.value++;
-                }
-              }
-              //left
-              else if(key.data.logicalKey == LogicalKeyboardKey.arrowLeft){
-                if(index>0) {
-                  index.value--;
-                }
-              }
-            }
-          },
-          focusNode: FocusNode(),
-          child: Container(
-            color: App.primery,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height -
-                      (MediaQuery.of(context).size.height * 0.1),
-                  child: PhotoView(
-                    imageProvider:
-                    NetworkImage(homeController.gallary[index.value].image!.replaceAll("localhost", "10.0.2.2")),
-                    backgroundDecoration: const BoxDecoration(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Positioned(child: IconButton(icon: Icon(Icons.arrow_back_ios,color: App.primery,),onPressed: (){index.value++;}),),
-        Positioned(
-          left: 40,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==0?const Center(): Container(
-            width: 55,
-            height: 55,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: IconButton(icon: Padding(
-                padding: const EdgeInsets.only(left: 3),
-                child: const Icon(Icons.arrow_back_ios,color: App.primery,size: 25,),
-              ),onPressed: (){index.value--;}),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 40,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==homeController.gallary.length-1?const Center():
-          Container(
-            width: 55,
-            height: 55,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: IconButton(icon: const Icon(Icons.arrow_forward_ios,color: App.primery,size: 25,),onPressed: (){index.value++;}),
-            ),
-          ),
-        ),
-      ],
-    );
+    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 100, 100,50);
+  }
+  large2Widget(BuildContext context) {
+    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 100, 100,50);
   }
   bigWidget(BuildContext context) {
-    return Stack(
-      children: [
-        RawKeyboardListener(
-          autofocus: true,
-          onKey: (key){
-            if (key.runtimeType == RawKeyDownEvent) {
-              //right
-              if(key.data.logicalKey == LogicalKeyboardKey.arrowRight){
-                if(index<homeController.gallary.length-1) {
-                  index.value++;
-                }
-              }
-              //left
-              else if(key.data.logicalKey == LogicalKeyboardKey.arrowLeft){
-                if(index>0) {
-                  index.value--;
-                }
-              }
-            }
-          },
-          focusNode: FocusNode(),
-          child: Container(
-            color: App.primery,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height -
-                      (MediaQuery.of(context).size.height * 0.1),
-                  child: PhotoView(
-                    imageProvider:
-                    NetworkImage(homeController.gallary[index.value].image!.replaceAll("localhost", "10.0.2.2")),
-                    backgroundDecoration: const BoxDecoration(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Positioned(child: IconButton(icon: Icon(Icons.arrow_back_ios,color: App.primery,),onPressed: (){index.value++;}),),
-        Positioned(
-          left: 30,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==0?const Center(): Container(
-            width: 45,
-            height: 45,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: IconButton(icon: Padding(
-                padding: const EdgeInsets.only(left: 3),
-                child: const Icon(Icons.arrow_back_ios,color: App.primery,),
-              ),onPressed: (){index.value--;}),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 30,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==homeController.gallary.length-1?const Center():
-          Container(
-            width: 45,
-            height: 45,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: IconButton(icon: const Icon(Icons.arrow_forward_ios,color: App.primery,),onPressed: (){index.value++;}),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-  medWidget(BuildContext context) {
-    return Stack(
-      children: [
-        RawKeyboardListener(
-          autofocus: true,
-          onKey: (key){
-            if (key.runtimeType == RawKeyDownEvent) {
-              //right
-              if(key.data.logicalKey == LogicalKeyboardKey.arrowRight){
-                if(index<homeController.gallary.length-1) {
-                  index.value++;
-                }
-              }
-              //left
-              else if(key.data.logicalKey == LogicalKeyboardKey.arrowLeft){
-                if(index>0) {
-                  index.value--;
-                }
-              }
-            }
-          },
-          focusNode: FocusNode(),
-          child: Container(
-            color: App.primery,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height -
-                      (MediaQuery.of(context).size.height * 0.1),
-                  child: PhotoView(
-                    imageProvider:
-                    NetworkImage(homeController.gallary[index.value].image!.replaceAll("localhost", "10.0.2.2")),
-                    backgroundDecoration: const BoxDecoration(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Positioned(child: IconButton(icon: Icon(Icons.arrow_back_ios,color: App.primery,),onPressed: (){index.value++;}),),
-        Positioned(
-          left: 20,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==0?const Center(): Container(
-            width: 40,
-            height: 40,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: IconButton(icon: Padding(
-                padding: const EdgeInsets.only(left: 3),
-                child: const Icon(Icons.arrow_back_ios,color: App.primery,),
-              ),onPressed: (){index.value--;}),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 20,
-          top: MediaQuery.of(context).size.height*0.5,
-          child: index.value==homeController.gallary.length-1?const Center():
-          Container(
-            width: 40,
-            height: 40,
-            child: CircleAvatar(
-              backgroundColor: App.grey,
-              child: IconButton(icon: const Icon(Icons.arrow_forward_ios,color: App.primery,),onPressed: (){index.value++;}),
-            ),
-          ),
-        ),
-      ],
-    );
+    return body(context,MediaQuery.of(context).size.height*0.5 , 10,10, 70, 70,40);
   }
 
 }

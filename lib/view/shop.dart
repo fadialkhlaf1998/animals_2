@@ -898,6 +898,7 @@ import 'package:animals/app_localization.dart';
 import 'package:animals/controller/shop_controller.dart';
 import 'package:animals/view/cart.dart';
 import 'package:animals/view/on_hover.dart';
+import 'package:animals/view/shopHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animals/controller/home_controller.dart';
@@ -916,16 +917,15 @@ class Shop extends StatelessWidget {
       return shopController.btmNavBarIndex.value == 0 ? _shop(context) :
       shopController.btmNavBarIndex.value == 1 ? _shop(context) :
       shopController.btmNavBarIndex.value == 2 ? _shop(context) :
-      shopController.btmNavBarIndex.value == 3 ? Container() :
-      shopController.btmNavBarIndex.value == 4 ? Container() :
-      shopController.btmNavBarIndex.value == 5 ? Container() : Cart();
+      shopController.btmNavBarIndex.value == 3 ?  _shop(context)  :
+      shopController.btmNavBarIndex.value == 4 ?  _shop(context)  :
+      shopController.btmNavBarIndex.value == 5 ?  _shop(context)  : Cart();
     });
   }
 
   _shop(BuildContext context) {
     return Scaffold(
       key: myKey,
-      endDrawer: App.myDrawer(context, homeController,myKey),
       body: RefreshIndicator(
         onRefresh: ()async{
           Get.offAllNamed("/");
@@ -947,7 +947,8 @@ class Shop extends StatelessWidget {
                                 image: AssetImage("assets/image/Background.png")
                             )
                         ),
-                        child: MediaQuery.of(context).size.width>App.larg?largeWidget(context)
+                        child: MediaQuery.of(context).size.width>App.extra ? extraShop(context) :
+                        MediaQuery.of(context).size.width>App.larg?largeWidget(context)
                             :MediaQuery.of(context).size.width>App.big?bigWedgit(context)
                             :medWedgit(context)
                     ),
@@ -955,20 +956,9 @@ class Shop extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(child: App.shopHeader(context, shopController,homeController,myKey)),
             Positioned(
                 right: 0,
-                child: App.languageBar(context, shopController)
-            ),
-            Positioned(
-                right: 100,
-                left: 0,
-                child: shopByBetsList(context)
-            ),
-            Positioned(
-                right: 0,
-                left: 150,
-                child: shopByBrands(context)
+                child: App.languageBarShop(context, shopController)
             ),
             homeController.loading.value
                 ? Positioned(
@@ -987,18 +977,25 @@ class Shop extends StatelessWidget {
     );
   }
 
-  /////////////////////////// ShopByBets ///////////////////////////
-  shopByBetsList(BuildContext context) {
-    return MediaQuery.of(context).size.width>App.larg?largeshopByBetsList(context)
-        : MediaQuery.of(context).size.width>App.big ? bigshopByBetsList(context) :
-    medshopByBetsList(context);
-  }
 
-  /////////////////////////// ShopByBrands ///////////////////////////
-  shopByBrands(BuildContext context) {
-    return MediaQuery.of(context).size.width>App.larg?largeBrandsList(context)
-        : MediaQuery.of(context).size.width>App.big ? bigBrandsList(context) :
-    medBrandsList(context);
+
+  //************************ Extra ************************
+  extraShop(BuildContext context){
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          controller: App.scrollController,
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.width*0.13),
+              App.footer(context,homeController),
+              App.copyrights(context, 50, 23),
+            ],
+          ),
+        ),
+        Positioned(child: ShopHeader()),
+      ],
+    );
   }
 
   ////////////////// large //////////////////

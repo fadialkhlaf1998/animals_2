@@ -23,7 +23,6 @@ class ProductList extends StatelessWidget {
     return Obx(() {
       return Scaffold(
         key: myKey,
-        endDrawer: App.myDrawer(context, homeController,myKey),
         appBar: AppBar(
           title: Text(App_Localization.of(context).translate("product_list")),
           centerTitle: true,

@@ -12,9 +12,10 @@ import 'package:url_strategy/url_strategy.dart';
 
 void main() {
   setPathUrlStrategy();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
-//todo Fadi
+//todo maya
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {

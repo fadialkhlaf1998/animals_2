@@ -25,7 +25,6 @@ class Cart extends StatelessWidget {
     return Obx(() {
       return Scaffold(
         key: myKey,
-        endDrawer: App.myDrawer(context, homeController,myKey),
         body: RefreshIndicator(
           onRefresh: ()async{
             Get.offAllNamed("/");
@@ -39,10 +38,8 @@ class Cart extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: MediaQuery.of(context).size.width>App.larg?_lgWedget(context)
-                        :MediaQuery.of(context).size.width>App.big?_bgWedget(context)
-                        :_mdWedget(context),
+                        :_bgWedget(context),
                   ),
-                  Positioned(child: App.shopHeader(context,shopController, homeController,myKey)),
                   cartController.loading.value
                       ? Positioned(
                           child: Container(
@@ -1797,8 +1794,8 @@ class Cart extends StatelessWidget {
       return 25;
     }else if(MediaQuery.of(context).size.width>App.big){
       return 20;
-    }else if(MediaQuery.of(context).size.width>App.mid){
-      return 15;
+    // }else if(MediaQuery.of(context).size.width>App.mid){
+    //   return 15;
     }else {
       return 8;
     }

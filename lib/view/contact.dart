@@ -17,7 +17,6 @@ class Contact extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       key: myKey,
-      endDrawer: App.myDrawer(context, homeController,myKey),
       body: RefreshIndicator(
         onRefresh: ()async{
           Get.offAllNamed("/");
@@ -37,11 +36,13 @@ class Contact extends StatelessWidget {
                             image: AssetImage("assets/image/Background.png")
                         )
                     ),
-                    child: MediaQuery.of(context).size.width>App.extra?extraWidget(context) :
-                    MediaQuery.of(context).size.width>App.xLarge?xlargeWidget(context) :
-                    MediaQuery.of(context).size.width>App.larg?largegWidget(context)
-                        :MediaQuery.of(context).size.width>App.big?bigWidget(context)
-                        :medWidget(context)
+                    child: MediaQuery.of(context).size.width>App.extra ? extraWidget(context) :
+                    MediaQuery.of(context).size.width>App.extra2 ? extra2Widget(context) :
+                    MediaQuery.of(context).size.width>App.xLarge ? xlargeWidget(context) :
+                    MediaQuery.of(context).size.width>App.xLarge2 ? xlarge2Widget(context) :
+                    MediaQuery.of(context).size.width>App.larg ? largeWidget(context) :
+                    MediaQuery.of(context).size.width>App.larg2 ? large2Widget(context) :
+                    bigWidget(context)
                 ),
                 // Positioned(child: App.header(context, homeController,myKey)),
                 Positioned(child: Header()),
@@ -55,6 +56,31 @@ class Contact extends StatelessWidget {
         ),
       ),
     ));
+  }
+
+  textField(BuildContext context,TextEditingController controller,String translate, double width,double height,double fontSize) {
+    return Container(
+        width: width,
+        height: height,
+        color: Colors.grey[200],
+        child: TextField(
+          controller: controller,
+          style: TextStyle(fontSize: fontSize,
+              fontFamily: "POPPINS"),
+          textAlignVertical: TextAlignVertical.bottom,
+          decoration:  InputDecoration(
+            hintText: App_Localization.of(context).translate(translate),
+            hintStyle: TextStyle(color: Colors.grey[500],
+                fontSize: fontSize, fontFamily: "POPPINS"),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+            ),
+            enabledBorder:const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+            ),
+          ),
+        )
+    );
   }
 
   extraWidget(BuildContext context) {
@@ -73,90 +99,13 @@ class Contact extends StatelessWidget {
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 70,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 25,
-                    fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 25, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 70, 23),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 70,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 25, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 25, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5, 70, 23),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 70,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 25, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 25, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5, 70, 23),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 70,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 25, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 25, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5, 70, 23),
           SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
@@ -164,7 +113,7 @@ class Contact extends StatelessWidget {
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                  fontSize: 25,
+                  fontSize: 23,
                   color: App.purple,
                   fontWeight: FontWeight.bold),
             ),
@@ -175,46 +124,8 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 70,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 25, fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 25, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 70,
-                    color: Colors.grey[200],
-                    child: TextField  (
-                      textAlignVertical: TextAlignVertical.bottom,
-                      style: TextStyle(fontSize: 25, fontFamily: "POPPINS"),
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 25, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.22, 70, 23),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.22, 70, 23),
               ],
             ),
           ),
@@ -224,48 +135,10 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 70,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 25),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 25, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.22, 70, 23),
                 Stack(
                   children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width*0.22,
-                        height: 70,
-                        color: Colors.grey[200],
-                        child: TextField (
-                          style: TextStyle(fontSize: 2,),
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration:  InputDecoration(
-                            hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],
-                                fontSize: 25, fontFamily: "POPPINS"),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                            enabledBorder:const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                          ),
-                        )
-                    ),
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.22, 70, 23),
                     Positioned(
                       right: 0,
                         top: 18,
@@ -305,15 +178,15 @@ class Contact extends StatelessWidget {
                 width: MediaQuery.of(context).size.width*0.12,
                 decoration: BoxDecoration(
                     color: App.primery,
-                    borderRadius: BorderRadius.circular(50/2)
+                    borderRadius: BorderRadius.circular(30)
                 ),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(14),
                     child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
                     TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
                         fontFamily: "POPPINS",
-                        fontSize: 25
+                        fontSize: 23
                     ),),
                   ),
                 )
@@ -321,19 +194,123 @@ class Contact extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
+          App.copyrights(context, 50, 23),
+        ],
+      ),
+    );
+  }
+  extra2Widget(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width * 0.13),
+          SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: 50,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(
+                child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
+                    style: const TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        color: App.primery,fontSize:65,
+                        fontWeight: FontWeight.bold),maxLines: 1)
+            ),
+          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 65, 21),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5, 65, 21),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5, 65, 21),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5, 65, 21),
+          SizedBox(height: MediaQuery.of(context).size.width*0.02),
+          SizedBox(
+            width: MediaQuery.of(context).size.width*0.5,
+            height: MediaQuery.of(context).size.height*0.05,
+            child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
+              style: TextStyle(
+                  fontFamily: "FOUNDRYGRIDNIK",
+                  fontSize: 21,
+                  color: App.purple,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.015),
+          Container(
+            width: MediaQuery.of(context).size.width*0.5,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 20)),
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.22, 65, 21),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.22, 65, 21),
               ],
             ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          Container(
+            width: MediaQuery.of(context).size.width*0.5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.22, 65, 21),
+                Stack(
+                  children: [
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.22, 65, 21),
+                    Positioned(
+                        right: 0,
+                        top: 16,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Container(
+                            width: 100,
+                            height: 35,
+                            decoration: BoxDecoration(
+                                color: App.purple,
+                                borderRadius: BorderRadius.circular(30)
+                            ),
+                            child: Center(
+                              child: Text(App_Localization.of(context).translate("upload").toUpperCase(),
+                                style: TextStyle(
+                                    fontFamily: "POPPINS",
+                                    color: Colors.white,
+                                    fontSize: 19
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
+          GestureDetector(
+            onTap: () {
+              //todo submit
+            },
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width*0.12,
+                decoration: BoxDecoration(
+                    color: App.primery,
+                    borderRadius: BorderRadius.circular(30)
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(13),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
+                    TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                        fontFamily: "POPPINS",
+                        fontSize: 21
+                    ),),
+                  ),
+                )
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 45, 21),
         ],
       ),
     );
@@ -354,91 +331,13 @@ class Contact extends StatelessWidget {
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 60,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 20,
-                    fontFamily: "POPPINS"
-                ),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 20, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 60, 19),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 60,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 20, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 20, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5, 60, 19),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 60,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 20, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 20, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5, 60, 19),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 60,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 20, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 20, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5,60, 19),
           SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
@@ -446,7 +345,7 @@ class Contact extends StatelessWidget {
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                  fontSize: 20,
+                  fontSize: 19,
                   color: App.purple,
                   fontWeight: FontWeight.bold),
             ),
@@ -457,46 +356,8 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 60,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 20, fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 20, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 60,
-                    color: Colors.grey[200],
-                    child: TextField  (
-                      textAlignVertical: TextAlignVertical.bottom,
-                      style: TextStyle(fontSize: 20, fontFamily: "POPPINS"),
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 20, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.22, 60, 19),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.22,60, 19),
               ],
             ),
           ),
@@ -506,48 +367,10 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 60,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 20,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 20, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.22,60, 19),
                 Stack(
                   children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width*0.22,
-                        height: 60,
-                        color: Colors.grey[200],
-                        child: TextField (
-                          style: TextStyle(fontSize: 20,fontFamily: "POPPINS"),
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration:  InputDecoration(
-                            hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],
-                                fontSize: 20, fontFamily: "POPPINS"),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                            enabledBorder:const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                          ),
-                        )
-                    ),
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.22,60, 19),
                     Positioned(
                         right: 0,
                         top: 15,
@@ -565,13 +388,13 @@ class Contact extends StatelessWidget {
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
                                     color: Colors.white,
-                                    fontSize: 15
+                                    fontSize: 18
                                 ),
                               ),
                             ),
                           ),
                         )
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -587,7 +410,7 @@ class Contact extends StatelessWidget {
                 width: MediaQuery.of(context).size.width*0.12,
                 decoration: BoxDecoration(
                     color: App.primery,
-                    borderRadius: BorderRadius.circular(50/2)
+                    borderRadius: BorderRadius.circular(30)
                 ),
                 child: Center(
                   child: Padding(
@@ -595,7 +418,7 @@ class Contact extends StatelessWidget {
                     child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
                     TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
                         fontFamily: "POPPINS",
-                        fontSize: 20
+                        fontSize: 19
                     ),),
                   ),
                 )
@@ -603,24 +426,12 @@ class Contact extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 45,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 15)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 40, 19),
         ],
       ),
     );
   }
-  largegWidget(BuildContext context){
+  xlarge2Widget(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -632,95 +443,17 @@ class Contact extends StatelessWidget {
                 child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
                     style: const TextStyle(
                         fontFamily: "FOUNDRYGRIDNIK",
-                        color: App.primery,fontSize:50,
+                        color: App.primery,fontSize:55,
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 40,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 16,
-                    fontFamily: "POPPINS"
-                ),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 16, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 55, 17),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 40,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 16, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 16, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5,  55, 17),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 40,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 16, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 16, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5,  55, 17),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 40,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 16, fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],
-                      fontSize: 16, fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5, 55, 17),
           SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
@@ -728,7 +461,7 @@ class Contact extends StatelessWidget {
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                  fontSize: 16,
+                  fontSize: 17,
                   color: App.purple,
                   fontWeight: FontWeight.bold),
             ),
@@ -739,46 +472,8 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 40,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 16, fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 16, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 40,
-                    color: Colors.grey[200],
-                    child: TextField  (
-                      textAlignVertical: TextAlignVertical.bottom,
-                      style: TextStyle(fontSize: 16, fontFamily: "POPPINS"),
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 16, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.22, 55, 17),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.22, 55, 17),
               ],
             ),
           ),
@@ -788,48 +483,126 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 40,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 16,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],
-                            fontSize: 16, fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.22, 55, 17),
                 Stack(
                   children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width*0.22,
-                        height: 40,
-                        color: Colors.grey[200],
-                        child: TextField (
-                          style: TextStyle(fontSize: 16,fontFamily: "POPPINS"),
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration:  InputDecoration(
-                            hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],
-                                fontSize: 16, fontFamily: "POPPINS"),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.22, 55, 17),
+                    Positioned(
+                        right: 0,
+                        top: 14,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Container(
+                            width: 90,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: App.purple,
+                                borderRadius: BorderRadius.circular(30)
                             ),
-                            enabledBorder:const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
+                            child: Center(
+                              child: Text(App_Localization.of(context).translate("upload").toUpperCase(),
+                                style: TextStyle(
+                                    fontFamily: "POPPINS",
+                                    color: Colors.white,
+                                    fontSize: 17
+                                ),
+                              ),
                             ),
                           ),
                         )
                     ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
+          GestureDetector(
+            onTap: () {
+              //todo submit
+            },
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width*0.12,
+                decoration: BoxDecoration(
+                    color: App.primery,
+                    borderRadius: BorderRadius.circular(30)
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(9),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
+                    TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                        fontFamily: "POPPINS",
+                        fontSize: 17
+                    ),),
+                  ),
+                )
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 35, 17),
+        ],
+      ),
+    );
+  }
+  largeWidget(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width * 0.12),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(
+                child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
+                    style: const TextStyle(
+                        fontFamily: "FOUNDRYGRIDNIK",
+                        color: App.primery,fontSize:45,
+                        fontWeight: FontWeight.bold),maxLines: 1)
+            ),
+          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 40, 15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5, 40, 15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5, 40, 15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5,40, 15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.02),
+          SizedBox(
+            width: MediaQuery.of(context).size.width*0.5,
+            height: MediaQuery.of(context).size.height*0.05,
+            child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
+              style: TextStyle(
+                  fontFamily: "FOUNDRYGRIDNIK",
+                  fontSize: 15,
+                  color: App.purple,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.015),
+          Container(
+            width: MediaQuery.of(context).size.width*0.5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.22,40, 15),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.22,40, 15),
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.01),
+          Container(
+            width: MediaQuery.of(context).size.width*0.5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.22,40, 15),
+                Stack(
+                  children: [
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.22,40, 15),
                     Positioned(
                         right: 0,
                         top: 10,
@@ -847,7 +620,7 @@ class Contact extends StatelessWidget {
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
                                     color: Colors.white,
-                                    fontSize: 11
+                                    fontSize: 14
                                 ),
                               ),
                             ),
@@ -869,15 +642,15 @@ class Contact extends StatelessWidget {
                 width: MediaQuery.of(context).size.width*0.12,
                 decoration: BoxDecoration(
                     color: App.primery,
-                    borderRadius: BorderRadius.circular(50/2)
+                    borderRadius: BorderRadius.circular(30)
                 ),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(6),
                     child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
                     TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
                         fontFamily: "POPPINS",
-                        fontSize: 16
+                        fontSize: 15
                     ),),
                   ),
                 )
@@ -885,28 +658,16 @@ class Contact extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 11)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 30, 15),
         ],
       ),
     );
   }
-  bigWidget(BuildContext context){
+  large2Widget(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.13),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
@@ -918,85 +679,13 @@ class Contact extends StatelessWidget {
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: 35,
-              color: Colors.grey[200],
-              child: TextField(
-                textAlignVertical: TextAlignVertical.bottom,
-                style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 35, 12),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 35,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5,35, 12),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 35,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5,35, 12),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 35,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5,35, 12),
           SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
@@ -1004,7 +693,8 @@ class Contact extends StatelessWidget {
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                  color: App.purple,fontSize:12,
+                  fontSize: 12,
+                  color: App.purple,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -1014,44 +704,8 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 35,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 35,
-                    color: Colors.grey[200],
-                    child: TextField  (
-                      style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.23,35, 12),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.23,35, 12),
               ],
             ),
           ),
@@ -1061,64 +715,28 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.22,
-                    height: 35,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.23,35, 12),
                 Stack(
                   children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width*0.22,
-                        height: 35,
-                        color: Colors.grey[200],
-                        child: TextField (
-                          style: TextStyle(fontSize: 12,fontFamily: "POPPINS"),
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration:  InputDecoration(
-                            hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: 12,fontFamily: "POPPINS"),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                            enabledBorder:const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                          ),
-                        )
-                    ),
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.23,35, 12),
                     Positioned(
                         right: 0,
                         top: 8,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Container(
                             width: 50,
-                            height: 18,
+                            height: 20,
                             decoration: BoxDecoration(
                                 color: App.purple,
-                                borderRadius: BorderRadius.circular(15)
+                                borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
                               child: Text(App_Localization.of(context).translate("upload").toUpperCase(),
                                 style: TextStyle(
-                                    color: Colors.white,
                                     fontFamily: "POPPINS",
-                                    fontSize: 8
+                                    color: Colors.white,
+                                    fontSize: 10
                                 ),
                               ),
                             ),
@@ -1130,143 +748,60 @@ class Contact extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.06),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
           GestureDetector(
             onTap: () {
               //todo submit
             },
             child: Container(
-                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 width: MediaQuery.of(context).size.width*0.13,
                 decoration: BoxDecoration(
                     color: App.primery,
-                    borderRadius: BorderRadius.circular(50/2)
+                    borderRadius: BorderRadius.circular(30)
                 ),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
-                      style: TextStyle(
-                          fontFamily: "POPPINS",
-                          fontWeight: FontWeight.bold,color: Colors.white,fontSize: 12),),
+                    padding: const EdgeInsets.all(5),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
+                    TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                        fontFamily: "POPPINS",
+                        fontSize: 12
+                    ),),
                   ),
                 )
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 35,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 10)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 25, 12),
         ],
       ),
     );
   }
-  medWidget(BuildContext context){
+  bigWidget(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.15),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.13),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.15,
+            height: MediaQuery.of(context).size.height*0.2,
             child: Center(
                 child: Text(App_Localization.of(context).translate("book_an_assessment").toUpperCase(),
                     style: const TextStyle(
                         fontFamily: "FOUNDRYGRIDNIK",
-                        color: App.primery,fontSize:20,
+                        color: App.primery,fontSize:30,
                         fontWeight: FontWeight.bold),maxLines: 1)
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: 30,
-              color: Colors.grey[200],
-              child: TextField(
-                textAlignVertical: TextAlignVertical.bottom,
-                style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("name"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.name, "name", MediaQuery.of(context).size.width*0.5, 30, 10),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 30,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("email"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.email, "email", MediaQuery.of(context).size.width*0.5,30, 10),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 30,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("phone"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.phone, "phone", MediaQuery.of(context).size.width*0.5,30, 10),
           SizedBox(height: MediaQuery.of(context).size.width*0.01),
-          Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              height: 30,
-              color: Colors.grey[200],
-              child: TextField(
-                style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration:  InputDecoration(
-                  hintText: App_Localization.of(context).translate("city"),
-                  hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                ),
-              )
-          ),
+          textField(context, homeController.city, "city", MediaQuery.of(context).size.width*0.5,30, 10),
           SizedBox(height: MediaQuery.of(context).size.width*0.02),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.5,
@@ -1274,54 +809,19 @@ class Contact extends StatelessWidget {
             child: Text(App_Localization.of(context).translate("pet_details").toUpperCase(),
               style: TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                  color: App.purple,fontSize:10,
+                  fontSize: 10,
+                  color: App.purple,
                   fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.015),
           Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width*0.5,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.24,
-                    height: 30,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("pet"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width*0.24,
-                    height: 30,
-                    color: Colors.grey[200],
-                    child: TextField  (
-                      style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("breed"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.pet, "pet", MediaQuery.of(context).size.width*0.24,30, 10),
+                textField(context, homeController.breed, "breed", MediaQuery.of(context).size.width*0.24,30, 10),
               ],
             ),
           ),
@@ -1331,49 +831,13 @@ class Contact extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width*0.24,
-                    height: 30,
-                    color: Colors.grey[200],
-                    child: TextField(
-                      style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration:  InputDecoration(
-                        hintText: App_Localization.of(context).translate("date"),
-                        hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        enabledBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                      ),
-                    )
-                ),
+                textField(context, homeController.date, "date", MediaQuery.of(context).size.width*0.24,30, 10),
                 Stack(
                   children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width*0.24,
-                        height: 30,
-                        color: Colors.grey[200],
-                        child: TextField (
-                          style: TextStyle(fontSize: 10,fontFamily: "POPPINS"),
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration:  InputDecoration(
-                            hintText: App_Localization.of(context).translate("vaccination_certificate"),
-                            hintStyle: TextStyle(color: Colors.grey[500],fontSize: 10,fontFamily: "POPPINS"),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                            enabledBorder:const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent, width: 5.0),
-                            ),
-                          ),
-                        )
-                    ),
+                    textField(context, homeController.certificate, "vaccination_certificate", MediaQuery.of(context).size.width*0.24,30, 10),
                     Positioned(
                         right: 0,
-                        top: 7,
+                        top: 8,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Container(
@@ -1388,7 +852,7 @@ class Contact extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "POPPINS",
-                                    fontSize: 6
+                                    fontSize: 7
                                 ),
                               ),
                             ),
@@ -1400,47 +864,35 @@ class Contact extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.06),
+          SizedBox(height: MediaQuery.of(context).size.width*0.05),
           GestureDetector(
             onTap: () {
               //todo submit
             },
             child: Container(
-                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                width: MediaQuery.of(context).size.width*0.15,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width*0.13,
                 decoration: BoxDecoration(
                     color: App.primery,
-                    borderRadius: BorderRadius.circular(50/2)
+                    borderRadius: BorderRadius.circular(30)
                 ),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),
-                      style: TextStyle(
-                          fontFamily: "POPPINS",
-                          fontWeight: FontWeight.bold,color: Colors.white,fontSize: 10),),
+                    padding: const EdgeInsets.all(5),
+                    child: Text(App_Localization.of(context).translate("submit").toUpperCase(),style:
+                    TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                        fontFamily: "POPPINS",
+                        fontSize: 10
+                    ),),
                   ),
                 )
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 30,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 10)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 20, 10),
         ],
       ),
     );
   }
-
 }

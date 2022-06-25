@@ -15,8 +15,11 @@ class ShopController extends GetxController{
   Rx<RangeValues> price = const RangeValues(0, 5000).obs;
   Rx<int> btmNavBarIndex = 0.obs;
   var openCountry = false.obs;
-  var openShopByPetIndex = (-1).obs;
-  var openBrandIndex = (-1).obs;
+  Rx<int> hoverIndex = (-1).obs;
+  Rx<bool> petHover = false.obs;
+  Rx<bool> petHoverContainer = false.obs;
+  Rx<bool> brandHover = false.obs;
+  Rx<bool> brandHoverContainer = false.obs;
 
 
   @override

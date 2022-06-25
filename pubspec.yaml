@@ -72,6 +72,9 @@ dependencies:
   auto_size_text: ^3.0.0
   palette_generator: ^0.3.3+1
   hovering: ^1.0.4
+  google_maps_flutter: ^2.1.8
+  google_maps_flutter_web: ^0.4.0
+  custom_info_window: ^1.0.1
 
 dev_dependencies:
   flutter_test:

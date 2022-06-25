@@ -16,7 +16,6 @@ class Events extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: myKey,
-      endDrawer: App.myDrawer(context, homeController,myKey),
       body: RefreshIndicator(
         onRefresh: ()async{
           Get.offAllNamed("/");
@@ -36,26 +35,19 @@ class Events extends StatelessWidget {
                           image: AssetImage("assets/image/Background.png")
                       )
                   ),
-                  child:  MediaQuery.of(context).size.width> App.extra ? extraWidget(context) :
+                  child: MediaQuery.of(context).size.width> App.extra ? extraWidget(context) :
+                  MediaQuery.of(context).size.width> App.extra2 ? extra2Widget(context) :
                   MediaQuery.of(context).size.width>App.xLarge ? xlargeWidget(context) :
-                  MediaQuery.of(context).size.width>App.larg ? largeWidget(context)
-                      : MediaQuery.of(context).size.width>App.big ? bigWidget(context)
-                      : medWidget(context)
+                  MediaQuery.of(context).size.width>App.xLarge2 ? xlarge2Widget(context) :
+                  MediaQuery.of(context).size.width>App.larg ? largeWidget(context) :
+                  MediaQuery.of(context).size.width>App.larg2 ? large2Widget(context) :
+                  bigWidget(context)
                 ),
-                // Positioned(child: App.header(context, homeController,myKey)),
                 Positioned(child: Header()),
                 Positioned(
                     right: 0,
                     child: App.languageBarHome(context, homeController)
                 ),
-                // Positioned(
-                //   left: MediaQuery.of(context).size.width>App.larg ?
-                //   MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.38
-                //       : MediaQuery.of(context).size.width>App.big ?
-                //   MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.43
-                //       : MediaQuery.of(context).size.width -  MediaQuery.of(context).size.width * 0.41,
-                //     child: news(context)
-                // ),
               ],
             ),
           ),
@@ -63,7 +55,8 @@ class Events extends StatelessWidget {
       ),
     );
   }
-  //************************ Large ************************
+
+  //************************ Extra ************************
   extraWidget(BuildContext context){
     return SingleChildScrollView(
       child: Column(
@@ -83,24 +76,12 @@ class Events extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 20)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 50, 23),
         ],
       ),
     );
   }
-  extraEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  extraEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op,}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -114,7 +95,7 @@ class Events extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-
+                //todo
               },
               child: Column(
                 children: [
@@ -142,7 +123,8 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 25
+                                  fontSize: 23,
+                                overflow: TextOverflow.ellipsis
                               ),
                             ),
                             SizedBox(height: 5),
@@ -152,7 +134,7 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                   fontFamily: "POPPINS",
-                                  fontSize: 25
+                                  fontSize: 23
                               ),
                             ),
                           ],
@@ -165,7 +147,98 @@ class Events extends StatelessWidget {
           }),
     );}
 
-  //************************ Large ************************
+  //************************ Extra2 ************************
+  extra2Widget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:65,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+            child:extra2Events(count:2,ratio:6/4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 45, 21),
+        ],
+      ),
+    );
+  }
+  extra2Events({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op,}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 30,
+              crossAxisSpacing: 30,
+              childAspectRatio: ratio),
+          itemCount: posts.length,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                //todo
+              },
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(posts[index]
+                                .image!
+                                .replaceAll(
+                                "localhost", "10.0.2.2")),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      color: App.purple,
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              posts[index].title!,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "POPPINS",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 21,
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              posts[index].subTitle!,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: "POPPINS",
+                                  fontSize: 21
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                  )
+                ],
+              ),
+            );
+          }),
+    );}
+
+  //************************ xLarge ************************
   xlargeWidget(BuildContext context){
     return SingleChildScrollView(
       child: Column(
@@ -185,19 +258,7 @@ class Events extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 45,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 15)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 40, 19),
         ],
       ),
     );
@@ -243,7 +304,8 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20
+                                  fontSize: 19,
+                                  overflow: TextOverflow.ellipsis
                               ),
                             ),
                             SizedBox(height: 5),
@@ -253,7 +315,97 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                   fontFamily: "POPPINS",
-                                  fontSize: 20
+                                  fontSize: 19
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                  )
+                ],
+              ),
+            );
+          }),
+    );}
+
+  //************************ xLarge2 ************************
+  xlarge2Widget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:55,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+            child:xlarge2Events(count:2,ratio:6/4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 35, 17),
+        ],
+      ),
+    );
+  }
+  xlarge2Events({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 30,
+              crossAxisSpacing: 30,
+              childAspectRatio: ratio),
+          itemCount: posts.length,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+              },
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(posts[index]
+                                .image!
+                                .replaceAll(
+                                "localhost", "10.0.2.2")),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      color: App.purple,
+                      child: Padding(
+                        padding: EdgeInsets.all(18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              posts[index].title!,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "POPPINS",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              posts[index].subTitle!,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: "POPPINS",
+                                  fontSize: 17
                               ),
                             ),
                           ],
@@ -278,7 +430,7 @@ class Events extends StatelessWidget {
             child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
                 style: const TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                    color: App.primery,fontSize:50,fontWeight: FontWeight.bold),maxLines: 1)),
+                    color: App.primery,fontSize:45,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
@@ -286,19 +438,7 @@ class Events extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 11)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 30, 15),
         ],
       ),
     );
@@ -334,7 +474,7 @@ class Events extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       color: App.purple,
                       child: Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -344,7 +484,8 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16
+                                  fontSize: 15,
+                                  overflow: TextOverflow.ellipsis
                               ),
                             ),
                             Text(
@@ -353,7 +494,96 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                   fontFamily: "POPPINS",
-                                  fontSize: 16
+                                  fontSize: 15
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                  )
+                ],
+              ),
+            );
+          }),
+    );}
+
+  //************************ Large2 ************************
+  large2Widget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+            child:large2Events(count:2,ratio:6/4,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 25, 12),
+        ],
+      ),
+    );
+  }
+  large2Events({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 30,
+              crossAxisSpacing: 30,
+              childAspectRatio: ratio),
+          itemCount: posts.length,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+              },
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(posts[index]
+                                .image!
+                                .replaceAll(
+                                "localhost", "10.0.2.2")),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      color: App.purple,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              posts[index].title!,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "POPPINS",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                            ),
+                            Text(
+                              posts[index].subTitle!,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: "POPPINS",
+                                  fontSize: 12
                               ),
                             ),
                           ],
@@ -371,14 +601,14 @@ class Events extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(height: MediaQuery.of(context).size.width*0.15),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.2,
             child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),
                 style: const TextStyle(
                   fontFamily: "FOUNDRYGRIDNIK",
-                    color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
+                    color: App.primery,fontSize:30,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
@@ -386,19 +616,7 @@ class Events extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 35,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 10)),
-              ],
-            ),
-          ),
+          App.copyrights(context, 20, 10),
         ],
       ),
     );
@@ -408,8 +626,8 @@ class Events extends StatelessWidget {
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
               childAspectRatio: ratio),
           itemCount: posts.length,
           scrollDirection: Axis.vertical,
@@ -435,7 +653,7 @@ class Events extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       color: App.purple,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.all(6),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -445,7 +663,8 @@ class Events extends StatelessWidget {
                                   color: Colors.white,
                                   fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 12
+                                  fontSize: 10,
+                                  overflow: TextOverflow.ellipsis
                               ),
                             ),
                             SizedBox(height: 5),
@@ -455,7 +674,7 @@ class Events extends StatelessWidget {
                                   fontFamily: "POPPINS",
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: 12
+                                  fontSize: 10
                               ),
                             ),
                           ],
@@ -467,107 +686,4 @@ class Events extends StatelessWidget {
             );
           }),
     );}
-
-  //************************ Medium ************************
-  medWidget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.15),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.15,
-            child: Center(child: Text(App_Localization.of(context).translate("events").toUpperCase(),style: const TextStyle(
-                fontFamily: "FOUNDRYGRIDNIK",
-                color: App.primery,fontSize:20,fontWeight: FontWeight.bold),maxLines: 1)),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:medEvents(count:2,ratio: 1.3,posts:homeController.events,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.04),
-          App.footer(context,homeController),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 30,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("© 2022 by The Barkley Pet Camp",
-                    style: TextStyle(
-                        fontFamily: "POPPINS",
-                        fontSize: 10)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  medEvents({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                //todo
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
-                                  fontFamily: "POPPINS"
-                              ),
-                            ),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 10,
-                                  fontFamily: "POPPINS"
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
-
-
-
 }
