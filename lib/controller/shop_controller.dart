@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShopController extends GetxController{
+
   List<Post> posts = <Post>[];
   RxList<Post> postsView = <Post>[].obs;
   var openCollection = false.obs;
@@ -20,6 +21,10 @@ class ShopController extends GetxController{
   Rx<bool> petHoverContainer = false.obs;
   Rx<bool> brandHover = false.obs;
   Rx<bool> brandHoverContainer = false.obs;
+  ScrollController scrollController = ScrollController();
+
+  Rx<int> lengthList = 10.obs;
+  Rx<int> lengthBestSellers = 3.obs;
 
 
   @override
@@ -28,6 +33,30 @@ class ShopController extends GetxController{
     postsView = List<Post>.from(posts).obs;
     selectedCategory.value = -1;
     super.onInit();
+  }
+
+  animation(double width,int count){
+    print(scrollController.position.maxScrollExtent);
+    scrollController.animateTo(
+      width*count,
+      duration: Duration(milliseconds: 1000),
+      curve: Curves.fastOutSlowIn,
+    );
+    Future.delayed(Duration(milliseconds: 1000)).then((value) {
+      scrollController.animateTo(
+        0,
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.fastOutSlowIn,
+      );
+    });
+  }
+
+  viewAllProducts() {
+    if(lengthBestSellers.value + 3 > lengthList.value){
+      lengthBestSellers.value = lengthList.value;
+    }else{
+      lengthBestSellers.value = lengthBestSellers.value+3;
+    }
   }
 
   filterPost(int category){

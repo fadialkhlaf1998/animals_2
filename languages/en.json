@@ -128,11 +128,11 @@
   "our_story": "OUR STORY",
   "shop":"SHOP",
   "shop_title_1": "FREE DELIVERY",
-  "shop_title_2": "NEWEST PET SHOP IN THE UAE",
-  "shop_title_3": "GET YOUR ORDER IN 24HRS",
-  "shop_content_1":"FREE Delivery on EVERY order throughout the UAE.",
-  "shop_content_2":"We are a growing family and we aim to be the largest pet store in the UAE",
-  "shop_content_3":"We ship every day, all day. Get same day or next day delivery in Dubai, Abu Dhabi and Sharjah.",
+  "shop_title_2": "GET YOUR ORDER IN 24HRS",
+  "shop_title_3": "BEST PET SHOP IN THE UAE",
+  "shop_content_1":"On all orders over AED 100 throughout the UAE.",
+  "shop_content_2":"Order before 15:00 and get your order the same day in Dubai! Next day delivery for Abu Dhabi and Sharjah.",
+  "shop_content_3":"We are a growing family and we aim to be the largest pet store in the UAE.",
   "sale": "Sale",
   "filter_by": "Filter By",
   "collection": "Collection",
@@ -185,6 +185,8 @@
   "upload": "Upload",
   "events": "Events",
   "blog": "Blog",
-  "view_more": "View More"
-
+  "view_more": "View More",
+  "best_sellers" : "Best Sellers",
+  "view_all_products": "View All Products",
+  "view_all" : "view all"
 }

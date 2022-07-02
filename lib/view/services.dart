@@ -1,6 +1,6 @@
 import 'package:animals/helper/app.dart';
 import 'package:animals/model/post.dart';
-import 'package:animals/view/header.dart';
+import 'package:animals/view/homeHeader.dart';
 import 'package:animals/view/on_hover.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,12 +45,7 @@ class Services extends StatelessWidget {
                     MediaQuery.of(context).size.width>App.larg2 ? large2Widget(context) :
                     bigWidget(context)
                 ),
-                // Positioned(child: App.header(context, homeController,myKey)),
-                Positioned(child: Header()),
-                Positioned(
-                    right: 0,
-                    child: App.languageBarHome(context, homeController)
-                ),
+                Positioned(child: HomeHeader()),
               ],
             ),
           ),
@@ -59,60 +54,14 @@ class Services extends StatelessWidget {
     ));
   }
 
-  //************************ Extra ************************
-  extraWidget(BuildContext context){
-    return SingleChildScrollView(
-      controller: homeController.scrollController,
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.03),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width*0.5,
-                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
-                            style: TextStyle(
-                                color: App.primery,
-                                fontSize: 70,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "FOUNDRYGRIDNIK"
-                            ))),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.08),
-                  child:extraService(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          extraDescription(context,homeController.selectedServices.value),
-          SizedBox(height: MediaQuery.of(context).size.width * 0.04),
-          App.footer(context,homeController),
-          App.copyrights(context, 50, 23),
-        ],
-      ),
-    );
-  }
-  extraService({required int count, required double ratio, required List<Post> posts,required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+  servicesList({required int count, required double ratio, required List<Post> posts,required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op, required double mainAxisSpacing,required  double crossAxisSpacing, required double fontSize, required double hPadding, required double vPadding}) {
     return SizedBox(
       height: height,
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
+              mainAxisSpacing: mainAxisSpacing,
+              crossAxisSpacing: crossAxisSpacing,
               childAspectRatio: ratio),
           scrollDirection: Axis.horizontal,
           itemCount: posts.length,
@@ -126,63 +75,174 @@ class Services extends StatelessWidget {
                   homeController.scrollDown();
                 });
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: img_radius == null
-                                ? null
-                                : BorderRadius.only(
-                                topLeft: Radius.circular(radius!),
-                                topRight: Radius.circular(radius)),
-                            image: DecorationImage(
-                                image: NetworkImage(posts[index]
-                                    .image!
-                                    .replaceAll(
-                                    "localhost", "10.0.2.2")),
-                                fit: BoxFit.cover)),
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width*0.25,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 15),
-                              child: Text(
-                                posts[index].title!,
-                                style: TextStyle(
-                                    fontFamily: "POPPINS",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 23
+              child: OnHover(builder: (hover) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: background,
+                    boxShadow: [shadow ? App.boxShadow : App.noShadow],
+                    borderRadius:
+                    radius == null ? null : BorderRadius.only(
+                        topLeft: Radius.circular(radius),
+                        topRight: Radius.circular(radius)),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: img_radius == null
+                                  ? null
+                                  : BorderRadius.only(
+                                  topLeft: Radius.circular(radius!),
+                                  topRight: Radius.circular(radius)),
+                              image: DecorationImage(
+                                  colorFilter: hover ? ColorFilter.mode(App.serviceHover.withOpacity(0.2), BlendMode.darken) :
+                                  null,
+                                  image: NetworkImage(posts[index]
+                                      .image!
+                                      .replaceAll(
+                                      "localhost", "10.0.2.2")),
+                                  fit: BoxFit.cover)),
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: Container(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: vPadding),
+                                child: AnimatedDefaultTextStyle(
+                                  child:Text(
+                                      posts[index].title!),
+                                  duration: Duration(microseconds: 1000),
+                                  style: TextStyle(
+                                      fontFamily: "POPPINS",
+                                      color: Colors.white,
+                                      letterSpacing: 2,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: hover ? fontSize + 2 : fontSize
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
             );
           }),
     );
   }
-  extraDescription(BuildContext context,int index){
+  mobileservicesList({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op, required double mainAxisSpacing,required  double crossAxisSpacing, required double fontSize, required double hPadding, required double vPadding}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: mainAxisSpacing,
+              crossAxisSpacing: crossAxisSpacing,
+              childAspectRatio: ratio),
+          scrollDirection: Axis.vertical,
+          itemCount: posts.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                homeController.btmNavBarIndex.value = 2;
+                homeController.selectedServices.value = index;
+                Future.delayed(Duration(milliseconds: 500)).then((value) {
+                  homeController.scrollDown2();
+                });
+              },
+              child: OnHover(builder: (hover) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: background,
+                    boxShadow: [shadow ? App.boxShadow : App.noShadow],
+                    borderRadius:
+                    radius == null ? null : BorderRadius.only(
+                        topLeft: Radius.circular(radius),
+                        topRight: Radius.circular(radius)),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: img_radius == null
+                                  ? null
+                                  : BorderRadius.only(
+                                  topLeft: Radius.circular(radius!),
+                                  topRight: Radius.circular(radius)),
+                              image: DecorationImage(
+                                  colorFilter: hover ? ColorFilter.mode(Color(0xff000000).withOpacity(0.2), BlendMode.darken) :
+                                  null,
+                                  image: NetworkImage(posts[index]
+                                      .image!
+                                      .replaceAll(
+                                      "localhost", "10.0.2.2")),
+                                  fit: BoxFit.cover)),
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: Container(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: vPadding),
+                                child: AnimatedDefaultTextStyle(
+                                  child:Text(
+                                      posts[index].title!),
+                                  duration: Duration(microseconds: 1000),
+                                  style: TextStyle(
+                                      fontFamily: "POPPINS",
+                                      color: Colors.white,
+                                      letterSpacing: 2,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: hover ? fontSize + 2 : fontSize
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            );
+          }),
+    );
+  }
+  bookAnAssessmentButton(BuildContext context,double width,double height,String translate,double fontSize) {
+    return GestureDetector(
+      onTap: (){
+        homeController.btmNavBarIndex.value = 6;
+      },
+      child: OnHover(builder:(hover){
+        return Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+              color: hover ? App.bookAnAssessmentHover : App.primery,
+              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
+              border: Border.all(color: hover ? Color(0xffFF6200) : Colors.transparent)
+          ),
+          child: Center(
+            child: Text(App_Localization.of(context).translate(translate),style:TextStyle(
+                color: hover ? App.primery : Colors.white,
+                fontSize: fontSize,
+                fontFamily: "POPPINS",
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold),),
+          ),
+        );
+      }),
+    );
+  }
+  description(BuildContext context,int index,double hBigContainer,double bigFontSize,double smallFontSize,double wBookBtn,double hBookBtn){
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.4,
+      height: hBigContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Row(
@@ -210,7 +270,7 @@ class Services extends StatelessWidget {
                             fontFamily: "FOUNDRYGRIDNIK",
                             fontWeight: FontWeight.bold,
                             color: App.blue,
-                            fontSize: 70,
+                            fontSize: bigFontSize,
                           ),maxLines: 2,)
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width*0.03,),
@@ -219,7 +279,8 @@ class Services extends StatelessWidget {
                       child: Text(homeController.service[index].stringDescription.toString(),
                         style: TextStyle(
                             fontFamily: "POPPINS",
-                            fontSize: 23,
+                            fontSize: smallFontSize,
+                            letterSpacing: 1,
                             color: Colors.black.withOpacity(0.8)),
                         textAlign: TextAlign.justify,
                       ),
@@ -229,28 +290,7 @@ class Services extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: Row(
                         children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.14,
-                              decoration: BoxDecoration(
-                                  color: App.primery,
-                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                      color: Colors.white ,
-                                      fontFamily: "POPPINS",
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold),),
-                                ),
-                              ) ,
-                            ),
-                          )
+                          bookAnAssessmentButton(context, wBookBtn, hBookBtn, "book_an_assessment", smallFontSize)
                         ],
                       ),
                     ),
@@ -260,6 +300,57 @@ class Services extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+
+  //************************ Extra ************************
+  extraWidget(BuildContext context){
+    return SingleChildScrollView(
+      controller: homeController.scrollController,
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.03),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*0.5,
+                        child: Center(child: Text(App_Localization.of(context).translate("services").toUpperCase(),
+                            style: TextStyle(
+                                color: App.primery,
+                                fontSize: 70,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "FOUNDRYGRIDNIK"
+                            ))),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.08),
+                  child: servicesList(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,
+                      radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1,
+                      mainAxisSpacing: 20,crossAxisSpacing: 20,fontSize: 23,hPadding: 40,vPadding: 15),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.4,
+              70, 23, MediaQuery.of(context).size.width * 0.14, 70),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 50, 23),
+        ],
       ),
     );
   }
@@ -296,175 +387,20 @@ class Services extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.08),
-                  child:extra2Service(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1),
+                  child: servicesList(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,
+                      radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1,
+                      mainAxisSpacing: 20,crossAxisSpacing: 20,fontSize: 21,hPadding: 40,vPadding: 15),
                 ),
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          extra2Description(context,homeController.selectedServices.value),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.4,
+              65, 21,MediaQuery.of(context).size.width * 0.15, 65),
           SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           App.footer(context,homeController),
           App.copyrights(context, 45, 21),
         ],
-      ),
-    );
-  }
-  extra2Service({required int count, required double ratio, required List<Post> posts,required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      height: height,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-              childAspectRatio: ratio),
-          scrollDirection: Axis.horizontal,
-          itemCount: posts.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                homeController.btmNavBarIndex.value = 2;
-                homeController.selectedServices.value = index;
-                Future.delayed(Duration(milliseconds: 500)).then((value) {
-                  homeController.scrollDown();
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: img_radius == null
-                                ? null
-                                : BorderRadius.only(
-                                topLeft: Radius.circular(radius!),
-                                topRight: Radius.circular(radius)),
-                            image: DecorationImage(
-                                image: NetworkImage(posts[index]
-                                    .image!
-                                    .replaceAll(
-                                    "localhost", "10.0.2.2")),
-                                fit: BoxFit.cover)),
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width*0.25,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 15),
-                              child: Text(
-                                posts[index].title!,
-                                style: TextStyle(
-                                    fontFamily: "POPPINS",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 21
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );
-  }
-  extra2Description(BuildContext context,int index){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.4,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.service[index].image!),
-                        fit: BoxFit.cover
-                    )
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        alignment: Alignment.topRight,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text(homeController.service[index].title.toString(),
-                          style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
-                            fontWeight: FontWeight.bold,
-                            color: App.blue,
-                            fontSize: 65,
-                          ),maxLines: 2,)
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(
-                            fontFamily: "POPPINS",
-                            fontSize: 21,
-                            color: Colors.black.withOpacity(0.8)),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.14,
-                              decoration: BoxDecoration(
-                                  color: App.primery,
-                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(14),
-                                  child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                      color: Colors.white ,
-                                      fontFamily: "POPPINS",
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.bold),),
-                                ),
-                              ) ,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -475,7 +411,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.13),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -501,176 +437,20 @@ class Services extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.08),
-                  child: xLargeService(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1),
+                  child: servicesList(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,
+                      radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1,
+                      mainAxisSpacing: 20,crossAxisSpacing: 20,fontSize: 19,hPadding: 30,vPadding: 10),
                 ),
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          xlargDescription(context,homeController.selectedServices.value),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.4,
+              60, 19, MediaQuery.of(context).size.width * 0.16, 60),
           SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           App.footer(context,homeController),
           App.copyrights(context, 40, 19),
         ],
-      ),
-    );
-  }
-  xLargeService({required int count, required double ratio, required List<Post> posts, required double height ,required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      height: height,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                homeController.btmNavBarIndex.value = 2;
-                homeController.selectedServices.value = index;
-                Future.delayed(Duration(milliseconds: 500)).then((value) {
-                  homeController.scrollDown();
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: img_radius == null
-                                ? null
-                                : BorderRadius.only(
-                                topLeft: Radius.circular(radius!),
-                                topRight: Radius.circular(radius)),
-                            image: DecorationImage(
-                                image: NetworkImage(posts[index]
-                                    .image!
-                                    .replaceAll(
-                                    "localhost", "10.0.2.2")),
-                                fit: BoxFit.cover)),
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
-                              child: Text(
-                                posts[index].title!,
-                                style: TextStyle(
-                                    fontFamily: "POPPINS",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 19
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );
-  }
-  xlargDescription(BuildContext context,int index){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.4,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.service[index].image!),
-                        fit: BoxFit.cover
-                    )
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        alignment: Alignment.topRight,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text(homeController.service[index].title.toString(),
-                          style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
-                            fontWeight: FontWeight.bold,
-                            color: App.blue,
-                            fontSize: 60,
-                          ),maxLines: 2,)
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(
-                            fontFamily: "POPPINS",
-                            fontSize: 19,
-                            color: Colors.black.withOpacity(0.8)),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.14,
-                              decoration: BoxDecoration(
-                                  color: App.primery,
-                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(13),
-                                  child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                      color: Colors.white ,
-                                      fontFamily: "POPPINS",
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold),),
-                                ),
-                              ) ,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -681,7 +461,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -706,177 +486,21 @@ class Services extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.08),
-                  child:xLarge2Service(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1),
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.07),
+                  child: servicesList(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,
+                      radius:60,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 60,op: 1,
+                      mainAxisSpacing: 20,crossAxisSpacing: 20,fontSize: 17,hPadding: 15,vPadding: 10),
                 ),
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          xlarg2Description(context,homeController.selectedServices.value),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.4,
+              55, 17, MediaQuery.of(context).size.width * 0.17, 55),
           SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           App.footer(context,homeController),
           App.copyrights(context, 35, 17),
         ],
-      ),
-    );
-  }
-  xLarge2Service({required int count, required double ratio, required List<Post> posts, required double height ,required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      height: height,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                homeController.btmNavBarIndex.value = 2;
-                homeController.selectedServices.value = index;
-                Future.delayed(Duration(milliseconds: 500)).then((value) {
-                  homeController.scrollDown();
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: img_radius == null
-                                ? null
-                                : BorderRadius.only(
-                                topLeft: Radius.circular(radius!),
-                                topRight: Radius.circular(radius)),
-                            image: DecorationImage(
-                                image: NetworkImage(posts[index]
-                                    .image!
-                                    .replaceAll(
-                                    "localhost", "10.0.2.2")),
-                                fit: BoxFit.cover)),
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
-                              child: Text(
-                                posts[index].title!,
-                                style: TextStyle(
-                                    fontFamily: "POPPINS",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 19
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );
-  }
-  xlarg2Description(BuildContext context,int index){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.4,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.service[index].image!),
-                        fit: BoxFit.cover
-                    )
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        alignment: Alignment.topRight,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text(homeController.service[index].title.toString(),
-                          style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
-                            fontWeight: FontWeight.bold,
-                            color: App.blue,
-                            fontSize: 55,
-                          ),maxLines: 2,)
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(
-                            fontFamily: "POPPINS",
-                            fontSize: 17,
-                            color: Colors.black.withOpacity(0.8)),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.14,
-                              decoration: BoxDecoration(
-                                  color: App.primery,
-                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                      color: Colors.white ,
-                                      fontFamily: "POPPINS",
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),),
-                                ),
-                              ) ,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -887,7 +511,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -913,173 +537,20 @@ class Services extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-                  child:largService(count:1,ratio: 1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,radius:50,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 50,op: 1),
+                  child: servicesList(count:1,ratio:1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,
+                      radius:50,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 50,op: 1,
+                      mainAxisSpacing: 20,crossAxisSpacing: 20,fontSize: 15,hPadding: 10,vPadding: 8),
                 ),
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          largDescription(context,homeController.selectedServices.value),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.4,
+              45, 15, MediaQuery.of(context).size.width * 0.18, 50),
           SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           App.footer(context,homeController),
           App.copyrights(context,30, 15)
         ],
-      ),
-    );
-  }
-  largService({required int count, required double ratio, required List<Post> posts,required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      height: height,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                homeController.btmNavBarIndex.value = 2;
-                homeController.selectedServices.value = index;
-                Future.delayed(Duration(milliseconds: 500)).then((value) {
-                  homeController.scrollDown();
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: img_radius == null
-                                ? null
-                                : BorderRadius.only(
-                                topLeft: Radius.circular(radius!),
-                                topRight: Radius.circular(radius)),
-                            image: DecorationImage(
-                                image: NetworkImage(posts[index]
-                                    .image!
-                                    .replaceAll(
-                                    "localhost", "10.0.2.2")),
-                                fit: BoxFit.cover)),
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                              child: Text(
-                                posts[index].title!,
-                                style: TextStyle(
-                                    fontFamily: "POPPINS",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );}
-  largDescription(BuildContext context,int index){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.35,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.service[index].image!),
-                        fit: BoxFit.cover
-                    )
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.topRight,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Text(homeController.service[index].title.toString(),
-                        style: TextStyle(
-                          fontFamily: "FOUNDRYGRIDNIK",
-                          fontWeight: FontWeight.bold,
-                          color: App.blue,
-                          fontSize: 45,
-                        ),maxLines: 2,)
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(
-                          fontFamily: "POPPINS",
-                        fontSize: 15,
-                        color: Colors.black.withOpacity(0.8)),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              decoration: BoxDecoration(
-                                  color: App.primery,
-                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                      color: Colors.white ,
-                                      fontFamily: "POPPINS",
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),),
-                                ),
-                              ) ,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -1090,7 +561,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -1115,174 +586,24 @@ class Services extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
-                  child:larg2Service(count:1,ratio: 1,posts:homeController.service,height:MediaQuery.of(context).size.width*0.13,radius:35,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 35,op: 1),
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
+                  child: servicesList(count:1,ratio:0.95,posts:homeController.service,height:MediaQuery.of(context).size.width*0.135,
+                      radius:35,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 35,op: 1,
+                      mainAxisSpacing: 5,crossAxisSpacing: 5,fontSize: 12,hPadding: 10,
+                      vPadding: MediaQuery.of(context).size.width > 1150 ? 8 : 5
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          larg2Description(context,homeController.selectedServices.value),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.4,
+              40, 12, MediaQuery.of(context).size.width > 1200 ?
+              MediaQuery.of(context).size.width * 0.16 : MediaQuery.of(context).size.width * 0.19, 40),
           SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           App.footer(context,homeController),
           App.copyrights(context,25, 12)
         ],
-      ),
-    );
-  }
-  larg2Service({required int count, required double ratio, required List<Post> posts,required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      height: height,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                homeController.btmNavBarIndex.value = 2;
-                homeController.selectedServices.value = index;
-                Future.delayed(Duration(milliseconds: 500)).then((value) {
-                  homeController.scrollDown();
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: img_radius == null
-                                ? null
-                                : BorderRadius.only(
-                                topLeft: Radius.circular(radius!),
-                                topRight: Radius.circular(radius)),
-                            image: DecorationImage(
-                                image: NetworkImage(posts[index]
-                                    .image!
-                                    .replaceAll(
-                                    "localhost", "10.0.2.2")),
-                                fit: BoxFit.cover)),
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 6),
-                              child: Text(
-                                posts[index].title!,
-                                style: TextStyle(
-                                    fontFamily: "POPPINS",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );}
-  larg2Description(BuildContext context,int index){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.35,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.service[index].image!),
-                        fit: BoxFit.cover
-                    )
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        alignment: Alignment.topRight,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text(homeController.service[index].title.toString(),
-                          style: TextStyle(
-                            fontFamily: "FOUNDRYGRIDNIK",
-                            fontWeight: FontWeight.bold,
-                            color: App.blue,
-                            fontSize: 40,
-                          ),maxLines: 2,)
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(
-                            fontFamily: "POPPINS",
-                            fontSize: 12,
-                            color: Colors.black.withOpacity(0.8)),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.18,
-                              decoration: BoxDecoration(
-                                  color: App.primery,
-                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(11),
-                                  child: Text(App_Localization.of(context).translate("book_an_assessment"),style:TextStyle(
-                                      color: Colors.white ,
-                                      fontFamily: "POPPINS",
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),),
-                                ),
-                              ) ,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -1293,7 +614,7 @@ class Services extends StatelessWidget {
       controller: homeController.scrollController,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -1316,14 +637,20 @@ class Services extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.02),
-                  child:bigService(count:1,ratio:1,posts:homeController.service, height: MediaQuery.of(context).size.width*0.14,radius:25,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 25,op: 1),
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.14),
+                  child: mobileservicesList(count:3,ratio: 1,posts:homeController.service,
+                      radius: 25,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: 25,op: 1,
+                      mainAxisSpacing: 20,crossAxisSpacing: 25,fontSize: 10,hPadding: 20,
+                      vPadding: MediaQuery.of(context).size.width > 850 ? 12 : 9
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          bigDescription(context,homeController.selectedServices.value),
+          description(context, homeController.selectedServices.value, MediaQuery.of(context).size.width * 0.5,
+              25, 10, MediaQuery.of(context).size.width > 850 ? MediaQuery.of(context).size.width * 0.19 :
+              MediaQuery.of(context).size.width * 0.23, 35),
           SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           App.footer(context,homeController),
           App.copyrights(context,20, 10)
@@ -1331,172 +658,4 @@ class Services extends StatelessWidget {
       ),
     );
   }
-  bigService({required int count, required double ratio, required List<Post> posts,required double height, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      height: height,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: ratio),
-          scrollDirection: Axis.horizontal,
-          itemCount: posts.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                homeController.btmNavBarIndex.value = 2;
-                homeController.selectedServices.value = index;
-                Future.delayed(Duration(milliseconds: 500)).then((value) {
-                  homeController.scrollDown();
-                });
-              },
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 2),
-                decoration: BoxDecoration(
-                  color: background,
-                  boxShadow: [shadow ? App.boxShadow : App.noShadow],
-                  borderRadius:
-                  radius == null ? null : BorderRadius.only(
-                    topLeft: Radius.circular(radius),
-                    topRight: Radius.circular(radius),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: img_radius == null
-                                    ? null
-                                    : BorderRadius.only(
-                                    topLeft: Radius.circular(radius!),
-                                    topRight: Radius.circular(radius)
-                                ),
-                                shape: circle
-                                    ? BoxShape.circle
-                                    : BoxShape.rectangle,
-                                image: DecorationImage(
-                                    image: NetworkImage(posts[index]
-                                        .image!
-                                        .replaceAll(
-                                        "localhost", "10.0.2.2")),
-                                    fit: BoxFit.cover)),
-                            child: Align(
-                              alignment: AlignmentDirectional.bottomStart,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width*0.25,
-                                // color:  posts[index].color,
-                                child: Padding(
-                                  padding:  EdgeInsets.symmetric(horizontal: 5,vertical:
-                                  MediaQuery.of(context).size.width > 830 ? 3 : 1),
-                                  child: Text(
-                                    posts[index].title!,
-                                    style: const TextStyle(
-                                        fontFamily: "POPPINS",
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,fontSize: 10),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );
-  }
-  bigDescription(BuildContext context,int index){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width * 0.45,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration:BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(homeController.service[index].image!),
-                        fit: BoxFit.cover
-                    )
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Align(
-                          alignment: Alignment.topRight,
-                          child: Text(homeController.service[index].title.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: App.blue,
-                              fontFamily: "FOUNDRYGRIDNIK",
-                              fontSize: 25,
-                            ),maxLines: 2,)
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: Text(homeController.service[index].stringDescription.toString(),
-                        style: TextStyle(
-                            fontFamily: "POPPINS",
-                            fontSize: 10,color: Colors.black.withOpacity(0.8)),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width*0.03,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.btmNavBarIndex.value = 6;
-                            },
-                            child: Container(
-                                width:  MediaQuery.of(context).size.width * 0.2,
-                                decoration: BoxDecoration(
-                                    color: App.primery,
-                                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.1)
-                                ),
-                                child:  Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Center(
-                                    child: Text(App_Localization.of(context).translate("book_an_assessment"),
-                                      style: const TextStyle(
-                                          fontFamily: "POPPINS",
-                                          color: Colors.white ,fontSize: 10,fontWeight: FontWeight.bold
-                                      ),),
-                                  ),
-                                )
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
 }

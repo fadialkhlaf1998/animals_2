@@ -1,4 +1,5 @@
 import 'package:animals/controller/shop_controller.dart';
+import 'package:animals/view/shopHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animals/app_localization.dart';
@@ -40,6 +41,7 @@ class Cart extends StatelessWidget {
                     child: MediaQuery.of(context).size.width>App.larg?_lgWedget(context)
                         :_bgWedget(context),
                   ),
+                  Positioned(child: ShopHeader()),
                   cartController.loading.value
                       ? Positioned(
                           child: Container(

@@ -1,7 +1,7 @@
 import 'package:animals/app_localization.dart';
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
-import 'package:animals/view/header.dart';
+import 'package:animals/view/homeHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zoom_widget/zoom_widget.dart';
@@ -42,11 +42,8 @@ class About extends StatelessWidget {
                   MediaQuery.of(context).size.width>App.larg?lgWidget(context) :
                   MediaQuery.of(context).size.width>App.larg2?lg2Widget(context) : bgWidget(context)
                 ),
-                Positioned(child: Header()),
-                Positioned(
-                    right: 0,
-                    child: App.languageBarHome(context, homeController)
-                ),
+                Positioned(child: HomeHeader()),
+
               ],
             ),
           ),
@@ -59,7 +56,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width * 0.13),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -102,8 +99,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),
                             height: 1.5,
+                            letterSpacing: 1,
                             fontFamily: "POPPINS",
                             fontSize: 23,
                           ),
@@ -114,8 +112,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 23,
+                              letterSpacing: 1,
                               height: 1.5,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
@@ -124,8 +123,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 23,
+                              letterSpacing: 1,
                               height: 1.5,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
@@ -190,8 +190,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),
                             height: 1.5,
+                            letterSpacing: 1,
                             fontFamily: "POPPINS",
                             fontSize: 21,
                           ),
@@ -202,9 +203,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 21,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -212,9 +214,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 21,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -235,7 +238,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width * 0.12),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.13),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -278,10 +281,11 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),
                             height: 1.5,
                             fontFamily: "POPPINS",
                             fontSize: 19,
+                            letterSpacing: 1,
                           ),
                           textAlign: TextAlign.justify,
                         ),
@@ -290,9 +294,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 19,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -300,9 +305,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 19,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -323,7 +329,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width * 0.12),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -366,8 +372,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),
                             height: 1.5,
+                            letterSpacing: 1,
                             fontFamily: "POPPINS",
                             fontSize: 17,
                           ),
@@ -378,9 +385,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 17,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -388,8 +396,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 17,
+                              letterSpacing: 1,
                               height: 1.5,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
@@ -411,7 +420,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width * 0.12),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -454,10 +463,11 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),
                             height: 1.5,
                             fontFamily: "POPPINS",
                             fontSize: 15,
+                            letterSpacing: 1,
                           ),
                           textAlign: TextAlign.justify,
                         ),
@@ -466,8 +476,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 15,
+                              letterSpacing: 1,
                               height: 1.5,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
@@ -476,8 +487,9 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 15,
+                              letterSpacing: 1,
                               height: 1.5,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
@@ -499,7 +511,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width * 0.13),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.16),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -535,17 +547,18 @@ class About extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.65,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),
                             height: 1.5,
                             fontFamily: "POPPINS",
                             fontSize: 12,
+                            letterSpacing: 1,
                           ),
                           textAlign: TextAlign.justify,
                         ),
@@ -554,9 +567,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 12,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -564,9 +578,10 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),
                               fontSize: 12,
                               height: 1.5,
+                              letterSpacing: 1,
                               fontFamily: "POPPINS",
                             ),textAlign: TextAlign.justify),
                       ),
@@ -587,7 +602,7 @@ class About extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -623,16 +638,17 @@ class About extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.65,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![0].data,
-                          style: TextStyle(color: App.auto,fontSize: 10,
+                          style: TextStyle(color: Colors.black.withOpacity(0.8),fontSize: 10,
                               fontFamily: "POPPINS",
-                              height: 1.5
+                              height: 1.5,
+                            letterSpacing: 1,
                           ),
                           textAlign: TextAlign.justify,
                         ),
@@ -641,18 +657,20 @@ class About extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![1].data,
-                            style: TextStyle(color: App.auto,fontSize: 10,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),fontSize: 10,
                                 fontFamily: "POPPINS",
-                                height: 1.5
+                                height: 1.5,
+                              letterSpacing: 1,
                             ),textAlign: TextAlign.justify),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.width*0.01,),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Text(homeController.aboutPage!.jsonData![2].data,
-                            style: TextStyle(color: App.auto,fontSize: 10,
+                            style: TextStyle(color: Colors.black.withOpacity(0.8),fontSize: 10,
                                 fontFamily: "POPPINS",
-                                height: 1.5
+                                height: 1.5,
+                              letterSpacing: 1,
                             ),textAlign: TextAlign.justify),
                       ),
                     ],

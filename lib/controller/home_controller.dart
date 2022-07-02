@@ -6,7 +6,6 @@ import 'package:animals/helper/store.dart';
 import 'package:animals/model/login_info.dart';
 import 'package:animals/model/start_up.dart';
 import 'package:animals/view/search.dart';
-import 'package:animals/view/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animals/helper/api.dart';
@@ -20,17 +19,19 @@ class HomeController extends GetxController {
   List<Post> banner = <Post>[];
   List<Post> brand = <Post>[];
   List<Post> service = <Post>[];
-  List<Post> category = <Post>[];
+  List<Post> superCategory = <Post>[];
   List<Post> product = <Post>[];
   List<Post> gallary = <Post>[];
   List<Post> reviews = <Post>[];
   List<Post> events = <Post>[];
   List<Post> blogs = <Post>[];
-  RxList<Post> products = <Post>[].obs;
   Post? aboutHomePage;
   Post? aboutPage;
   CartController cartController = Get.put(CartController());
   ShopController shopController = Get.put(ShopController());
+  Rx<int> selectedCategory = 0.obs;
+  Rx<int> locationSearch = 0.obs;
+
 
   ///footers
   TextEditingController subscribeEmail = TextEditingController();
@@ -42,7 +43,6 @@ class HomeController extends GetxController {
     zoom: 11.5,
   );
   Set<Marker> marker = Set();
-
   void onMapCreated(GoogleMapController controller)  async {
     marker.add(
         Marker(
@@ -51,7 +51,6 @@ class HomeController extends GetxController {
           visible: false
     ));
   }
-
   void openMap(double latitude, double longitude) async {
     String googleUrl = 'https://www.google.com/maps/place/The+Barkley+Pet+Camp/@25.1774539,55.3645627,17z/data=!3m1!4b1!4m5!3m4!1s0x3e5f671870b004a3:0xd105f08f9c4285cc!8m2!3d25.1774539!4d55.3645627';
     await launchUrl(Uri.parse(googleUrl));
@@ -72,8 +71,6 @@ class HomeController extends GetxController {
   Rx<bool> fake = false.obs;
   Rx<int> btmNavBarIndex = 0.obs;
   Rx<int> hoverIndex = (-1).obs;
-  int hoverIndexValue = -1;
-  Rx<int> selectedSlider = 0.obs;
   var ready = false.obs;
   var openCountry = false.obs;
   RxBool popUp = true.obs;
@@ -84,6 +81,7 @@ class HomeController extends GetxController {
   Rx<int> selectedNews = 0.obs;
 
   ///review slider
+  Rx<int> selectedSlider = 0.obs;
   var activeIndex = 0.obs;
   set_index(int selected){
     activeIndex.value=selected;
@@ -104,6 +102,15 @@ class HomeController extends GetxController {
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 500),
       scrollController.position.maxScrollExtent / 2.5,
+
+    );
+  }
+  scrollDown2() {
+    scrollController.animateTo(
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 500),
+      scrollController.position.maxScrollExtent / 1.7,
+
     );
   }
 
@@ -111,25 +118,6 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     get_data();
-  }
-
-  goToShop(int id){
-    loading.value=true;
-    if(id == -1){
-      shopController.posts = product;
-      shopController.postsView.value = product;
-      shopController.selectedCategory.value = id;
-      Get.to(()=>Shop());
-      loading.value=false;
-    }else{
-      API.getByParent1(id).then((value){
-        shopController.posts = product;
-        shopController.postsView.value = value;
-        shopController.selectedCategory.value = id;
-        Get.to(()=>Shop());
-        loading.value=false;
-      });
-    }
   }
 
   login() async {
@@ -153,7 +141,7 @@ class HomeController extends GetxController {
           StartUp? startUp = await API.startUp();
           if(startUp != null){
             banner = startUp.banners.posts;
-            category = startUp.super_category.posts;
+            superCategory = startUp.super_category.posts;
             service = startUp.services.posts;
             brand = startUp.brand.posts;
             gallary = startUp.gallary.posts;
@@ -180,7 +168,7 @@ class HomeController extends GetxController {
   }
 
   get_nave() {
-    category = category;
+    superCategory = superCategory;
     banner = banner;
     service = service;
     product = product;
@@ -226,6 +214,8 @@ class HomeController extends GetxController {
         }
         Future.delayed(Duration(seconds: 3)).then((value) {
           subscribe.value = false;
+          subscribeEmail.text = "";
+          clickSubscribe.value = false;
         });
       });
     } else {

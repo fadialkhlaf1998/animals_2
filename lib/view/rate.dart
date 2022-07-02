@@ -1,6 +1,6 @@
 import 'package:animals/helper/app.dart';
 import 'package:animals/model/post.dart';
-import 'package:animals/view/header.dart';
+import 'package:animals/view/homeHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animals/app_localization.dart';
@@ -46,11 +46,8 @@ class Rate extends StatelessWidget {
                   bigWidget(context)
                 ),
                 // Positioned(child: App.header(context, homeController,myKey)),
-                Positioned(child: Header()),
-                Positioned(
-                    right: 0,
-                    child: App.languageBarHome(context, homeController)
-                ),
+                Positioned(child: HomeHeader()),
+
               ],
             ),
           ),
@@ -58,12 +55,13 @@ class Rate extends StatelessWidget {
       ),
     );
   }
+
   //************************ Extra ************************
   extraWidget(BuildContext context){
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -128,7 +126,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 23
+                              fontSize: 23,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 25,) :
@@ -230,7 +229,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 21
+                              fontSize: 21,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 21,) :
@@ -267,7 +267,7 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.13),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -332,7 +332,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 19
+                              fontSize: 19,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 19,) :
@@ -369,7 +370,7 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -387,7 +388,7 @@ class Rate extends StatelessWidget {
                                 color: App.primery,
                                 fontSize: 55,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: "FOUNDRYGRIDNIK"
+                                fontFamily: "FOUNDRYGRIDNIK",
                             ))),
                       ),
                     ),
@@ -434,7 +435,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 17
+                              fontSize: 17,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 17,) :
@@ -471,7 +473,7 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -524,7 +526,7 @@ class Rate extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     height: 40,
                     color: homeController.openServiceIndex.value==index ?
                     homeController.service[index].color : Colors.grey[400],
@@ -536,7 +538,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 15
+                              fontSize: 15,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 15,) :
@@ -552,12 +555,12 @@ class Rate extends StatelessWidget {
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeIn,
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5+20,
+                      width: MediaQuery.of(context).size.width * 0.6+20,
                       child: !(homeController.openServiceIndex.value == index)
                           ? Center()
                           :  Center(child: App.ratesTable(posts[index].jsonData!.first.data,
                           context,
-                          MediaQuery.of(context).size.width * 0.5, 15, 17
+                          MediaQuery.of(context).size.width * 0.6, 15, 17
                       ),)
                   ),
                 ),
@@ -573,7 +576,7 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -626,7 +629,7 @@ class Rate extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     height: 35,
                     color: homeController.openServiceIndex.value==index ?
                     homeController.service[index].color : Colors.grey[400],
@@ -638,7 +641,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 12
+                              fontSize: 12,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 12,) :
@@ -654,12 +658,12 @@ class Rate extends StatelessWidget {
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeIn,
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5+20,
+                      width: MediaQuery.of(context).size.width * 0.6+20,
                       child: !(homeController.openServiceIndex.value == index)
                           ? Center()
                           :  Center(child: App.ratesTable(posts[index].jsonData!.first.data,
                           context,
-                          MediaQuery.of(context).size.width * 0.5, 10, 12
+                          MediaQuery.of(context).size.width * 0.6, 10, 12
                       ),)
                   ),
                 ),
@@ -675,7 +679,7 @@ class Rate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -728,7 +732,7 @@ class Rate extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     height: 30,
                     color: homeController.openServiceIndex.value==index ?
                     homeController.service[index].color : Colors.grey[400],
@@ -740,7 +744,8 @@ class Rate extends StatelessWidget {
                           Text(posts[index].title!, style: TextStyle(
                               color: Colors.white,
                               fontFamily: "POPPINS",
-                              fontSize: 10
+                              fontSize: 10,
+                              letterSpacing: 2
                           ),),
                           homeController.openServiceIndex.value==index ?
                           Icon(Icons.add , color: Colors.white,size: 10,) :
@@ -756,12 +761,12 @@ class Rate extends StatelessWidget {
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeIn,
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5+20,
+                      width: MediaQuery.of(context).size.width * 0.7+20,
                       child: !(homeController.openServiceIndex.value == index)
                           ? Center()
                           :  Center(child: App.ratesTable(posts[index].jsonData!.first.data,
                           context,
-                          MediaQuery.of(context).size.width * 0.5, 8, 10
+                          MediaQuery.of(context).size.width * 0.7, 8, 10
                       ),)
                   ),
                 ),

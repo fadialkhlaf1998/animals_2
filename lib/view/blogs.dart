@@ -2,7 +2,7 @@ import 'package:animals/app_localization.dart';
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
 import 'package:animals/model/post.dart';
-import 'package:animals/view/header.dart';
+import 'package:animals/view/HomeHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zoom_widget/zoom_widget.dart';
@@ -43,12 +43,8 @@ class Blogs extends StatelessWidget {
                     MediaQuery.of(context).size.width>App.larg2 ? large2Widget(context)
                         : bigWidget(context)
                 ),
-                // Positioned(child: App.header(context, homeController,myKey)),
-                Positioned(child: Header()),
-                Positioned(
-                    right: 0,
-                    child: App.languageBarHome(context, homeController)
-                ),
+                Positioned(child: HomeHeader()),
+
               ],
             ),
           ),
@@ -56,38 +52,14 @@ class Blogs extends StatelessWidget {
       ),
     );
   }
-  //************************ Extra ************************
-  extraWidget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.13),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
-                style: const TextStyle(
-                    fontFamily: "FOUNDRYGRIDNIK",
-                    color: App.primery,fontSize:70,fontWeight: FontWeight.bold),maxLines: 1)),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:extraBlogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.04),
-          App.footer(context,homeController),
-          App.copyrights(context, 50, 23),
-        ],
-      ),
-    );
-  }
-  extraBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
+
+  blogs({required int count, required double ratio, required List<Post> posts,required double mainAxisSpacing, required double crossAxisSpacing ,required double textPadding,required double fontSize}) {
     return SizedBox(
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
+              mainAxisSpacing: mainAxisSpacing,
+              crossAxisSpacing: crossAxisSpacing,
               childAspectRatio: ratio),
           itemCount: posts.length,
           scrollDirection: Axis.vertical,
@@ -95,7 +67,7 @@ class Blogs extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-
+                //todo
               },
               child: Column(
                 children: [
@@ -113,7 +85,7 @@ class Blogs extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       color: App.purple,
                       child: Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.all(textPadding),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -121,20 +93,22 @@ class Blogs extends StatelessWidget {
                               posts[index].title!,
                               style: TextStyle(
                                   color: Colors.white,
+                                  letterSpacing: 2,
                                   fontFamily: "POPPINS",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 23,
-                                overflow: TextOverflow.ellipsis
+                                  fontSize: fontSize,
+                                  overflow: TextOverflow.ellipsis
                               ),
                             ),
                             SizedBox(height: 5),
                             Text(
                               posts[index].subTitle!,
                               style: TextStyle(
+                                  letterSpacing: 2,
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                   fontFamily: "POPPINS",
-                                  fontSize: 23
+                                  fontSize: fontSize
                               ),
                             ),
                           ],
@@ -146,6 +120,34 @@ class Blogs extends StatelessWidget {
             );
           }),
     );}
+
+
+  //************************ Extra ************************
+  extraWidget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:70,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 6/4, posts: homeController.blogs, mainAxisSpacing: 30,
+                  crossAxisSpacing: 30, textPadding: 20, fontSize: 23)
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 50, 23),
+        ],
+      ),
+    );
+  }
 
   //************************ Extra2 ************************
   extra2Widget(BuildContext context){
@@ -162,8 +164,9 @@ class Blogs extends StatelessWidget {
                     color: App.primery,fontSize:65,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:extra2Blogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 6/4, posts: homeController.blogs, mainAxisSpacing: 30,
+                  crossAxisSpacing: 30, textPadding: 20, fontSize: 21)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -172,343 +175,9 @@ class Blogs extends StatelessWidget {
       ),
     );
   }
-  extra2Blogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "POPPINS",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 21,
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "POPPINS",
-                                  fontSize: 21
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
 
   //************************ xLarge ************************
   xlargeWidget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
-                style: const TextStyle(
-                    fontFamily: "FOUNDRYGRIDNIK",
-                    color: App.primery,fontSize:60,fontWeight: FontWeight.bold),maxLines: 1)),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:xlargeBlogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.04),
-          App.footer(context,homeController),
-          App.copyrights(context, 40, 19),
-        ],
-      ),
-    );
-  }
-  xlargeBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "POPPINS",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 19,
-                                overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "POPPINS",
-                                  fontSize: 19
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
-
-  //************************ xLarge2 ************************
-  xlarge2Widget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
-                style: const TextStyle(
-                    fontFamily: "FOUNDRYGRIDNIK",
-                    color: App.primery,fontSize:55,fontWeight: FontWeight.bold),maxLines: 1)),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:xlarge2Blogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.04),
-          App.footer(context,homeController),
-          App.copyrights(context, 35, 17),
-        ],
-      ),
-    );
-  }
-  xlarge2Blogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(18),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "POPPINS",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "POPPINS",
-                                  fontSize: 17
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
-
-  //************************ Large ************************
-  largeWidget(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.12),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.2,
-            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
-                style: const TextStyle(
-                    fontFamily: "FOUNDRYGRIDNIK",
-                    color: App.primery,fontSize:45,fontWeight: FontWeight.bold),maxLines: 1)),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:largeBlogs(count:2,ratio:6/4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.width*0.04),
-          App.footer(context,homeController),
-          App.copyrights(context, 30, 15),
-        ],
-      ),
-    );
-  }
-  largeBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "POPPINS",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "POPPINS",
-                                  fontSize: 15
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
-
-  //************************ Large2 ************************
-  large2Widget(BuildContext context){
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -519,11 +188,93 @@ class Blogs extends StatelessWidget {
             child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
                 style: const TextStyle(
                     fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:60,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 6/4, posts: homeController.blogs, mainAxisSpacing: 30,
+                  crossAxisSpacing: 30, textPadding: 20, fontSize: 19)
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 40, 19),
+        ],
+      ),
+    );
+  }
+
+  //************************ xLarge2 ************************
+  xlarge2Widget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:55,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 6/4, posts: homeController.blogs, mainAxisSpacing: 30,
+                  crossAxisSpacing: 30, textPadding: 18, fontSize: 17)
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 35, 17),
+        ],
+      ),
+    );
+  }
+
+  //************************ Large ************************
+  largeWidget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.14),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
+                    color: App.primery,fontSize:45,fontWeight: FontWeight.bold),maxLines: 1)),
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 6/4, posts: homeController.blogs, mainAxisSpacing: 30,
+                  crossAxisSpacing: 30, textPadding: 12, fontSize: 15)
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width*0.04),
+          App.footer(context,homeController),
+          App.copyrights(context, 30, 15),
+        ],
+      ),
+    );
+  }
+
+  //************************ Large2 ************************
+  large2Widget(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.2,
+            child: Center(child: Text(App_Localization.of(context).translate("blog").toUpperCase(),
+                style: const TextStyle(
+                    fontFamily: "FOUNDRYGRIDNIK",
                     color: App.primery,fontSize:35,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:large2Blogs(count:2,ratio: 1.4,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 1.4, posts: homeController.blogs, mainAxisSpacing: 30,
+                  crossAxisSpacing: 30, textPadding: 10, fontSize: 12)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -532,78 +283,13 @@ class Blogs extends StatelessWidget {
       ),
     );
   }
-  large2Blogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                //todo
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "POPPINS",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  fontFamily: "POPPINS",
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
 
   //************************ Medium ************************
   bigWidget(BuildContext context){
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width*0.15),
+          SizedBox(height: MediaQuery.of(context).size.width*0.16),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.15,
@@ -612,8 +298,9 @@ class Blogs extends StatelessWidget {
                 color: App.primery,fontSize:30,fontWeight: FontWeight.bold),maxLines: 1)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
-            child:bigBlogs(count:2,ratio: 1.3,posts:homeController.blogs,radius:null,circle:false,background: const Color(0xffffffff),shadow: false,img_radius: null,op: 1),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1),
+              child: blogs(count: 2, ratio: 1.4, posts: homeController.blogs, mainAxisSpacing: 20,
+                  crossAxisSpacing: 20, textPadding: 6, fontSize: 10)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -622,70 +309,6 @@ class Blogs extends StatelessWidget {
       ),
     );
   }
-  bigBlogs({required int count, required double ratio, required List<Post> posts, required double? img_radius, required double? radius, required bool circle, required Color background, required bool shadow, required int op}) {
-    return SizedBox(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
-              childAspectRatio: ratio),
-          itemCount: posts.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                //todo
-              },
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(posts[index]
-                                .image!
-                                .replaceAll(
-                                "localhost", "10.0.2.2")),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: App.purple,
-                      child: Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              posts[index].title!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
-                                  fontFamily: "POPPINS",
-                                overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                            Text(
-                              posts[index].subTitle!,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 10,
-                                  fontFamily: "POPPINS",
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  )
-                ],
-              ),
-            );
-          }),
-    );}
+
 
 }

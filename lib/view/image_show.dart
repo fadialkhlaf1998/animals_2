@@ -16,15 +16,15 @@ class ImageShow extends StatelessWidget {
     return Scaffold(
       key: myKey,
       appBar: AppBar(
-        title: const Text(""),
-        centerTitle: true,
+        toolbarHeight: headerHeight(context),
+        leading: headerIcon(context)
       ),
       body: Center(
         child: SafeArea(
             child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Obx( () {
-              return  MediaQuery.of(context).size.width>App.extra ? extraWidget(context) :
+              return MediaQuery.of(context).size.width>App.extra ? extraWidget(context) :
               MediaQuery.of(context).size.width>App.extra2 ? extra2Widget(context) :
               MediaQuery.of(context).size.width>App.xLarge ? xlargeWidget(context) :
               MediaQuery.of(context).size.width>App.xLarge2 ? xlarge2Widget(context) :
@@ -37,7 +37,30 @@ class ImageShow extends StatelessWidget {
       ),
     );
   }
-
+  headerIcon(BuildContext context){
+    return IconButton(
+      onPressed: () => {
+        Get.back()
+      },
+      icon: Icon(
+          Icons.arrow_back,
+          size: MediaQuery.of(context).size.width>App.extra ? 50 :
+          MediaQuery.of(context).size.width>App.extra2 ? 45 :
+          MediaQuery.of(context).size.width>App.xLarge ? 40 :
+          MediaQuery.of(context).size.width>App.xLarge2 ? 35 :
+          MediaQuery.of(context).size.width>App.larg? 30 :
+          MediaQuery.of(context).size.width>App.larg2? 25 : 20
+      ),
+    );
+  }
+  headerHeight(BuildContext context) {
+    return MediaQuery.of(context).size.width>App.extra ? 90 :
+    MediaQuery.of(context).size.width>App.extra2 ? 80 :
+    MediaQuery.of(context).size.width>App.xLarge ? 70 :
+    MediaQuery.of(context).size.width>App.xLarge2 ? 60 :
+    MediaQuery.of(context).size.width>App.larg? 50 :
+    MediaQuery.of(context).size.width>App.larg2? 45 : 40 ;
+  }
   body(BuildContext context, double top ,double left,double right,double width,double height,double fontSize) {
     return Stack(
       children: [
@@ -61,18 +84,15 @@ class ImageShow extends StatelessWidget {
           },
           focusNode: FocusNode(),
           child: Container(
-            color: App.primery,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  color: Colors.white,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height -
                       (MediaQuery.of(context).size.height * 0.1),
                   child: PhotoView(
-                    imageProvider:
-                    NetworkImage(homeController.gallary[index.value].image!.replaceAll("localhost", "10.0.2.2")),
+                    imageProvider: NetworkImage(homeController.gallary[index.value].image!.replaceAll("localhost", "10.0.2.2")),
                     backgroundDecoration: const BoxDecoration(color: Colors.white),
                   ),
                 ),
@@ -118,25 +138,25 @@ class ImageShow extends StatelessWidget {
   }
 
   extraWidget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 200, 200,100);
+    return body(context,MediaQuery.of(context).size.height*0.4, 50,50, 200, 200,100);
   }
   extra2Widget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 190, 190,90);
+    return body(context,MediaQuery.of(context).size.height*0.4, 50,50, 190, 190,90);
   }
   xlargeWidget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 150, 150,80);
+    return body(context,MediaQuery.of(context).size.height*0.4, 50,50, 150, 150,80);
   }
   xlarge2Widget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 150, 150,70);
+    return body(context,MediaQuery.of(context).size.height*0.4, 50,50, 150, 150,70);
   }
   largeWidget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 100, 100,50);
+    return body(context,MediaQuery.of(context).size.height*0.4, 50,50, 100, 100,60);
   }
   large2Widget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 50,50, 100, 100,50);
+    return body(context,MediaQuery.of(context).size.height*0.4, 30,30, 50, 50,50);
   }
   bigWidget(BuildContext context) {
-    return body(context,MediaQuery.of(context).size.height*0.5 , 10,10, 70, 70,40);
+    return body(context,MediaQuery.of(context).size.height*0.4, 15,15, 50, 70,40);
   }
 
 }

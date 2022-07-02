@@ -1,6 +1,7 @@
 import 'package:animals/controller/home_controller.dart';
 import 'package:animals/helper/app.dart';
-import 'package:animals/view/header.dart';
+import 'package:animals/model/post.dart';
+import 'package:animals/view/homeHeader.dart';
 import 'package:animals/view/image_show.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,11 +44,8 @@ class Gallery extends StatelessWidget {
                   MediaQuery.of(context).size.width>App.larg2 ? larg2Widget(context) : bigWidget(context)
                 ),
                 // Positioned(child: App.header(context, homeController,myKey)),
-                Positioned(child: Header()),
-                Positioned(
-                    right: 0,
-                    child: App.languageBarHome(context, homeController)
-                ),
+                Positioned(child: HomeHeader()),
+
               ],
             ),
           ),
@@ -55,6 +53,36 @@ class Gallery extends StatelessWidget {
       ),
     );
   }
+
+  galleryList({required int count, required double ratio, required List<Post> posts}) {
+    return SizedBox(
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: count,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+              childAspectRatio: ratio),
+          scrollDirection: Axis.vertical,
+          itemCount: posts.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Get.to(()=>ImageShow(index.obs));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            homeController.gallary[index].image!
+                        ),
+                        fit: BoxFit.cover)),
+              ),
+            );
+          }),
+    );
+  }
+
 
   extraWidget(BuildContext context){
     return SingleChildScrollView(
@@ -64,31 +92,7 @@ class Gallery extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 6/4
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: homeController.gallary.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(()=>ImageShow(index.obs));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    homeController.gallary[index].image!
-                                ),
-                                fit: BoxFit.cover)),
-                      )
-                  );
-                }),
+            child: galleryList(count: 3, ratio: 6/4, posts: homeController.gallary)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -145,32 +149,8 @@ class Gallery extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.width * 0.12),
           SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 6/4
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: homeController.gallary.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(()=>ImageShow(index.obs));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    homeController.gallary[index].image!
-                                ),
-                                fit: BoxFit.cover)),
-                      )
-                  );
-                }),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: galleryList(count: 3, ratio: 6/4, posts: homeController.gallary)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -186,32 +166,8 @@ class Gallery extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.width * 0.12),
           SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 6/4
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: homeController.gallary.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(()=>ImageShow(index.obs));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    homeController.gallary[index].image!
-                                ),
-                                fit: BoxFit.cover)),
-                      )
-                  );
-                }),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: galleryList(count: 3, ratio: 6/4, posts: homeController.gallary)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -227,32 +183,8 @@ class Gallery extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.width * 0.12),
           SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 6/4
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: homeController.gallary.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Get.to(()=>ImageShow(index.obs));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                homeController.gallary[index].image!
-                              ),
-                              fit: BoxFit.cover)),
-                    )
-                  );
-                }),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: galleryList(count: 3, ratio: 6/4, posts: homeController.gallary)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -268,32 +200,8 @@ class Gallery extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.width*0.13),
           SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 6/4
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: homeController.gallary.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(()=>ImageShow(index.obs));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    homeController.gallary[index].image!
-                                ),
-                                fit: BoxFit.cover)),
-                      )
-                  );
-                }),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: galleryList(count: 3, ratio: 6/4, posts: homeController.gallary)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),
@@ -309,32 +217,8 @@ class Gallery extends StatelessWidget {
           SizedBox( height: MediaQuery.of(context).size.width * 0.15),
           SizedBox(height: MediaQuery.of(context).size.width*0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 6/4
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: homeController.gallary.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(()=>ImageShow(index.obs));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    homeController.gallary[index].image!
-                                ),
-                                fit: BoxFit.cover)),
-                      )
-                  );
-                }),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: galleryList(count: 3, ratio: 6/4, posts: homeController.gallary)
           ),
           SizedBox(height: MediaQuery.of(context).size.width*0.04),
           App.footer(context,homeController),

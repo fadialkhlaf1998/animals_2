@@ -3,7 +3,6 @@ import 'package:animals/controller/home_controller.dart';
 import 'package:animals/controller/shop_controller.dart';
 import 'package:animals/helper/store.dart';
 import 'package:animals/model/post.dart';
-import 'package:animals/view/on_hover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,9 +22,15 @@ class App {
   static const Color hoverGrey = Color(0xffececec);
   static const Color green = Color(0xff00a550);
   static const Color lightOrang =  Color(0xffFFB380);
-  static Color auto = Colors.black.withOpacity(0.75);
-  static Color purple = Color(0xff662482);
-  static Color blue = Color(0xff1174bb);
+  static const Color darkGrey = Color(0xff1d1d1b);
+  static const Color purple = Color(0xff662482);
+  static const Color blue = Color(0xff1174bb);
+  static const Color serviceHover = Color(0xff000000);
+  static const Color bookAnAssessmentHover = Color(0xffFFFFFF);
+  static const Color goToShoptHover = Color(0xff9D4CBF);
+  static const Color bookABoardingtHover = Color(0xffFFD35B);
+
+
 
   ////////////////////////  Responsives  ////////////////////////
   static const double extra =  2500;
@@ -80,6 +85,7 @@ class App {
                   child: Container(
                   height: MediaQuery.of(context).size.width*0.3,
                   child: GoogleMap(
+                    mapType: MapType.normal,
                     zoomGesturesEnabled: false,
                     zoomControlsEnabled: false,
                     onMapCreated: homeController.onMapCreated,
@@ -99,8 +105,8 @@ class App {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("The Barckly",style: TextStyle(fontSize: 23,color: Colors.white)),
-                            Text("Main Office",style: TextStyle(fontSize: 21,color: Colors.white))
+                            Text("The Barkley",style: TextStyle(fontSize: 23,color: Colors.white,letterSpacing: 2)),
+                            Text("Main Office",style: TextStyle(fontSize: 21,color: Colors.white,letterSpacing: 2))
                           ],
                         ),
                       ),
@@ -144,10 +150,12 @@ class App {
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 23,
+                                    letterSpacing: 2,
                                     color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.03,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
                               style: TextStyle(
+                                letterSpacing: 2,
                                   fontFamily: "POPPINS",
                                   fontSize: 21,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
@@ -155,6 +163,7 @@ class App {
                             Text("Dubai, United Arab Emirates",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
+                                  letterSpacing: 2,
                                   fontSize: 21,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
@@ -162,12 +171,14 @@ class App {
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 21,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 21,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
@@ -181,6 +192,7 @@ class App {
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 23,
+                                  letterSpacing: 2,
                                   color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Container(
@@ -191,21 +203,25 @@ class App {
                                   style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 23,
+                                    letterSpacing: 2,
                                   ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration:  InputDecoration(
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
                                     hintStyle: TextStyle(color: Colors.grey,
                                         fontFamily: "POPPINS",
+                                        letterSpacing: 2,
                                       fontSize: 23),
                                     fillColor: Colors.white.withOpacity(0.9),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
                                     ),
                                     enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                           Colors.red : Colors.transparent,width: 3.3),
@@ -220,20 +236,19 @@ class App {
                               },
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                                  width: MediaQuery.of(context).size.width*0.15,
+                                  width: MediaQuery.of(context).size.width*0.14,
+                                  height: 70,
                                   decoration: BoxDecoration(
                                       color: primery,
                                       borderRadius: BorderRadius.circular(50)
                                   ),
                                   child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
-                                            fontFamily: "POPPINS",
-                                            fontSize: 23,
-                                          ),),
-                                      )
+                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                                          fontFamily: "POPPINS",
+                                          fontSize: 23,
+                                          letterSpacing: 2,
+                                        ),)
                                   )
                               ),
                             ),
@@ -241,6 +256,7 @@ class App {
                             homeController.subscribe.isTrue ?
                             Text(App_Localization.of(context).translate("footer4_content_thank"),style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 20,
                                 color: Colors.white.withOpacity(0.9),fontWeight: FontWeight.normal)) : Center(),
@@ -249,6 +265,7 @@ class App {
                             TextStyle(
                                 fontFamily: "POPPINS",
                                 fontSize: 23,
+                                letterSpacing: 2,
                                 color: Colors.white,fontWeight: FontWeight.w500)),
                             SizedBox(height: 10,child: Center(),),
                             Row(
@@ -338,8 +355,8 @@ class App {
   static extra2Footer(BuildContext context,HomeController homeController){
     return Obx(() => SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width > 2350 ? MediaQuery.of(context).size.width * 0.21 :
-      MediaQuery.of(context).size.width * 0.22,
+      height: MediaQuery.of(context).size.width > 2350 ? MediaQuery.of(context).size.width * 0.22 :
+      MediaQuery.of(context).size.width * 0.225,
       child: Row(
         children: [
           Expanded(
@@ -368,8 +385,8 @@ class App {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("The Barckly",style: TextStyle(fontSize: 21,color: Colors.white)),
-                              Text("Main Office",style: TextStyle(fontSize: 19,color: Colors.white))
+                              Text("The Barkley",style: TextStyle(fontSize: 21,color: Colors.white, letterSpacing: 2,)),
+                              Text("Main Office",style: TextStyle(fontSize: 19,color: Colors.white, letterSpacing: 2,))
                             ],
                           ),
                         ),
@@ -413,30 +430,35 @@ class App {
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 21,
+                                    letterSpacing: 2,
                                     color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.03,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 19,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 19,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 19,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 19,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
@@ -450,6 +472,7 @@ class App {
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 21,
+                                  letterSpacing: 2,
                                   color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Container(
@@ -460,21 +483,25 @@ class App {
                                   style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 21,
+                                    letterSpacing: 2,
                                   ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration:  InputDecoration(
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
                                     hintStyle: TextStyle(color: Colors.grey,
                                         fontFamily: "POPPINS",
+                                        letterSpacing: 2,
                                         fontSize: 21),
                                     fillColor: Colors.white.withOpacity(0.9),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
                                     ),
                                     enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
@@ -489,20 +516,19 @@ class App {
                               },
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                                  width: MediaQuery.of(context).size.width*0.14,
+                                  width: MediaQuery.of(context).size.width*0.15,
+                                  height: 65,
                                   decoration: BoxDecoration(
                                       color: primery,
                                       borderRadius: BorderRadius.circular(50)
                                   ),
                                   child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(14),
-                                        child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
-                                            fontFamily: "POPPINS",
-                                            fontSize: 21,
-                                          ),),
-                                      )
+                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                                          fontFamily: "POPPINS",
+                                          letterSpacing: 2,
+                                          fontSize: 21,
+                                        ),)
                                   )
                               ),
                             ),
@@ -510,12 +536,14 @@ class App {
                             homeController.subscribe.isTrue ?
                             Text(App_Localization.of(context).translate("footer4_content_thank"),style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 18,
                                 color: Colors.white.withOpacity(0.9),fontWeight: FontWeight.normal)) : Center(),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Text(App_Localization.of(context).translate("become_our_friends") + "!",style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 21,
                                 color: Colors.white,fontWeight: FontWeight.w500)),
@@ -606,7 +634,7 @@ class App {
   static xlargFooter(BuildContext context,HomeController homeController){
     return Obx(() => SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width > 2050 ? MediaQuery.of(context).size.width * 0.21 :
+      height: MediaQuery.of(context).size.width > 2050 ? MediaQuery.of(context).size.width * 0.22 :
       MediaQuery.of(context).size.width * 0.23,
       child: Row(
         children: [
@@ -636,8 +664,8 @@ class App {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("The Barckly",style: TextStyle(fontSize: 19,color: Colors.white)),
-                              Text("Main Office",style: TextStyle(fontSize: 17,color: Colors.white))
+                              Text("The Barkley",style: TextStyle(fontSize: 19,color: Colors.white, letterSpacing: 2,)),
+                              Text("Main Office",style: TextStyle(fontSize: 17,color: Colors.white,letterSpacing: 2,))
                             ],
                           ),
                         ),
@@ -679,6 +707,7 @@ class App {
                           children: [
                             Text(App_Localization.of(context).translate("footer1"),
                                 style: TextStyle(
+                                    letterSpacing: 2,
                                     fontFamily: "POPPINS",
                                     fontSize: 19,
                                     color: Colors.white,fontWeight: FontWeight.bold)),
@@ -687,24 +716,28 @@ class App {
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 17,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 17,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 17,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 17,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
@@ -718,6 +751,7 @@ class App {
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 19,
+                                  letterSpacing: 2,
                                   color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Container(
@@ -728,21 +762,25 @@ class App {
                                   style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 19,
+                                    letterSpacing: 2,
                                   ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration:  InputDecoration(
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
                                     hintStyle: TextStyle(color: Colors.grey,
                                         fontFamily: "POPPINS",
+                                        letterSpacing: 2,
                                         fontSize: 19),
                                     fillColor: Colors.white.withOpacity(0.9),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
                                     ),
                                     enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
@@ -758,19 +796,18 @@ class App {
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
                                   width: MediaQuery.of(context).size.width*0.15,
+                                  height: 60,
                                   decoration: BoxDecoration(
                                       color: primery,
                                       borderRadius: BorderRadius.circular(50)
                                   ),
                                   child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(13),
-                                        child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
-                                            fontFamily: "POPPINS",
-                                            fontSize: 19,
-                                          ),),
-                                      )
+                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                                          fontFamily: "POPPINS",
+                                          fontSize: 19,
+                                          letterSpacing: 2,
+                                        ),)
                                   )
                               ),
                             ),
@@ -778,12 +815,14 @@ class App {
                             homeController.subscribe.isTrue ?
                             Text(App_Localization.of(context).translate("footer4_content_thank"),style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 16,
                                 color: Colors.white.withOpacity(0.9),fontWeight: FontWeight.normal)) : Center(),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Text(App_Localization.of(context).translate("become_our_friends") + "!",style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 17,
                                 color: Colors.white,fontWeight: FontWeight.w500)),
@@ -904,8 +943,8 @@ class App {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("The Barckly",style: TextStyle(fontSize: 17,color: Colors.white)),
-                              Text("Main Office",style: TextStyle(fontSize: 15,color: Colors.white))
+                              Text("The Barkley",style: TextStyle(fontSize: 17,color: Colors.white,letterSpacing: 2)),
+                              Text("Main Office",style: TextStyle(fontSize: 15,color: Colors.white,letterSpacing: 2))
                             ],
                           ),
                         ),
@@ -949,30 +988,35 @@ class App {
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 17,
+                                    letterSpacing: 2,
                                     color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.03,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 15,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 15,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 15,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 15,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
@@ -986,6 +1030,7 @@ class App {
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 17,
+                                  letterSpacing: 2,
                                   color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Container(
@@ -994,6 +1039,7 @@ class App {
                                 child: TextField(
                                   controller: homeController.subscribeEmail,
                                   style: TextStyle(
+                                    letterSpacing: 2,
                                     fontFamily: "POPPINS",
                                     fontSize: 17,
                                   ),
@@ -1002,15 +1048,18 @@ class App {
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
                                     hintStyle: TextStyle(color: Colors.grey,
                                         fontFamily: "POPPINS",
+                                        letterSpacing: 2,
                                         fontSize: 17),
                                     fillColor: Colors.white.withOpacity(0.9),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
                                     ),
                                     enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
@@ -1026,19 +1075,18 @@ class App {
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
                                   width: MediaQuery.of(context).size.width*0.15,
+                                  height: 55,
                                   decoration: BoxDecoration(
                                       color: primery,
                                       borderRadius: BorderRadius.circular(50)
                                   ),
                                   child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(12),
-                                        child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
-                                            fontFamily: "POPPINS",
-                                            fontSize: 17,
-                                          ),),
-                                      )
+                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                                          fontFamily: "POPPINS",
+                                          fontSize: 17,
+                                          letterSpacing: 2,
+                                        ),)
                                   )
                               ),
                             ),
@@ -1046,12 +1094,14 @@ class App {
                             homeController.subscribe.isTrue ?
                             Text(App_Localization.of(context).translate("footer4_content_thank"),style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 14,
                                 color: Colors.white.withOpacity(0.9),fontWeight: FontWeight.normal)) : Center(),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Text(App_Localization.of(context).translate("become_our_friends") + "!",style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 15,
                                 color: Colors.white,fontWeight: FontWeight.w500)),
@@ -1142,7 +1192,7 @@ class App {
   static largFooter(BuildContext context,HomeController homeController){
     return Obx(() => SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width > 1450 ? MediaQuery.of(context).size.width * 0.22 :
+      height: MediaQuery.of(context).size.width > 1450 ? MediaQuery.of(context).size.width * 0.23 :
       MediaQuery.of(context).size.width * 0.25,
       child: Row(
         children: [
@@ -1171,8 +1221,8 @@ class App {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("The Barckly",style: TextStyle(fontSize: 15,color: Colors.white)),
-                              Text("Main Office",style: TextStyle(fontSize: 12,color: Colors.white))
+                              Text("The Barkley",style: TextStyle(fontSize: 15,color: Colors.white,letterSpacing: 2)),
+                              Text("Main Office",style: TextStyle(fontSize: 12,color: Colors.white,letterSpacing: 2,))
                             ],
                           ),
                         ),
@@ -1217,41 +1267,47 @@ class App {
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
                                     fontSize: 15,
+                                    letterSpacing: 2,
                                     color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 13,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 13,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 13,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
                               style: TextStyle(
                                   fontFamily: "POPPINS",
                                   fontSize: 13,
+                                  letterSpacing: 2,
                                   color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                      SizedBox(width: MediaQuery.of(context).size.width*0.04),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(App_Localization.of(context).translate("footer4"),
                               style: TextStyle(
+                                  letterSpacing: 2,
                                   fontFamily: "POPPINS",
                                   fontSize: 15,
                                   color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
@@ -1262,6 +1318,7 @@ class App {
                                 child: TextField(
                                   controller: homeController.subscribeEmail,
                                   style: TextStyle(
+                                    letterSpacing: 2,
                                     fontSize: 15,
                                     fontFamily: "POPPINS",
                                   ),
@@ -1270,15 +1327,18 @@ class App {
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
                                     hintStyle: TextStyle(color: Colors.grey,
                                         fontFamily: "POPPINS",
+                                        letterSpacing: 2,
                                       fontSize: 15),
                                     fillColor: Colors.white.withOpacity(0.9),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
                                     ),
                                     enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 3.3),
@@ -1294,19 +1354,18 @@ class App {
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
                                   width: MediaQuery.of(context).size.width*0.15,
+                                  height: 45,
                                   decoration: BoxDecoration(
                                       color: primery,
                                       borderRadius: BorderRadius.circular(50/2)
                                   ),
                                   child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
-                                            fontFamily: "POPPINS",
-                                            fontSize: 15,
-                                          ),),
-                                      )
+                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+                                          fontFamily: "POPPINS",
+                                          fontSize: 15,
+                                          letterSpacing: 2,
+                                        ),)
                                   )
                               ),
                             ),
@@ -1314,12 +1373,14 @@ class App {
                             homeController.subscribe.isTrue ?
                             Text(App_Localization.of(context).translate("footer4_content_thank"),style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 12,
                                 color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.normal)) : Center(),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Text(App_Localization.of(context).translate("become_our_friends") + "!",style:
                             TextStyle(
+                                letterSpacing: 2,
                                 fontFamily: "POPPINS",
                                 fontSize: 13,
                                 color: Colors.white,fontWeight: FontWeight.normal)),
@@ -1410,7 +1471,7 @@ class App {
   static large2Footer(BuildContext context,HomeController homeController){
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height:  MediaQuery.of(context).size.width > 1250 ? MediaQuery.of(context).size.width * 0.21 :
+      height:  MediaQuery.of(context).size.width > 1250 ? MediaQuery.of(context).size.width * 0.215 :
       MediaQuery.of(context).size.width * 0.25,
       child: Row(
         children: [
@@ -1439,8 +1500,8 @@ class App {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("The Barckly",style: TextStyle(fontSize: 12,color: Colors.white)),
-                              Text("Main Office",style: TextStyle(fontSize: 10,color: Colors.white))
+                              Text("The Barkley",style: TextStyle(fontSize: 12,color: Colors.white,letterSpacing: 2,)),
+                              Text("Main Office",style: TextStyle(fontSize: 10,color: Colors.white,letterSpacing: 2,))
                             ],
                           ),
                         ),
@@ -1484,49 +1545,53 @@ class App {
                             Text(App_Localization.of(context).translate("footer1"),
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
+                                    letterSpacing: 2,
                                     fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold)),
                             SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
                             Text("Warehouse S01, Ras Al Khor 2",
-                              style: TextStyle(fontSize: 10, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 10, letterSpacing: 2,fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("Dubai, United Arab Emirates",
-                              style: TextStyle(fontSize: 10, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 10, letterSpacing: 2,fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("04 333 5843",
-                              style: TextStyle(fontSize: 10, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 10, letterSpacing: 2,fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                             SizedBox(height: 10,child: Center(),),
                             Text("+971 54 204 6700",
-                              style: TextStyle(fontSize: 10, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                              style: TextStyle(fontSize: 10,letterSpacing: 2, fontFamily: "POPPINS",color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           ],
                         ),
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width*0.04),
+                      SizedBox(width: MediaQuery.of(context).size.width*0.02),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 14, fontFamily: "POPPINS",color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
+                            Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontSize: 12,letterSpacing: 2, fontFamily: "POPPINS",color: Colors.white,fontWeight: FontWeight.bold),maxLines: 1,),
                             SizedBox(height: 12,child: Center(),),
                             Container(
-                                width: MediaQuery.of(context).size.width*0.23,
-                                height: 30,
+                                width: MediaQuery.of(context).size.width*0.22,
+                                height: 35,
                                 child: TextField(
                                   controller: homeController.subscribeEmail,
                                   textAlignVertical: TextAlignVertical.bottom,
                                   style: TextStyle(
+                                      letterSpacing: 2,
                                       fontFamily: "POPPINS",
                                       fontSize: 12),
                                   decoration:  InputDecoration(
                                     hintText: App_Localization.of(context).translate("footer4_content_email"),
-                                    hintStyle: TextStyle(color: Colors.grey,fontSize: 12, fontFamily: "POPPINS",),
+                                    hintStyle: TextStyle(color: Colors.grey,fontSize: 12, fontFamily: "POPPINS",letterSpacing: 2,),
                                     fillColor: Colors.white.withOpacity(0.9),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 2.5),
                                     ),
                                     enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
                                       borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                           && homeController.clickSubscribe.isTrue ?
                                       Colors.red : Colors.transparent,width: 2.5),
@@ -1541,29 +1606,28 @@ class App {
                               },
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
-                                  width: MediaQuery.of(context).size.width*0.15,
+                                  width: MediaQuery.of(context).size.width*0.16,
+                                  height: 35,
                                   decoration: BoxDecoration(
                                       color: primery,
                                       borderRadius: BorderRadius.circular(50/2)
                                   ),
                                   child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),
-                                        style: TextStyle(
-                                            fontFamily: "POPPINS",
-                                            fontWeight: FontWeight.bold,color: Colors.white,fontSize: 12),),
-                                    )
+                                    child: Text(App_Localization.of(context).translate("footer4_content_subscribe").toUpperCase(),
+                                      style: TextStyle(
+                                          fontFamily: "POPPINS",
+                                          letterSpacing: 2,
+                                          fontWeight: FontWeight.bold,color: Colors.white,fontSize: 12),)
                                   )
                               ),
                             ),
                             SizedBox(height: 10,child: Center(),),
                             homeController.subscribe.isTrue ?
                             Text(App_Localization.of(context).translate("footer4_content_thank"),style:
-                            TextStyle(fontSize: 9,fontFamily: "POPPINS",color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.normal)) : Center(),
+                            TextStyle(fontSize: 9,fontFamily: "POPPINS",letterSpacing: 2,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.normal)) : Center(),
                             SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                             Text(App_Localization.of(context).translate("become_our_friends")+"!",style:
-                            TextStyle(fontSize: 10,fontFamily: "POPPINS",color: Colors.white,fontWeight: FontWeight.normal)),
+                            TextStyle(fontSize: 10,letterSpacing: 2,fontFamily: "POPPINS",color: Colors.white,fontWeight: FontWeight.normal)),
                             SizedBox(height: 5,child: Center(),),
                             Row(
                               children: [
@@ -1651,7 +1715,7 @@ class App {
   static bigFooter(BuildContext context,HomeController homeController){
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width > 850 ? MediaQuery.of(context).size.width * 0.23:
+      height: MediaQuery.of(context).size.width > 850 ? MediaQuery.of(context).size.width * 0.25:
       MediaQuery.of(context).size.width * 0.29,
       child: Row(
         children: [
@@ -1680,8 +1744,8 @@ class App {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("The Barckly",style: TextStyle(fontSize: 10,color: Colors.white)),
-                              Text("Main Office",style: TextStyle(fontSize: 8,color: Colors.white))
+                              Text("The Barkley",style: TextStyle(fontSize: 10,color: Colors.white,letterSpacing: 0.5,)),
+                              Text("Main Office",style: TextStyle(fontSize: 8,color: Colors.white,letterSpacing: 0.5,))
                             ],
                           ),
                         ),
@@ -1722,28 +1786,30 @@ class App {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(App_Localization.of(context).translate("footer1"),
-                              style: TextStyle(fontFamily: "POPPINS",fontSize: 10,color: Colors.white,fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontFamily: "POPPINS",fontSize: 10,letterSpacing: 0.5,color: Colors.white,fontWeight: FontWeight.bold)),
                           SizedBox(height: MediaQuery.of(context).size.width*0.05/2,child: Center(),),
                           Text("Warehouse S01, Ras Al Khor 2",
-                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,letterSpacing: 0.5,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           SizedBox(height: 10,child: Center(),),
                           Text("Dubai, United Arab Emirates",
-                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,letterSpacing: 0.5,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           SizedBox(height: 10,child: Center(),),
                           Text("04 333 5843",
-                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,letterSpacing: 0.5,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                           SizedBox(height: 10,child: Center(),),
                           Text("+971 54 204 6700",
-                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
+                            style: TextStyle(fontFamily: "POPPINS",fontSize: 8,letterSpacing: 0.5,color: Colors.white.withOpacity(0.7),fontWeight: FontWeight.normal),maxLines: 10,),
                         ],
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.04),
+                    SizedBox(width: MediaQuery.of(context).size.width*0.03),
                     Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(App_Localization.of(context).translate("footer4"),style: TextStyle(fontFamily: "POPPINS",fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold)),
+                          Text(App_Localization.of(context).translate("footer4"),style: TextStyle(
+                              letterSpacing: 0.5,
+                              fontFamily: "POPPINS",fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold)),
                           SizedBox(height: 10,child: Center(),),
                           Container(
                               width: MediaQuery.of(context).size.width*0.2,
@@ -1753,20 +1819,24 @@ class App {
                                 textAlignVertical: TextAlignVertical.bottom,
                                 style: TextStyle(
                                     fontFamily: "POPPINS",
+                                    letterSpacing: 0.5,
                                     fontSize: 10),
                                 decoration:  InputDecoration(
                                   hintText: App_Localization.of(context).translate("footer4_content_email"),
                                   hintStyle: TextStyle(
+                                      letterSpacing: 0.5,
                                       fontFamily: "POPPINS",
                                       color: Colors.grey,fontSize: 10),
                                   fillColor: Colors.white.withOpacity(0.9),
                                   filled: true,
                                   focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
                                     borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                         && homeController.clickSubscribe.isTrue ?
                                     Colors.red : Colors.transparent,width: 2),
                                   ),
                                   enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
                                     borderSide: BorderSide(color: homeController.subscribeEmail.text.isEmpty
                                         && homeController.clickSubscribe.isTrue ?
                                     Colors.red : Colors.transparent,width: 2),
@@ -1782,27 +1852,26 @@ class App {
                             child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
                                 width: MediaQuery.of(context).size.width*0.15,
+                                height: 28,
                                 decoration: BoxDecoration(
                                     color: primery,
                                     borderRadius: BorderRadius.circular(50/2)
                                 ),
                                 child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),
-                                    style: TextStyle(fontFamily: "POPPINS",
-                                        fontWeight: FontWeight.bold,color: Colors.white,fontSize: 10),),
-                                ),
+                                child: Text(App_Localization.of(context).translate("footer4_content_subscribe"),
+                                  style: TextStyle(fontFamily: "POPPINS",
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.bold,color: Colors.white,fontSize: 10),),
                                 )
                             ),
                           ),
                           SizedBox(height: 10,child: Center(),),
                           homeController.subscribe.isTrue ?
                           Text(App_Localization.of(context).translate("footer4_content_thank"),style:
-                          TextStyle(fontFamily: "POPPINS",fontSize: 8,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.normal)): Center(),
+                          TextStyle(fontFamily: "POPPINS",fontSize: 8, letterSpacing: 0.5,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.normal)): Center(),
                           SizedBox(height: MediaQuery.of(context).size.width*0.01,child: Center(),),
                           Text(App_Localization.of(context).translate("become_our_friends") + "!",style:
-                          TextStyle(fontFamily: "POPPINS",fontSize: 8,color: Colors.white,fontWeight: FontWeight.normal)),
+                          TextStyle(fontFamily: "POPPINS",fontSize: 8, letterSpacing: 0.5,color: Colors.white,fontWeight: FontWeight.normal)),
                           SizedBox(height: 5,child: Center(),),
                           Row(
                             children: [
@@ -1887,233 +1956,6 @@ class App {
     );
   }
 
-  //////////////////////// LanguageBarHome ////////////////////////
-  static languageBarHome(BuildContext context,HomeController homeController) {
-    return MediaQuery.of(context).size.width>App.extra?extraLanguageBarHome(context,homeController) :
-    MediaQuery.of(context).size.width>App.extra2?extra2LanguageBarHome(context,homeController) :
-    MediaQuery.of(context).size.width>App.xLarge?xLargeLanguageBarHome(context,homeController) :
-    MediaQuery.of(context).size.width>App.xLarge2?xLarge2LanguageBarHome(context,homeController) :
-    MediaQuery.of(context).size.width>App.larg?largeLanguageBarHome(context,homeController) :
-    MediaQuery.of(context).size.width>App.larg2 ? large2LanguageBarHome(context,homeController) :
-    bigLanguageBarHome(context,homeController);
-  }
-  static extraLanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value == true ?
-    Column(
-      children: [
-        SizedBox(height: 55),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 35, height: 35),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 21,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static extra2LanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value == true ?
-    Column(
-      children: [
-        SizedBox(height: 50),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(13),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 30, height: 30),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 19,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static xLargeLanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value == true ?
-    Column(
-      children: [
-        SizedBox(height: 45),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(11),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 25, height: 25),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static xLarge2LanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value ==true ?
-    Column(
-      children: [
-        SizedBox(height: 40),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(9),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 20, height: 20),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static largeLanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value == true ?
-    Column(
-      children: [
-        SizedBox(height: 35),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(7),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 15, height: 15),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 13,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static large2LanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value ==true ?
-    Column(
-      children: [
-        SizedBox(height: 30),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 10, height: 10),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 10,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static bigLanguageBarHome(BuildContext context,HomeController homeController) {
-    return homeController.openCountry.value ==true ?
-    Column(
-      children: [
-        SizedBox(height: 25),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(3),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 10, height: 10),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 8,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
 
   //////////////////////// copyrights ////////////////////////
   static copyrights(BuildContext context,double height,double fontSize) {
@@ -2125,6 +1967,7 @@ class App {
         children: [
           Text("© 2022 by The Barkley Pet Camp",
               style: TextStyle(
+                letterSpacing: 1,
                   fontFamily: "POPPINS",
                   fontSize: fontSize)),
         ],
@@ -2140,6 +1983,7 @@ class App {
             width: width,
           ),
           "td":Style(
+            letterSpacing: 1,
               textAlign: TextAlign.left,
               padding: EdgeInsets.all(10),
               width: width/3,
@@ -2149,6 +1993,7 @@ class App {
               border: Border.all(width: 0.5,color: Colors.grey.withOpacity(0.5))
           ),
           "th":Style(
+            letterSpacing: 2,
               textAlign: TextAlign.left,
               padding: EdgeInsets.all(10),
               fontWeight: FontWeight.bold,
@@ -2387,38 +2232,29 @@ class App {
   }
 
 
-  //////////////////////// LanguageBarShop ////////////////////////
-  static languageBarShop(BuildContext context,ShopController shopController) {
-    return MediaQuery.of(context).size.width>App.extra?extraLanguageBarShop(context,shopController) :
-    MediaQuery.of(context).size.width>App.extra2?extra2LanguageBarShop(context,shopController) :
-    MediaQuery.of(context).size.width>App.xLarge?xLargeLanguageBarShop(context,shopController) :
-    MediaQuery.of(context).size.width>App.xLarge2?xLarge2LanguageBarShop(context,shopController) :
-    MediaQuery.of(context).size.width>App.larg?largeLanguageBarShop(context,shopController) :
-    MediaQuery.of(context).size.width>App.larg2 ? large2LanguageBarShop(context,shopController) :
-    bigLanguageBarShop(context,shopController);
-  }
-  static extraLanguageBarShop(BuildContext context,ShopController shopController) {
+  //////////////////////// ShopLanguageBar ////////////////////////
+  static shopLanguageBar(BuildContext context,ShopController shopController,bool open,double blackHeight,double padding, double wImg,double hImg,double bFontSize,double sFontSize) {
     return shopController.openCountry.value == true ?
     Column(
       children: [
-        SizedBox(height: 55),
+        SizedBox(height: blackHeight),
         Container(
           color: Colors.grey[300],
           child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: EdgeInsets.all(padding),
             child: Row(
               children: [
                 SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 35, height: 35),
+                    width: wImg, height: hImg),
                 SizedBox(width: 5),
                 Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 23,
+                    fontSize: bFontSize,
                     fontWeight: FontWeight.bold,
                     fontFamily: "POPPINS"
                 ),),
                 SizedBox(width: 10,),
                 Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 21,
+                    fontSize: sFontSize,
                     fontFamily: "POPPINS"
                 ),)
               ],
@@ -2428,183 +2264,30 @@ class App {
       ],
     ) : Center();
   }
-  static extra2LanguageBarShop(BuildContext context,ShopController shopController) {
-    return shopController.openCountry.value == true ?
+
+  //////////////////////// HomeLanguageBar ////////////////////////
+  static homeLanguageBar(BuildContext context,HomeController homeController,bool open,double blackHeight,double padding, double wImg,double hImg,double bFontSize,double sFontSize) {
+    return homeController.openCountry.value == true ?
     Column(
       children: [
-        SizedBox(height: 50),
+        SizedBox(height: blackHeight),
         Container(
           color: Colors.grey[300],
           child: Padding(
-            padding: const EdgeInsets.all(13),
+            padding: EdgeInsets.all(padding),
             child: Row(
               children: [
                 SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 30, height: 30),
+                    width: wImg, height: hImg),
                 SizedBox(width: 5),
                 Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 21,
+                    fontSize: bFontSize,
                     fontWeight: FontWeight.bold,
                     fontFamily: "POPPINS"
                 ),),
                 SizedBox(width: 10,),
                 Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 19,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static xLargeLanguageBarShop(BuildContext context,ShopController shopController) {
-    return shopController.openCountry.value == true ?
-    Column(
-      children: [
-        SizedBox(height: 45),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(11),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 25, height: 25),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static xLarge2LanguageBarShop(BuildContext context,ShopController shopController) {
-    return shopController.openCountry.value ==true ?
-    Column(
-      children: [
-        SizedBox(height: 40),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(9),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 20, height: 20),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static largeLanguageBarShop(BuildContext context,ShopController shopController) {
-    return shopController.openCountry.value == true ?
-    Column(
-      children: [
-        SizedBox(height: 35),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(7),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 15, height: 15),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 13,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static large2LanguageBarShop(BuildContext context,ShopController shopController) {
-    return shopController.openCountry.value ==true ?
-    Column(
-      children: [
-        SizedBox(height: 30),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 10, height: 10),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 10,
-                    fontFamily: "POPPINS"
-                ),)
-              ],
-            ),
-          ),
-        )
-      ],
-    ) : Center();
-  }
-  static bigLanguageBarShop(BuildContext context,ShopController shopController) {
-    return shopController.openCountry.value ==true ?
-    Column(
-      children: [
-        SizedBox(height: 25),
-        Container(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(3),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/image/Icon_AED.svg",
-                    width: 10, height: 10),
-                SizedBox(width: 5),
-                Text(App_Localization.of(context).translate("uae"),style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "POPPINS"
-                ),),
-                SizedBox(width: 10,),
-                Text("(UAE "+App_Localization.of(context).translate("dirham")+")",style: TextStyle(
-                    fontSize: 8,
+                    fontSize: sFontSize,
                     fontFamily: "POPPINS"
                 ),)
               ],
